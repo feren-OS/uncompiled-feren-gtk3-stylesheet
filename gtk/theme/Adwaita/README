@@ -6,6 +6,12 @@ Summary
 * The configure script will detect whether or not you have sassc installed;
   if you do, it will regenerate the CSS every time you modify the SCSS files
   and rebuild GTK+.
+  
+Credits
+-------
+
+* GNOME for the upstream Adwaita theme
+* Elementary OS for the Elementary OS specific stylesheets added for Elementary OS stylesheet compatibility (they'll be likely modified later on in development)
 
 How to tweak the theme
 ----------------------

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-INKSCAPE="/usr/bin/inkscape"
+INKSCAPE="inkscape"
 OPTIPNG="/usr/bin/optipng"
 
 SRC_FILE="assets.svg"

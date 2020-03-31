@@ -1,0 +1,139 @@
+/* Misc. Application Fixes */
+
+/**********
+ * Files  *
+ *********/
+.nemo-window .nemo-places-sidebar.frame {
+  border-width: 0;
+}
+
+/**********
+ * Photos *
+ *********/
+.checkerboard-layout {
+    color: $text_color;
+}
+.checkerboard,
+.checkerboard-layout,
+.checkboard-layout .item {
+    background-color: $base_color;
+    background-image: linear-gradient(45deg, gtkalpha(#000, 0.1) 25%, transparent 25%, transparent 75%, gtkalpha(#000, 0.1) 75%, gtkalpha(#000, 0.1)), linear-gradient(45deg, gtkalpha(#000, 0.1) 25%, transparent 25%, transparent 75%, gtkalpha(#000, 0.1) 75%, gtkalpha(#000, 0.1));
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+}
+.bottom-toolbar {
+    border-top: 1px solid $borders_color;
+    background-color: $bg_color;
+    color: $fg_color;
+}
+.overlay-toolbar {
+    background-color: gtkalpha($bg_color, 0.9);
+    border: none;
+    border-radius: 3px;
+}
+.overlay-toolbar .mark {
+    color: $text_color;
+}
+scale.temperature trough {
+    background-image:
+        linear-gradient(
+            to right,
+            $BLUEBERRY_500,
+            $BANANA_500
+        );
+}
+scale.temperature:dir(rtl) trough {
+    background-image:
+        linear-gradient(
+            to left,
+            $BLUEBERRY_500,
+            $BANANA_500
+        );
+}
+scale.tint trough {
+    background-image:
+        linear-gradient(
+            to right,
+            #e41b79,
+            $LIME_500
+        );
+}
+scale.tint:dir(rtl) trough {
+    background-image:
+        linear-gradient(
+            to left,
+            #e41b79,
+            $LIME_500
+        );
+}
+scale.tint trough,
+scale.temperature trough {
+    box-shadow:
+        inset 0 0 0 1px gtkalpha(#000, 0.7),
+        inset 0 1px 0 gtkalpha(#000, 0.7),
+        inset 0 2px 0 gtkalpha(#fff, 0.15),
+        0 1px 0 0 gtkalpha($bg_color, 0.3);
+}
+frame.flat > border,
+frame > border.flat,
+.frame.flat {
+  border-style: none;
+}
+
+/***************
+  * Chrome(ium) *
+  ***************/
+window.background.chromium {
+}
+
+window.background.chromium headerbar.titlebar {
+}
+
+window.background.chromium headerbar.titlebar .button.titlebutton {
+}
+
+
+/**************************
+  * Misc. (Elementary OS) *
+  ************************/
+.h1 {
+    font-size: 24pt;
+}
+
+.h2 {
+    font-weight: 300;
+    font-size: 18pt;
+}
+
+.h3 {
+    font-size: 11pt;
+}
+
+.h4,
+.category-label {
+    color: gtkalpha($text_color, 0.7);
+    font-weight: bold;
+    text-shadow: 0 1px #000;
+}
+
+.h4 {
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+list .h4 {
+    padding-left: 6px;
+}
+
+label.primary {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+/********
+* Geary *
+********/
+
+paned statusbar frame {
+    border: none;
+}
