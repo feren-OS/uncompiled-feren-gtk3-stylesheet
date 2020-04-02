@@ -25,6 +25,11 @@
     border-top: 1px solid $borders_color;
     background-color: $bg_color;
     color: $fg_color;
+    &:backdrop {
+        border-color: $backdrop_borders_color;
+        background-color: $backdrop_bg_color;
+        color: $backdrop_fg_color;
+    }
 }
 .overlay-toolbar {
     background-color: gtkalpha($bg_color, 0.9);

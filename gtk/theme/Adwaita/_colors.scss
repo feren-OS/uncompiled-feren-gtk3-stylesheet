@@ -16,8 +16,12 @@ $selected_fg_color: #ffffff;
 $selected_bg_color: #006aff;
 $selected_borders_color: if($variant== 'light', darken($selected_bg_color, 15%), darken($selected_bg_color, 30%));
 $button_background_normal: if($variant == 'light', #eeeeee, #323232);
+$theme_button_background_backdrop: if($variant == 'light', #eeeeee, #ffffff);
+$theme_button_background_backdrop_insensitive: if($variant == 'light', #e3e3e3, #ffffff);
+$theme_button_background_insensitive: if($variant == 'light', #e3e3e3, #ffffff);
 $theme_button_foreground_normal: if($variant == 'light', #000000, #ffffff);
-$borders_color: darken($button_background_normal, 15%);
+$theme_button_foreground_backdrop: if($variant == 'light', #000000, #ffffff);
+$borders_color: if($variant == 'light', transparentize(black, 0.9), transparentize(black, 0.6));
 $alt_borders_color: if($variant == 'light', darken($bg_color, 24%), darken($bg_color, 18%));
 $borders_edge: if($variant == 'light', transparentize(white, 0.2), transparentize($fg_color, 0.93));
 $link_color: if($variant == 'light', darken($selected_bg_color, 10%), lighten($selected_bg_color, 20%));
@@ -75,12 +79,13 @@ $backdrop_scrollbar_slider_color: mix($backdrop_fg_color, $backdrop_bg_color, 40
 $backdrop_menu_color: if($variant == 'light', $backdrop_base_color, mix($backdrop_bg_color, $backdrop_base_color, 20%));
 
 //special cased widget colors
-$suggested_bg_color: $selected_bg_color;
+$suggested_bg_color: #00aa00;
 $suggested_border_color: $selected_borders_color;
 $progress_bg_color: $selected_bg_color;
 $progress_border_color: $selected_borders_color;
 $checkradio_bg_color: $selected_bg_color;
 $checkradio_fg_color: $selected_fg_color;
+$checkradio_borders_color: if($variant == 'light', darken($checkradio_bg_color,20%), darken($checkradio_bg_color,40%));
 
 
 /***************************

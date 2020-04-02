@@ -19,7 +19,11 @@
 @define-color selected_bg_color #{"" + $selected_bg_color};
 @define-color selected_borders_color #{"" + $selected_borders_color};
 @define-color button_background_normal #{"" + $button_background_normal};
+@define-color theme_button_background_backdrop #{"" + $theme_button_background_backdrop};
+@define-color theme_button_background_backdrop_insensitive #{"" + $theme_button_background_backdrop_insensitive};
+@define-color theme_button_background_insensitive #{"" + $theme_button_background_insensitive};
 @define-color theme_button_foreground_normal #{"" + $theme_button_foreground_normal};
+@define-color theme_button_foreground_backdrop #{"" + $theme_button_foreground_backdrop};
 @define-color borders_color #{"" + $borders_color};
 @define-color alt_borders_color #{"" + $alt_borders_color};
 @define-color borders_edge #{"" + $borders_edge};
@@ -84,6 +88,7 @@
 @define-color progress_border_color #{"" + $progress_border_color};
 @define-color checkradio_bg_color #{"" + $checkradio_bg_color};
 @define-color checkradio_fg_color #{"" + $checkradio_fg_color};
+@define-color checkradio_borders_color #{"" + $checkradio_borders_color};
 
 // (Elementary OS Compatibility) Brand Colors
 @define-color colorPrimary #{"" + $colorPrimary};
