@@ -22,14 +22,14 @@
 }
 
 // entries
-@function entry_focus_border($fc:$selected_bg_color) {
+@function entry_focus_border($fc:gtk("@theme_selected_bg_color")) {
   @if $variant == 'light' { @return $fc; }
-  @else { @return if($fc==$selected_bg_color, $selected_borders_color, darken($fc, 35%)); }
+  @else { @return if($fc==gtk("@theme_selected_bg_color"), gtk("@selected_borders_color"), gtkdarken($fc, 35%)); }
 }
 
-@function entry_focus_shadow($fc:$selected_bg_color) { @return inset 0 0 0 1px $fc; }
+@function entry_focus_shadow($fc:gtk("@theme_selected_bg_color")) { @return inset 0 0 0 1px $fc; }
 
-@mixin entry($t, $fc:$selected_bg_color, $edge: none) {
+@mixin entry($t, $fc:gtk("@theme_selected_bg_color"), $edge: none) {
 //
 // Entries drawing function
 //
@@ -42,14 +42,14 @@
 // normal, focus, insensitive, backdrop, backdrop-insensitive, osd, osd-focus, osd-backdrop;
 //
 
-  $_blank_edge: if($edge == none, none, 0 1px transparentize($edge, 1));
+  $_blank_edge: if($edge == none, none, 0 1px gtktransparentize($edge, 1));
   $_entry_edge: if($edge == none, none, _widget_edge($edge));
 
   @if $t==normal {
-    color: $text_color;
-    border-color: $borders_color;
-    background-color: $base_color;
-    @include _shadows(entry_focus_shadow(transparentize($fc, 1)), $_entry_edge);
+    color: gtk("@theme_text_color");
+    border-color: gtk("@borders");
+    background-color: gtk("@theme_base_color");
+    @include _shadows(entry_focus_shadow(gtktransparentize($fc, 1)), $_entry_edge);
     // for the transition to work the number of shadows in different states needs to match, hence the transparent shadow here.
   }
   @if $t==focus {
@@ -57,54 +57,54 @@
     border-color: entry_focus_border($fc);
   }
   @if $t==insensitive {
-    color: $insensitive_fg_color;
-    border-color: $borders_color;
-    background-color: $insensitive_bg_color;
+    color: gtk("@insensitive_fg_color");
+    border-color: gtk("@borders");
+    background-color: gtk("@insensitive_bg_color");
     box-shadow: $_entry_edge;
   }
   @if $t==backdrop {
-    color: $backdrop_text_color;
-    border-color: $backdrop_borders_color;
-    background-color: $backdrop_base_color;
+    color: gtk("@theme_unfocused_text_color");
+    border-color: gtk("@backdrop_borders_color");
+    background-color: gtk("@theme_unfocused_base_color");
     box-shadow: $_blank_edge;
   }
   @if $t==backdrop-insensitive {
-    color: $backdrop_insensitive_color;
-    border-color: $backdrop_borders_color;
-    background-color: $insensitive_bg_color;
+    color: gtkdarken(gtk("@theme_unfocused_bg_color"), 15%);
+    border-color: gtk("@backdrop_borders_color");
+    background-color: gtk("@insensitive_bg_color");
     box-shadow: $_blank_edge;
   }
   @if $t==osd {
-    color: $osd_text_color;
-    border-color: $osd_borders_color;
-    background-color: transparentize(opacify($osd_borders_color, 1), 0.5);
+    color: gtk("@theme_text_color");
+    border-color: gtk("@borders");
+    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
     background-clip: padding-box;
     box-shadow: none;
     text-shadow: 0 1px black;
     -gtk-icon-shadow: 0 1px black;
   }
   @if $t==osd-focus {
-    color: $osd_text_color;
-    border-color: $selected_bg_color;
-    background-color: transparentize(opacify($osd_borders_color, 1), 0.5);
+    color: gtk("@theme_text_color");
+    border-color: gtk("@theme_selected_bg_color");
+    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
     background-clip: padding-box;
     box-shadow: entry_focus_shadow($fc);
     text-shadow: 0 1px black;
     -gtk-icon-shadow: 0 1px black;
   }
   @if $t==osd-insensitive {
-    color: $osd_insensitive_fg_color;
-    border-color: $osd_borders_color;
-    background-color: $osd_insensitive_bg_color;
+    color: gtk("@insensitive_fg_color");
+    border-color: gtk("@borders");
+    background-color: gtk("@insensitive_bg_color");
     background-clip: padding-box;
     box-shadow: none;
     text-shadow: none;
     -gtk-icon-shadow: none;
   }
   @if $t==osd-backdrop {
-    color: $osd_text_color;
-    border-color: $osd_borders_color;
-    background-color: transparentize(opacify($osd_borders_color, 1), 0.5);
+    color: gtk("@theme_text_color");
+    border-color: gtk("@borders");
+    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
     background-clip: padding-box;
     box-shadow: none;
     text-shadow: none;
@@ -115,37 +115,37 @@
 // buttons
 
 @function _border_color($c, $darker: false) {
-  @if $darker == true { @return darken($c, 10%); }
-  @else { @return darken($c, 5%); }
+  @if $darker == true { @return gtkdarken($c, 10%); }
+  @else { @return gtkdarken($c, 5%); }
 }
 
-@function _text_shadow_color ($tc: $fg_color, $bg: $bg_color) {
-//
-// calculate the color of text shadows
-//
-// $tc is the text color
-// $bg is the background color
-//
-  $_lbg: lightness($bg)/100%;
-  @if lightness($tc)<50% { @return transparentize(white, 1-$_lbg/($_lbg*1.3)); }
-  @else { @return transparentize(black, $_lbg*0.8); }
-}
+//@function _text_shadow_color ($tc: gtk("@theme_fg_color"), $bg: gtk("@theme_bg_color")) {
+////
+//// calculate the color of text shadows
+////
+//// $tc is the text color
+//// $bg is the background color
+////
+//  $_lbg: gtklightness($bg)/100%;
+//  @if gtklightness($tc)<50% { @return gtktransparentize(white, 1-$_lbg/($_lbg*1.3)); }
+//  @else { @return gtktransparentize(black, $_lbg*0.8); }
+//}
 
-@function _button_hilight_color($c) {
-//
-// calculate the right top hilight color for buttons
-//
-// $c: base color;
-//
-  @if lightness($c)>95% { @return white; }
-  @else if lightness($c)>90% { @return transparentize(white, 0.2); }
-  @else if lightness($c)>80% { @return transparentize(white, 0.5); }
-  @else if lightness($c)>50% { @return transparentize(white, 0.8); }
-  @else if lightness($c)>40% { @return transparentize(white, 0.9); }
-  @else { @return transparentize(white, 0.98); }
-}
+//@function _button_hilight_color($c) {
+////
+//// calculate the right top hilight color for buttons
+////
+//// $c: base color;
+////
+//  @if gtklightness($c)>95% { @return white; }
+//  @else if gtklightness($c)>90% { @return gtktransparentize(white, 0.2); }
+//  @else if gtklightness($c)>80% { @return gtktransparentize(white, 0.5); }
+//  @else if gtklightness($c)>50% { @return gtktransparentize(white, 0.8); }
+//  @else if gtklightness($c)>40% { @return gtktransparentize(white, 0.9); }
+//  @else { @return gtktransparentize(white, 0.98); }
+//}
 
-@mixin button($t, $c:$button_background_normal, $tc:$theme_button_foreground_normal, $edge: none) {
+@mixin button($t, $c:gtk("@theme_button_background_normal"), $tc:gtk("@theme_button_foreground_normal"), $edge: none) {
 //
 // Button drawing function
 //
@@ -162,10 +162,10 @@
 //
 // This mixin sets the $button_fill global variable which containts the button background-image
 //
-  $_hilight_color: _button_hilight_color($c);
+  //$_hilight_color: _button_hilight_color($c);
   $_button_edge: if($edge == none, none, _widget_edge($edge));
-  $_blank_edge: if($edge == none, none, _widget_edge(transparentize($edge,1)));
-  $_button_shadow: 0 1px 2px $shadow_color;
+  $_blank_edge: if($edge == none, none, _widget_edge(gtktransparentize($edge,1)));
+  $_button_shadow: 0 1px 2px rgba(0,0,0,0.1);
   // TODO: Make light-ish borders for buttons on light theme ala old Feren
 
   @if $t==normal {
@@ -173,11 +173,9 @@
   // normal button
   //
     color: $tc;
-    //outline-color: transparentize($tc, 0.7);
-    border-color: if($c != $button_background_normal, _border_color($c), $borders_color);
-    $button_fill: if($variant == 'light', linear-gradient(to top, darken($c, 3%) 2px, $c),
-                                          linear-gradient(to top, darken($c,2%) 2px, $c)) !global;
-    background-image: $button_fill;
+    //outline-color: gtktransparentize($tc, 0.7);
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    background: $c linear-gradient(to top, rgba(0,0,0,0.03), transparent);
   }
 
   @else if $t==hover {
@@ -185,15 +183,9 @@
   // hovered button
   //
     color: $tc;
-    //outline-color: transparentize($tc, 0.7);
-    border-color: if($c != $button_background_normal, _border_color($c), $borders_color);
-    @if $variant == 'light' {
-      $button_fill: linear-gradient(to top, lighten($c, 1%) 2px, lighten($c, 4%)) !global;
-    }
-    @else {
-      $button_fill: linear-gradient(to top, lighten($c, 1%) 2px, lighten($c, 4%)) !global;
-    }
-    background-image: $button_fill;
+    //outline-color: gtktransparentize($tc, 0.7);
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    background: $c linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04));
     @include _shadows($_button_shadow);
   }
 
@@ -202,14 +194,9 @@
   // normal button alternative look
   //
     color: $tc;
-    //outline-color: transparentize($tc, 0.7);
-    border-color: if($c != $button_background_normal, _border_color($c), $borders_color);
-    @if $variant == 'light' {
-      background-image: linear-gradient(to bottom, lighten($c, 5%) 20%, $c 90%);
-    }
-    @else {
-      background-image: linear-gradient(to bottom, darken($c, 3%) 20%, darken($c, 6%) 90%);
-    }
+    //outline-color: gtktransparentize($tc, 0.7);
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    background: $c linear-gradient(to bottom, rgba(0, 0, 0, 0.05), transparent);
   }
 
   @else if $t==hover-alt {
@@ -217,86 +204,71 @@
   // hovered button alternative look
   //
     color: $tc;
-    //outline-color: transparentize($tc, 0.7);
-    border-color: if($c != $button_background_normal, _border_color($c), $borders_color);
-    @if $variant == 'light' {
-      $button_fill: linear-gradient(to bottom, lighten($c, 9%) 10%, lighten($c, 4%) 90%) !global;
-    }
-    @else {
-      $button_fill: linear-gradient(to bottom, $c 20%, darken($c, 4%) 90%) !global;
-    }
-    background-image: $button_fill;
+    //outline-color: gtktransparentize($tc, 0.7);
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
   }
 
   @else if $t==active {
   //
   // pushed button
   //
-    $button_fgcolor: if($c != $button_background_normal, $tc, $selected_fg_color);
+    $button_fgcolor: if($c != gtk("@theme_button_background_normal"), $tc, gtk("@theme_selected_fg_color"));
     color: $button_fgcolor;
-    //outline-color: transparentize($tc, 0.7);
-    $button_bgcolor: if($c != $button_background_normal, darken($c, 9%), $selected_bg_color);
+    //outline-color: gtktransparentize($tc, 0.7);
+    $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 9%), gtk("@theme_selected_bg_color"));
     border-color: $button_bgcolor;
-    $button_fill: image(linear-gradient(to bottom, lighten($button_bgcolor, 7%) 10%, $button_bgcolor 90%)) !global;
-    background-image: $button_fill;
+    background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
   }
 
   @else if $t==insensitive {
   //
   // insensitive button
   //
-    $_bg: if($c != $button_background_normal, mix($c, $button_background_normal, 45%), $theme_button_background_insensitive);
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtkmix($c, gtk("@theme_button_background_normal"), 45%), gtk("@theme_button_background_insensitive"));
 
-    label, & { color: if($c != $button_background_normal, mix($tc, $_bg, 45%), mix($theme_button_foreground_normal, $theme_button_background_insensitive, 45%)); }
+    label, & { color: if($c != gtk("@theme_button_background_normal"), gtkmix($tc, $_bg, 45%), gtkmix(gtk("@theme_button_foreground_normal"), gtk("@theme_button_background_insensitive"), 45%)); }
 
-    border-color: if($c != $button_background_normal, _border_color($c), rgba(0,0,0,0.12));
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.12));
+    background: $_bg;
   }
 
   @else if $t==insensitive-active {
   //
   // insensitive pushed button
   //
-    $button_bgcolor: if($c != $button_background_normal, darken($c, 11%), $selected_bg_color);
-    $button_fgcolor: if($c != $button_background_normal, $tc, $selected_fg_color);
-    $_bg: image(linear-gradient(to bottom, lighten($button_bgcolor, 7%) 10%, $button_bgcolor 90%)) !global;
-    $_bc: if($c != $button_background_normal, _border_color($c), $insensitive_borders_color);
+    $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 11%), gtk("@theme_selected_bg_color"));
+    $button_fgcolor: if($c != gtk("@theme_button_background_normal"), $tc, gtk("@theme_selected_fg_color"));
 
-    label, & { color: mix($button_fgcolor, $button_bgcolor, 50%); }
+    label, & { color: gtkmix($button_fgcolor, $button_bgcolor, 50%); }
 
     border-color: $button_bgcolor;
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
   }
 
   @else if $t==backdrop {
   //
   // backdrop button
   //
-    $_bg: if($c != $button_background_normal, $c, $theme_button_background_backdrop);
+    $_bg: if($c != gtk("@theme_button_background_normal"), $c, gtk("@theme_button_background_backdrop"));
 
-    label, & { color: if($c != $button_background_normal, mix($tc, $_bg, 80%), mix($theme_button_foreground_backdrop, $_bg, 80%)); }
+    label, & { color: if($c != gtk("@theme_button_background_normal"), gtkmix($tc, $_bg, 80%), gtkmix(gtk("@theme_button_foreground_backdrop"), $_bg, 80%)); }
 
-    border-color: if($c != $button_background_normal, gtkalpha(_border_color($c), 0.88), gtkalpha($borders_color, 0.88));
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    border-color: if($c != gtk("@theme_button_background_normal"), gtkalpha(_border_color($c), 0.88), gtkalpha(gtk("@borders"), 0.88));
+    background: $_bg;
   }
 
   @else if $t==backdrop-active {
   //
   // backdrop pushed button
   //
-    $button_bgcolor: if($c != $button_background_normal, darken($c, 11%), $selected_bg_color);
-    $button_fgcolor: if($c != $button_background_normal, $tc, $selected_fg_color);
-    $_bg: image(linear-gradient(to bottom, gtkalpha(lighten($button_bgcolor, 7%), 0.8) 10%, gtkalpha($button_bgcolor, 0.8) 90%)) !global;
-    $_bc: if($variant == 'light', $_bg ,_border_color($c));
+    $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 11%), gtk("@theme_selected_bg_color"));
+    $button_fgcolor: if($c != gtk("@theme_button_background_normal"), $tc, gtk("@theme_selected_fg_color"));
 
-    label, & { color: mix($button_fgcolor, $button_bgcolor, 80%); }
+    label, & { color: gtkmix($button_fgcolor, $button_bgcolor, 80%); }
     
     border-color: gtkalpha($button_bgcolor, 0.8);
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: gtkalpha($button_bgcolor, 0.8) linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent);
   }
 
   @else if $t==backdrop-insensitive {
@@ -304,14 +276,13 @@
   // backdrop insensitive button
   //
 
-    $_bg: if($c != $button_background_normal, mix($c, $theme_button_background_backdrop_insensitive, 65%), $theme_button_background_backdrop_insensitive);
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtkmix($c, gtk("@theme_button_background_backdrop")_insensitive, 65%), gtk("@theme_button_background_backdrop")_insensitive);
     $_bc: if($variant == 'light', $_bg,_border_color($c));
 
-    label, & { color: if($c != $button_background_normal, mix($tc, $c, 35%), mix($theme_button_foreground_normal, $button_background_normal, 35%)); }
+    label, & { color: if($c != gtk("@theme_button_background_normal"), gtkmix($tc, $c, 35%), gtkmix(gtk("@theme_button_foreground_normal"), gtk("@theme_button_background_normal"), 35%)); }
 
     border-color: rgba(0,0,0,0.12);
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: $_bg;
   }
 
   @else if $t==backdrop-insensitive-active {
@@ -319,46 +290,41 @@
   // backdrop insensitive pushed button
   //
 
-    $button_bgcolor: if($c != $button_background_normal, darken($c, 11%), $selected_bg_color);
-    $button_fgcolor: if($c != $button_background_normal, $tc, $selected_fg_color);
-    $_bg: image(linear-gradient(to bottom, gtkalpha(lighten($button_bgcolor, 7%), 0.8) 10%, gtkalpha($button_bgcolor, 0.8) 90%)) !global;
-    $_bc: if($variant == 'light', $_bg ,_border_color($c));
-
-    label, & { color: mix($button_fgcolor, $button_bgcolor, 40%); }
+    $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 11%), gtk("@theme_selected_bg_color"));
+    $button_fgcolor: if($c != gtk("@theme_button_background_normal"), $tc, gtk("@theme_selected_fg_color"));
     
-    border-color: gtkalpha($selected_bg_color, 0.8);
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    label, & { color: gtkmix($button_fgcolor, $button_bgcolor, 40%); }
+    
+    border-color: gtkalpha($button_bgcolor, 0.8);
+    background: gtkalpha($button_bgcolor, 0.8) linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent);
   }
 
   @else if $t==osd {
   //
   // normal osd button
   //
-    $_bg: if($c != $button_background_normal, transparentize($c, 0.5), $osd_bg_color);
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
 
-    color: $osd_fg_color;
-    border-color: $osd_borders_color;
+    color: gtk("@theme_fg_color");
+    border-color: gtk("@borders");
     background-color: transparent;
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: $_bg;
     background-clip: padding-box;
-    outline-color: transparentize($osd_fg_color, 0.7);
+    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
   }
 
   @else if $t==osd-hover {
   //
   // active osd button
   //
-    $_bg: if($c != $button_background_normal, transparentize($c, 0.3), lighten($osd_bg_color, 12%));
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.3), gtklighten(gtk("@theme_bg_color"), 12%));
 
-    color: $osd_fg_color;
-    border-color: $osd_borders_color;
+    color: gtk("@theme_fg_color");
+    border-color: gtk("@borders");
     background-color: transparent;
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: $_bg;
     background-clip: padding-box;
-    outline-color: transparentize($osd_fg_color, 0.7);
+    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
   }
 
   @else if $t==osd-active {
@@ -366,26 +332,24 @@
   // active osd button
   //
 
-    $button_fgcolor: if($c != $button_background_normal, $tc, $selected_fg_color);
+    $button_fgcolor: if($c != gtk("@theme_button_background_normal"), $tc, gtk("@theme_selected_fg_color"));
     color: $button_fgcolor;
     background-color: transparent;
-    $button_bgcolor: if($c != $button_background_normal, darken($c, 11%), $selected_bg_color);
+    $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 11%), gtk("@theme_selected_bg_color"));
     border-color: $button_bgcolor;
-    $button_fill: image(linear-gradient(to bottom, lighten($button_bgcolor, 7%) 10%, $button_bgcolor 90%)) !global;
-    background-image: $button_fill;
+    background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
     background-clip: padding-box;
-    outline-color: transparentize($osd_fg_color, 0.7);
+    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
   }
 
   @else if $t==osd-insensitive {
   //
   // insensitive osd button
   //
-    color: $osd_insensitive_fg_color;
-    border-color: $osd_borders_color;
+    color: gtk("@insensitive_fg_color");
+    border-color: gtk("@borders");
     background-color: transparent;
-    $button_fill: image($osd_insensitive_bg_color) !global;
-    background-image: $button_fill;
+    background: gtk("@insensitive_bg_color");
     background-clip: padding-box;
   }
 
@@ -393,13 +357,12 @@
   //
   // backdrop osd button
   //
-    $_bg: if($c != $button_background_normal, transparentize($c, 0.5), $osd_bg_color);
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
 
-    color: $osd_fg_color;
-    border-color: $osd_borders_color;
+    color: gtk("@theme_fg_color");
+    border-color: gtk("@borders");
     background-color: transparent;
-    $button_fill: image($_bg) !global;
-    background-image: $button_fill;
+    background: $_bg;
     background-clip: padding-box;
   }
 
@@ -410,27 +373,27 @@
     border-color: transparent;
     background-color: transparent;
     $button_fill: none !global;
-    background-image: $button_fill;
+    background: $button_fill;
   }
 }
 
-@mixin headerbar_fill($c:$theme_titlebar_background, $hc:$top_hilight, $ov: none) {
+//@mixin headerbar_fill($c:$theme_titlebar_background, $hc:$top_hilight, $ov: none) {
 //
-// headerbar fill
+//// headerbar fill
+////
+//// $c:  base color
+//// $hc: top highlight color
+//// $ov: a background layer for background shorthand (hence no commas!)
 //
-// $c:  base color
-// $hc: top highlight color
-// $ov: a background layer for background shorthand (hence no commas!)
+//  $gradient: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.1));
 //
-  $gradient: linear-gradient(to top, $c, lighten($c, 3%));
+//  @if $ov != none { background: $c $ov, $gradient; }
+//  @else { background: $c $gradient; }
+//
+//  //box-shadow: inset 0 1px $hc; // top highlight
+//}
 
-  @if $ov != none { background: $c $ov, $gradient; }
-  @else { background: $c $gradient; }
-
-  //box-shadow: inset 0 1px $hc; // top highlight
-}
-
-@mixin overshoot($p, $t:normal, $c:$fg_color) {
+@mixin overshoot($p, $t:normal, $c:gtk("@theme_fg_color")) {
 //
 // overshoot
 //
@@ -472,24 +435,24 @@
   $_small_gradient_color: $c;
   $_big_gradient_color: $c;
 
-  @if $c==$fg_color {
-    $_small_gradient_color: darken($borders_color, 10%);
-    $_big_gradient_color: $fg_color;
+  @if $c==gtk("@theme_fg_color") {
+    $_small_gradient_color: gtkdarken(gtk("@borders"), 10%);
+    $_big_gradient_color: gtk("@theme_fg_color");
 
-    @if $t==backdrop { $_small_gradient_color: $backdrop_borders_color; }
+    @if $t==backdrop { $_small_gradient_color: gtk("@backdrop_borders_color"); }
   }
 
   $_small_gradient: -gtk-gradient(radial,
                                   $_position, 0,
                                   $_position, 0.5,
                                   to($_small_gradient_color),
-                                  to(transparentize($_small_gradient_color, 1)));
+                                  to(gtktransparentize($_small_gradient_color, 1)));
 
   $_big_gradient: -gtk-gradient(radial,
                                 $_position, 0,
                                 $_position, 0.6,
-                                from(transparentize($_big_gradient_color, 0.93)),
-                                to(transparentize($_big_gradient_color, 1)));
+                                from(gtktransparentize($_big_gradient_color, 0.93)),
+                                to(gtktransparentize($_big_gradient_color, 1)));
 
   @if $t==normal {
     background-image: $_small_gradient, $_big_gradient;
@@ -514,7 +477,7 @@
  * Check and Radio buttons *
  ***************************/
 
- @mixin check($t, $c:$bg_color, $tc:$fg_color, $checked: false) {
+ @mixin check($t, $c:gtk("@theme_bg_color"), $tc:gtk("@theme_fg_color"), $checked: false) {
   // Check/Radio drawing function
   //
   // $t:        check/radio type,
@@ -525,39 +488,39 @@
   // possible $t values:
   // normal, hover, active, insensitive, backdrop, backdrop-insensitive
 
-  $_border_color: if($c==$checkradio_bg_color, $c, $alt_borders_color);
-  $_dim_border_color: transparentize($_border_color, if($variant == 'light', 0.3, 0.7));
+  $_border_color: if($c==gtk("@theme_selected_bg_color"), $c, gtk("@borders"));
+  $_dim_border_color: gtktransparentize($_border_color, if($variant == 'light', 0.3, 0.7));
 
   @if $t==normal  {
     background-clip: if($checked, border-box, padding-box);
-    background-image: linear-gradient(to bottom, lighten($c, 5%) 20%, $c 90%);
+    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 20%, transparent 90%);
     border-color: $_border_color;
     box-shadow: 0 1px transparentize(black, 0.95);
     color: $tc;
   }
 
   @if $t==hover {
-    background-image: if($c == white, image(darken($c, 5%)), linear-gradient(to bottom, lighten($c, 9%) 10%, lighten($c, 4%) 90%));
+    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 10%, rgba(255, 255, 255, 0.04) 90%);
   }
 
   @if $t==active {
-    box-shadow: inset 0 1px 1px 0px if($variant == 'light', rgba(0, 0, 0, 0.2), black);
+    box-shadow: inset 0 1px 1px 0px rgba(0, 0, 0, 0.2);
   }
 
   @if $t==insensitive {
     box-shadow: none;
-    color: transparentize($tc, 0.3);
+    color: gtkalpha($tc, 0.7);
   }
 
   @if $t==backdrop {
-    background-image: image($c);
+    background: image($c);
     box-shadow: none;
     color: $tc;
   }
 
   @if $t==backdrop-insensitive {
     box-shadow: none;
-    color: transparentize($tc, 0.3);
+    color: gtkalpha($tc, 0.7);
   }
 }
 
