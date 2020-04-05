@@ -2098,43 +2098,43 @@ headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon.svg"), color @theme_titlebar_foreground_backdrop); -gtk-icon-source: none; }
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon.svg"), color @theme_titlebar_foreground_backdrop); }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover { background-color: #ff5555; background-image: -gtk-recolor(url("assets/close-icon.svg"), color white); }
 
 headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active { background-color: #c83737; background-image: -gtk-recolor(url("assets/close-icon.svg"), color white); }
 
-headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: url("assets/titlebutton-max.svg"); }
+headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/max-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop { background-image: url("assets/titlebutton-max-backdrop.svg"); }
+headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/max-icon.svg"), color @theme_titlebar_foreground_backdrop); }
 
-headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover { background-image: url("assets/titlebutton-max-hover.svg"); }
+headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/max-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active { background-image: url("assets/titlebutton-max-active.svg"); }
+headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/max-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: url("assets/titlebutton-min.svg"); }
+headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: -gtk-recolor(url("assets/min-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop { background-image: url("assets/titlebutton-min-backdrop.svg"); }
+headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop { background-image: -gtk-recolor(url("assets/min-icon.svg"), color @theme_titlebar_foreground_backdrop); }
 
-headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover { background-image: url("assets/titlebutton-min-hover.svg"); }
+headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover { background-image: -gtk-recolor(url("assets/min-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active { background-image: url("assets/titlebutton-min-active.svg"); }
+headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active { background-image: -gtk-recolor(url("assets/min-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: url("assets/titlebutton-restore.svg"); }
+headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { background-image: url("assets/titlebutton-restore-backdrop.svg"); }
+headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground_backdrop); }
 
-headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover { background-image: url("assets/titlebutton-restore-hover.svg"); }
+headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
-headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active { background-image: url("assets/titlebutton-restore-active.svg"); }
+headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
-.fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize, .maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: url("assets/titlebutton-restore.svg"); }
+.fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize, .maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
-.fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop, .maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop { background-image: url("assets/titlebutton-restore-backdrop.svg"); }
+.fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop, .maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground_backdrop); }
 
-.fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover, .maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover { background-image: url("assets/titlebutton-restore-hover.svg"); }
+.fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover, .maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
-.fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active, .maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active { background-image: url("assets/titlebutton-restore-active.svg"); }
+.fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active, .maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/rest-icon.svg"), color @theme_titlebar_foreground); }
 
 .view:selected:focus, .view:selected, iconview:selected, .view text:selected, iconview text:selected, textview text:selected, .view text selection:focus, iconview text selection:focus, .view text selection, iconview text selection, textview text selection:focus, textview text selection, flowbox flowboxchild:selected, spinbutton:not(.vertical) selection, entry selection, modelbutton.flat:selected, .menuitem.button.flat:selected, treeview.view:selected:focus, treeview.view:selected, row:selected, calendar:selected { background-color: @theme_selected_bg_color; }
 

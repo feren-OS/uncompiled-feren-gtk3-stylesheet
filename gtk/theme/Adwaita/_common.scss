@@ -4659,7 +4659,6 @@ headerbar button.titlebutton.close, .titlebar button.titlebutton.close {
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {
     background-color: transparent;
     background-image: -gtk-recolor(url('assets/close-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
-    -gtk-icon-source: none;
 }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover {
@@ -4673,75 +4672,75 @@ headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:ac
 }
 
 headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize {
-  background-image: url("assets/titlebutton-max.svg");
+    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop {
-  background-image: url("assets/titlebutton-max-backdrop.svg");
+    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover {
-  background-image: url("assets/titlebutton-max-hover.svg");
+    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active {
-  background-image: url("assets/titlebutton-max-active.svg");
+    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize {
-  background-image: url("assets/titlebutton-min.svg");
+    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop {
-  background-image: url("assets/titlebutton-min-backdrop.svg");
+    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover {
-  background-image: url("assets/titlebutton-min-hover.svg");
+    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active {
-  background-image: url("assets/titlebutton-min-active.svg");
+    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
-  background-image: url("assets/titlebutton-restore.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
-  background-image: url("assets/titlebutton-restore-backdrop.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover {
-  background-image: url("assets/titlebutton-restore-hover.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active {
-  background-image: url("assets/titlebutton-restore-active.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize,
 .maximized headerbar button.titlebutton.maximize,
 .maximized .titlebar button.titlebutton.maximize {
-  background-image: url("assets/titlebutton-restore.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop,
 .maximized headerbar button.titlebutton.maximize:backdrop,
 .maximized .titlebar button.titlebutton.maximize:backdrop {
-  background-image: url("assets/titlebutton-restore-backdrop.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover,
 .maximized headerbar button.titlebutton.maximize:hover,
 .maximized .titlebar button.titlebutton.maximize:hover {
-  background-image: url("assets/titlebutton-restore-hover.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active,
 .maximized headerbar button.titlebutton.maximize:active,
 .maximized .titlebar button.titlebutton.maximize:active {
-  background-image: url("assets/titlebutton-restore-active.svg");
+    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 // catch all extend :)
