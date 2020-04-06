@@ -16,10 +16,10 @@
   @return unquote("alpha(#{$c},#{$a})");
 }
 
-// shade function
-@function gtkshade($c, $a) {
-  @return unquote("shade(#{$c}_breeze,#{$a})");
-}
+// shade function (not available in GTK 3.22)
+//@function gtkshade($c, $a) {
+//  @return unquote("shade(#{$c}_breeze,#{$a})");
+//}
 
 // mix function
 @function gtkmix($c1, $c2, $m) {

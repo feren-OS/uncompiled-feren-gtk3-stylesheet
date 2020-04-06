@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 $ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-$asset_suffix: if($variant=='dark', '-dark', '');
+//$asset_suffix: if($variant=='dark', '-dark', '');
+$asset_suffix: '';
 $backdrop_transition: 200ms ease-out;
 $button_transition: all 200ms $ease-out-quad;
 $button_radius: 4px;
@@ -1933,7 +1934,7 @@ treeview.view {
 
     &:selected {
       color: gtkmix(gtk("@theme_selected_fg_color"), gtk("@theme_selected_bg_color"), 40%);
-      &:backdrop { color: gtkmix(gtk("@theme_unfocused_selected_fg_color"), gtk("@theme_selected_bg_color"), 30%); }
+      &:backdrop { color: gtkmix(gtkalpha(gtk("@theme_selected_fg_color"), 0.8), gtk("@theme_selected_bg_color"), 30%); }
     }
 
     &:backdrop { color: gtkdarken(gtk("@theme_unfocused_bg_color"), 15%); }
@@ -1974,7 +1975,7 @@ treeview.view {
 
       &:hover { color: gtk("@theme_selected_fg_color"); }
 
-      &:backdrop { color: gtkmix(gtk("@theme_unfocused_selected_fg_color"), gtk("@theme_selected_bg_color"), 70%); }
+      &:backdrop { color: gtkmix(gtkalpha(gtk("@theme_selected_fg_color"), 0.8), gtk("@theme_selected_bg_color"), 70%); }
     }
 
     &:checked { -gtk-icon-source: -gtk-icontheme('pan-down-symbolic'); }
@@ -2152,7 +2153,7 @@ menu,
 .context-menu {
   margin: 4px; // see https://bugzilla.gnome.org/show_bug.cgi?id=591258
   padding: 0px 0px;
-  background-color: gtkalpha(gtk("@theme_base_color"), 0.7);
+  background: gtkalpha(gtk("@theme_base_color"), 0.94) linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.12));
   //border: 1px solid rgba(0,0,0,0.17); // adds borders in a non composited env
 
   .csd & {
@@ -2212,7 +2213,7 @@ menu,
     min-height: 16px;
     min-width: 16px;
     padding: 4px;
-    background-color: gtkalpha(gtk("@theme_base_color"), 0.7);
+    background-color: gtkalpha(gtk("@theme_base_color"), 0.9);
     border-radius: 0;
 
     &.top {
@@ -2263,7 +2264,7 @@ menuitem {
 
 popover.background {
   padding: 2px;
-  background-color: gtkalpha(gtk("@theme_base_color"), 0.7);
+  background: gtkalpha(gtk("@theme_base_color"), 0.9) linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.12));
 
   .csd &, & {
     border: 1px solid rgba(0,0,0,0.17);
@@ -2761,35 +2762,35 @@ switch {
   border: 1px solid rgba(0,0,0,0.17);
   border-radius: 14px;
   color: transparent;
-  background: gtk("@theme_bg_color") rgba(0,0,0,0.85);
+  background-color: gtk("@theme_bg_color");
 
   &:checked {
     color: transparent;
-    border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.3);
-    background: gtk("@theme_selected_bg_color");
+    border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.17);
+    background-color: gtk("@theme_selected_bg_color");
   }
 
   &:disabled {
     color: transparent;
-    border-color: rgba(0,0,0,0.17);
-    background: gtk("@insensitive_bg_color");
+    border: 1px solid rgba(0,0,0,0.17);
+    background-color: gtk("@insensitive_bg_color");
   }
 
   &:backdrop {
     color: transparent;
-    border-color: rgba(0,0,0,0.17);
-    background: gtk("@theme_unfocused_bg_color") rgba(0,0,0,0.85);
+    border: 1px solid rgba(0,0,0,0.17);
+    background-color: gtkshade(gtk("@theme_bg_color"), 1.4);
     transition: $backdrop_transition;
 
     &:checked {
-      border-color: gtk("@theme_unfocused_selected_bg_color") rgba(0,0,0,0.3);
-      background: gtk("@theme_unfocused_selected_bg_color");
+      border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.12);
+      background-color: gtkalpha(gtk("@theme_selected_bg_color"), 0.8);
     }
 
     &:disabled {
       color: transparent;
-      border-color: rgba(0,0,0,0.17);
-      background: gtk("@insensitive_unfocused_bg_color");
+      border: 1px solid rgba(0,0,0,0.17);
+      background-color: gtkshade(gtk("@insensitive_bg_color"), 1.4);
     }
   }
 
@@ -2822,7 +2823,7 @@ switch {
       @include button(backdrop);
     }
 
-    &:checked > slider { border-color: gtk("@theme_unfocused_selected_bg_color") rgba(0,0,0,0.3); }
+    &:checked > slider { border-color: gtk("@theme_unfocused_selected_bg_color") rgba(0,0,0,0.24); }
 
     &:disabled slider { @include button(backdrop-insensitive); }
   }
@@ -2851,11 +2852,11 @@ switch {
   ('', 'none', 'transparent', gtk("@theme_selected_bg_color")),
   (':hover', 'none', 'transparent', gtk("@theme_selected_bg_color")),
   (':active', 'none', 'transparent', gtk("@theme_selected_bg_color")),
-  (':backdrop', 'none', 'transparent', gtk("@theme_unfocused_selected_bg_color")),
+  (':backdrop', 'none', 'transparent', gtkalpha(gtk("@theme_selected_bg_color"), 0.8)),
   (':checked', '-gtk-icontheme(\'object-select-symbolic\')', gtk("@theme_fg_color"), gtk("@theme_selected_bg_color")),
   (':checked:hover', '-gtk-icontheme(\'object-select-symbolic\')', gtk("@theme_fg_color"), gtk("@theme_selected_bg_color")),
   (':checked:active', '-gtk-icontheme(\'object-select-symbolic\')', gtk("@theme_fg_color"), gtk("@theme_selected_bg_color")),
-  (':backdrop:checked', '-gtk-icontheme(\'object-select-symbolic\')', '#{gtkalpha(gtk("@theme_fg_color"), 0.8)}', gtk("@theme_unfocused_selected_bg_color")), {
+  (':backdrop:checked', '-gtk-icontheme(\'object-select-symbolic\')', '#{gtkalpha(gtk("@theme_fg_color"), 0.8)}', gtkalpha(gtk("@theme_selected_bg_color"), 0.8)), {
 
   .view.content-view.check#{$check_state}:not(list),
   .content-view .tile check#{$check_state}:not(list) {
@@ -4037,7 +4038,7 @@ placessidebar {
     &:backdrop {
       color: gtk("@theme_unfocused_fg_color");
 
-      &:selected { color: gtk("@theme_unfocused_selected_fg_color"); }
+      &:selected { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8); }
 
       &:disabled { color: gtk("@theme_unfocused_bg_color"); }
     }
@@ -4196,12 +4197,12 @@ infobar {
   &.question {
     color: gtk("@theme_selected_fg_color");
     label, & { color: gtk("@theme_selected_fg_color"); }
-    background-color: gtk("@theme_selected_bg_color");
+    background: gtk("@theme_selected_bg_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
-      color: gtk("@theme_unfocused_selected_fg_color");
-      label, & { color: gtk("@theme_unfocused_selected_fg_color"); }
-      background-color: gtk("@theme_unfocused_selected_bg_color");
+      color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8);
+      label, & { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8); }
+      background: gtkalpha(gtk("@theme_selected_bg_color"), 0.8);
     }
     
     button {
@@ -4217,10 +4218,10 @@ infobar {
       &:disabled { @include button(insensitiveib, transparent, gtk("@theme_selected_fg_color"), none); }
 
       &:backdrop {
-        @include button(normalib, transparent, gtk("@theme_unfocused_selected_fg_color"), none);
+        @include button(backdropib, transparent, gtkalpha(gtk("@theme_selected_fg_color"), 0.8), none);
 
         &:disabled {
-          @include button(insensitiveib, transparent, gtk("@theme_unfocused_selected_fg_color"), none);
+          @include button(backdropinsensitiveib, transparent, gtkalpha(gtk("@theme_selected_fg_color"), 0.8), none);
         }
       }
     }
@@ -4228,12 +4229,12 @@ infobar {
   &.warning {
     color: white;
     label, & { color: white; }
-    background-color: gtk("@warning_color");
+    background: gtk("@warning_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
       label, & { color: gtkalpha(white, 0.8); }
-      background-color: gtk("@warning_color_backdrop");
+      background: gtk("@warning_color_backdrop");
     }
     
     button {
@@ -4249,10 +4250,10 @@ infobar {
       &:disabled { @include button(insensitiveib, transparent, white, none); }
 
       &:backdrop {
-        @include button(normalib, transparent, gtkalpha(white, 0.8), none);
+        @include button(backdropib, transparent, gtkalpha(white, 0.8), none);
 
         &:disabled {
-          @include button(insensitiveib, transparent, gtkalpha(white, 0.8), none);
+          @include button(backdropinsensitiveib, transparent, gtkalpha(white, 0.8), none);
         }
       }
     }
@@ -4260,12 +4261,12 @@ infobar {
   &.error {
     color: white;
     label, & { color: white; }
-    background-color: gtk("@error_color");
+    background: gtk("@error_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
       label, & { color: gtkalpha(white, 0.8); }
-      background-color: gtk("@error_color_backdrop");
+      background: gtk("@error_color_backdrop");
     }
     
     button {
@@ -4281,10 +4282,10 @@ infobar {
       &:disabled { @include button(insensitiveib, transparent, white, none); }
 
       &:backdrop {
-        @include button(normalib, transparent, gtkalpha(white, 0.8), none);
+        @include button(backdropib, transparent, gtkalpha(white, 0.8), none);
 
         &:disabled {
-          @include button(insensitiveib, transparent, gtkalpha(white, 0.8), none);
+          @include button(backdropinsensitiveib, transparent, gtkalpha(white, 0.8), none);
         }
       }
     }
@@ -4675,94 +4676,94 @@ headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close {
     background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {
     background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover {
     background-color: #ff5555;
-    background-image: -gtk-recolor(url('assets/close-icon.svg'), color white);
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color white);
 }
 
 headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active {
     background-color: #c83737;
-    background-image: -gtk-recolor(url('assets/close-icon.svg'), color white);
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color white);
 }
 
 headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/max-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize {
-    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop {
-    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover {
-    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active {
-    background-image: -gtk-recolor(url('assets/min-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize,
 .maximized headerbar button.titlebutton.maximize,
 .maximized .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop,
 .maximized headerbar button.titlebutton.maximize:backdrop,
 .maximized .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover,
 .maximized headerbar button.titlebutton.maximize:hover,
 .maximized .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active,
 .maximized headerbar button.titlebutton.maximize:active,
 .maximized .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/rest-icon.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
 }
 
 // catch all extend :)
@@ -4776,9 +4777,9 @@ headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restor
     &:disabled { color: gtkmix(gtk("@theme_selected_fg_color"), gtk("@theme_selected_bg_color"), 50%); }
 
     &:backdrop {
-      color: gtk("@theme_unfocused_selected_fg_color");
+      color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8);
 
-      &:disabled { color: gtkmix(gtk("@theme_unfocused_selected_fg_color"), gtk("@theme_selected_bg_color"), 30%); }
+      &:disabled { color: gtkmix(gtkalpha(gtk("@theme_selected_fg_color"), 0.8), gtk("@theme_selected_bg_color"), 30%); }
     }
   }
 }
