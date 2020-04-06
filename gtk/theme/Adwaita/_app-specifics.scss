@@ -22,11 +22,11 @@
     background-position: 0 0, 12px 12px;
 }
 .bottom-toolbar {
-    border-top: 1px solid gtk("@borders");
+    border-top: 1px solid rgba(0,0,0,0.17);
     background-color: gtk("@theme_bg_color");
     color: gtk("@theme_fg_color");
     &:backdrop {
-        border-color: gtkalpha(gtk("@theme_titlebar_foreground")_backdrop, 0.15);
+        border-color: rgba(0,0,0,0.17);
         background-color: gtk("@theme_unfocused_bg_color");
         color: gtk("@theme_unfocused_fg_color");
     }

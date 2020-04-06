@@ -47,7 +47,7 @@
 
   @if $t==normal {
     color: gtk("@theme_text_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: gtk("@theme_base_color");
     @include _shadows(entry_focus_shadow(gtktransparentize($fc, 1)), $_entry_edge);
     // for the transition to work the number of shadows in different states needs to match, hence the transparent shadow here.
@@ -58,26 +58,26 @@
   }
   @if $t==insensitive {
     color: gtk("@insensitive_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: gtk("@insensitive_bg_color");
     box-shadow: $_entry_edge;
   }
   @if $t==backdrop {
     color: gtk("@theme_unfocused_text_color");
-    border-color: gtk("@backdrop_borders_color");
+    border-color: rgba(0,0,0,0.17);
     background-color: gtk("@theme_unfocused_base_color");
     box-shadow: $_blank_edge;
   }
   @if $t==backdrop-insensitive {
     color: gtkdarken(gtk("@theme_unfocused_bg_color"), 15%);
-    border-color: gtk("@backdrop_borders_color");
+    border-color: rgba(0,0,0,0.17);
     background-color: gtk("@insensitive_bg_color");
     box-shadow: $_blank_edge;
   }
   @if $t==osd {
     color: gtk("@theme_text_color");
-    border-color: gtk("@borders");
-    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
+    border-color: rgba(0,0,0,0.17);
+    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
     background-clip: padding-box;
     box-shadow: none;
     text-shadow: 0 1px black;
@@ -86,7 +86,7 @@
   @if $t==osd-focus {
     color: gtk("@theme_text_color");
     border-color: gtk("@theme_selected_bg_color");
-    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
+    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
     background-clip: padding-box;
     box-shadow: entry_focus_shadow($fc);
     text-shadow: 0 1px black;
@@ -94,7 +94,7 @@
   }
   @if $t==osd-insensitive {
     color: gtk("@insensitive_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: gtk("@insensitive_bg_color");
     background-clip: padding-box;
     box-shadow: none;
@@ -103,8 +103,8 @@
   }
   @if $t==osd-backdrop {
     color: gtk("@theme_text_color");
-    border-color: gtk("@borders");
-    background-color: gtktransparentize(gtkopacify(gtk("@borders"), 1), 0.5);
+    border-color: rgba(0,0,0,0.17);
+    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
     background-clip: padding-box;
     box-shadow: none;
     text-shadow: none;
@@ -115,8 +115,8 @@
 // buttons
 
 @function _border_color($c, $darker: false) {
-  @if $darker == true { @return gtkdarken($c, 10%); }
-  @else { @return gtkdarken($c, 5%); }
+  @if $darker == true { @return ($c rgba(0, 0, 0, 0.24)); }
+  @else { @return ($c rgba(0, 0, 0, 0.17)); }
 }
 
 //@function _text_shadow_color ($tc: gtk("@theme_fg_color"), $bg: gtk("@theme_bg_color")) {
@@ -174,7 +174,7 @@
   //
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to top, rgba(0,0,0,0.03), transparent);
   }
 
@@ -184,9 +184,27 @@
   //
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04));
     @include _shadows($_button_shadow);
+  }
+  
+  @if $t==normalib {
+  //
+  // normal infofar button
+  //
+    color: $tc;
+    border-color: $tc;
+    background: transparent;
+  }
+  
+  @else if $t==hoverib {
+  //
+  // hovered infobar button
+  //
+    color: $tc;
+    border-color: $tc;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04));
   }
 
   @if $t==normal-alt {
@@ -195,8 +213,8 @@
   //
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
-    background: $c linear-gradient(to bottom, rgba(0, 0, 0, 0.05), transparent);
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
+    background: $c linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
   }
 
   @else if $t==hover-alt {
@@ -205,7 +223,7 @@
   //
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), gtk("@borders"));
+    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
   }
 
@@ -218,7 +236,16 @@
     //outline-color: gtktransparentize($tc, 0.7);
     $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 9%), gtk("@theme_selected_bg_color"));
     border-color: $button_bgcolor;
-    background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
+    background: if($c != gtk("@theme_button_background_normal"), $button_bgcolor linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent));
+  }
+
+  @else if $t==activeib {
+  //
+  // pushed infobar button
+  //
+    color: $tc;
+    border-color: $tc;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
   }
 
   @else if $t==insensitive {
@@ -231,6 +258,16 @@
 
     border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.12));
     background: $_bg;
+  }
+  
+  @else if $t==insensitiveib {
+  //
+  // insensitive infobar button
+  //
+    label, & { color: gtkalpha($tc, 0.8); }
+
+    border-color: gtkalpha($tc, 0.8);
+    background: transparent;
   }
 
   @else if $t==insensitive-active {
@@ -254,8 +291,27 @@
 
     label, & { color: if($c != gtk("@theme_button_background_normal"), gtkmix($tc, $_bg, 80%), gtkmix(gtk("@theme_button_foreground_backdrop"), $_bg, 80%)); }
 
-    border-color: if($c != gtk("@theme_button_background_normal"), gtkalpha(_border_color($c), 0.88), gtkalpha(gtk("@borders"), 0.88));
+    border-color: if($c != gtk("@theme_button_background_normal"), gtkalpha(_border_color($c), 0.88), gtkalpha(rgba(0,0,0,0.17), 0.88));
     background: $_bg;
+  }
+  
+  @else if $t==backdropib {
+  //
+  // normal infofar button
+  //
+    color: $tc;
+    border-color: $tc;
+    background: transparent;
+  }
+  
+  @else if $t==backdropinsensitiveib {
+  //
+  // insensitive infobar button
+  //
+    label, & { color: gtkalpha($tc, 0.8); }
+
+    border-color: gtkalpha($tc, 0.8);
+    background: transparent;
   }
 
   @else if $t==backdrop-active {
@@ -306,7 +362,7 @@
     $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
 
     color: gtk("@theme_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: transparent;
     background: $_bg;
     background-clip: padding-box;
@@ -320,7 +376,7 @@
     $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.3), gtklighten(gtk("@theme_bg_color"), 12%));
 
     color: gtk("@theme_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: transparent;
     background: $_bg;
     background-clip: padding-box;
@@ -347,7 +403,7 @@
   // insensitive osd button
   //
     color: gtk("@insensitive_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: transparent;
     background: gtk("@insensitive_bg_color");
     background-clip: padding-box;
@@ -360,7 +416,7 @@
     $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
 
     color: gtk("@theme_fg_color");
-    border-color: gtk("@borders");
+    border-color: rgba(0,0,0,0.17);
     background-color: transparent;
     background: $_bg;
     background-clip: padding-box;
@@ -436,10 +492,10 @@
   $_big_gradient_color: $c;
 
   @if $c==gtk("@theme_fg_color") {
-    $_small_gradient_color: gtkdarken(gtk("@borders"), 10%);
+    $_small_gradient_color: gtkdarken(rgba(0,0,0,0.17), 10%);
     $_big_gradient_color: gtk("@theme_fg_color");
 
-    @if $t==backdrop { $_small_gradient_color: gtk("@backdrop_borders_color"); }
+    @if $t==backdrop { $_small_gradient_color: rgba(0,0,0,0.17); }
   }
 
   $_small_gradient: -gtk-gradient(radial,
@@ -477,7 +533,7 @@
  * Check and Radio buttons *
  ***************************/
 
- @mixin check($t, $c:gtk("@theme_bg_color"), $tc:gtk("@theme_fg_color"), $checked: false) {
+  @mixin check($t, $c:gtk("@theme_bg_color"), $tc:gtk("@theme_fg_color"), $checked: false) {
   // Check/Radio drawing function
   //
   // $t:        check/radio type,
@@ -488,19 +544,19 @@
   // possible $t values:
   // normal, hover, active, insensitive, backdrop, backdrop-insensitive
 
-  $_border_color: if($c==gtk("@theme_selected_bg_color"), $c, gtk("@borders"));
-  $_dim_border_color: gtktransparentize($_border_color, if($variant == 'light', 0.3, 0.7));
+  $_border_color: if($c==gtk("@theme_selected_bg_color"), $c rgba(0,0,0,0.3), rgba(0,0,0,0.17));
+  $_dim_border_color: gtkalpha($_border_color, 0.7);
 
   @if $t==normal  {
     background-clip: if($checked, border-box, padding-box);
-    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 20%, transparent 90%);
+    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0) 90%);
     border-color: $_border_color;
-    box-shadow: 0 1px transparentize(black, 0.95);
+    box-shadow: 0 1px gtkalpha(black, 0.05);
     color: $tc;
   }
 
   @if $t==hover {
-    background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 10%, rgba(255, 255, 255, 0.04) 90%);
+    background: if($c == white, $c rgba(0, 0, 0, 0.05), $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 10%, rgba(255, 255, 255, 0.04) 90%));
   }
 
   @if $t==active {
@@ -513,7 +569,7 @@
   }
 
   @if $t==backdrop {
-    background: image($c);
+    background: $c;
     box-shadow: none;
     color: $tc;
   }
