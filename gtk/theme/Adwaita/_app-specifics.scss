@@ -89,6 +89,34 @@ frame > border.flat,
   * Chrome(ium) *
   ***************/
 window.background.chromium {
+    
+    headerbar,
+    .titlebar {
+      button.titlebutton {    
+        &.close {
+          background-image: none;
+          -gtk-icon-transform: scale(1.125);
+        }
+    
+        &.maximize {
+          background-image: none;
+          -gtk-icon-transform: scale(1.125);
+        }    
+        &.minimize {
+          background-image: none;
+          -gtk-icon-transform: scale(1.125);
+        }
+      }
+    
+      @at-root window.background.chromium.maximized headerbar, .maximized .titlebar {
+        button.titlebutton {
+          &.maximize {
+            background-image: none;
+            -gtk-icon-transform: scale(1.125);
+          }
+        }
+      }
+    }
 }
 
 window.background.chromium headerbar.titlebar {

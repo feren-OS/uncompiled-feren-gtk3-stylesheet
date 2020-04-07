@@ -4675,13 +4675,17 @@ headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:
 }
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close {
-    background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
+    //background-color: transparent;
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    -gtk-icon-source: none;
+    image {
+        color: transparent;
+    }
 }
 
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {
-    background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
+    //background-color: transparent;
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
 }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover {
@@ -4698,6 +4702,10 @@ headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:ac
 
 headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize {
     background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
+    -gtk-icon-source: none;
+    image {
+        color: transparent;
+    }
 }
 
 headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop {
@@ -4714,6 +4722,10 @@ headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maxim
 
 headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize {
     background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
+    -gtk-icon-source: none;
+    image {
+        color: transparent;
+    }
 }
 
 headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop {
@@ -4730,6 +4742,10 @@ headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minim
 
 headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
+    -gtk-icon-source: none;
+    image {
+        color: transparent;
+    }
 }
 
 headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
@@ -4744,25 +4760,25 @@ headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restor
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
-.fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize,
+.maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize,
 .maximized headerbar button.titlebutton.maximize,
 .maximized .titlebar button.titlebutton.maximize {
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
-.fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop,
+.maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop,
 .maximized headerbar button.titlebutton.maximize:backdrop,
 .maximized .titlebar button.titlebutton.maximize:backdrop {
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
-.fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover,
+.maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover,
 .maximized headerbar button.titlebutton.maximize:hover,
 .maximized .titlebar button.titlebutton.maximize:hover {
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
-.fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active,
+.maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active,
 .maximized headerbar button.titlebutton.maximize:active,
 .maximized .titlebar button.titlebutton.maximize:active {
     background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
