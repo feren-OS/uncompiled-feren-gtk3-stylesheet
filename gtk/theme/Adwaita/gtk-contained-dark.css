@@ -2312,19 +2312,17 @@ headerbar button.titlebutton.close image, .titlebar button.titlebutton.close ima
 
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { opacity: 1; }
 
-headerbar button.titlebutton.close, .titlebar button.titlebutton.close { background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_titlebar_foreground); -gtk-icon-source: none; }
+headerbar button.titlebutton.close, .titlebar button.titlebutton.close { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_titlebar_foreground); -gtk-icon-source: none; }
 
 headerbar button.titlebutton.close image, .titlebar button.titlebutton.close image { color: transparent; }
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover { color: white; background-color: #ff5555; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
 headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active { color: white; background-color: #c83737; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); -gtk-icon-source: none; }
-
-headerbar button.titlebutton.maximize image, .titlebar button.titlebutton.maximize image { color: transparent; }
+headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
 headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
@@ -2332,9 +2330,7 @@ headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximi
 
 headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); -gtk-icon-source: none; }
-
-headerbar button.titlebutton.minimize image, .titlebar button.titlebutton.minimize image { color: transparent; }
+headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
 headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
@@ -2342,9 +2338,7 @@ headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimi
 
 headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); -gtk-icon-source: none; }
-
-headerbar button.titlebutton.restore image, .titlebar button.titlebutton.restore image { color: transparent; }
+headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
 headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
@@ -2482,7 +2476,7 @@ window.background.chromium headerbar button.titlebutton.maximize, window.backgro
 
 window.background.chromium headerbar button.titlebutton.minimize, window.background.chromium .titlebar button.titlebutton.minimize { background-image: none; -gtk-icon-transform: scale(1.12); }
 
-window.background.chromium.maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.12); }
+window.background.chromium.maximized headerbar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.12); }
 
 /************************** Misc. (Elementary OS) * */
 .h1 { font-size: 24pt; }

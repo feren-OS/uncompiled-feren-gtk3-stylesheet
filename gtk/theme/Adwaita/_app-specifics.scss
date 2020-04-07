@@ -108,7 +108,7 @@ window.background.chromium {
         }
       }
     
-      @at-root window.background.chromium.maximized headerbar, .maximized .titlebar {
+      @at-root window.background.chromium.maximized headerbar {
         button.titlebutton {
           &.maximize {
             background-image: none;
