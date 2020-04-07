@@ -2476,13 +2476,13 @@ scale.tint trough, scale.temperature trough { box-shadow: inset 0 0 0 1px alpha(
 frame.flat > border, frame > border.flat, .frame.flat { border-style: none; }
 
 /*************** Chrome(ium) * */
-window.background.chromium headerbar button.titlebutton.close, window.background.chromium .titlebar button.titlebutton.close { background-image: none; -gtk-icon-transform: scale(1.125); }
+window.background.chromium headerbar button.titlebutton.close, window.background.chromium .titlebar button.titlebutton.close { background-image: none; -gtk-icon-transform: scale(1.12); }
 
-window.background.chromium headerbar button.titlebutton.maximize, window.background.chromium .titlebar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.125); }
+window.background.chromium headerbar button.titlebutton.maximize, window.background.chromium .titlebar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.12); }
 
-window.background.chromium headerbar button.titlebutton.minimize, window.background.chromium .titlebar button.titlebutton.minimize { background-image: none; -gtk-icon-transform: scale(1.125); }
+window.background.chromium headerbar button.titlebutton.minimize, window.background.chromium .titlebar button.titlebutton.minimize { background-image: none; -gtk-icon-transform: scale(1.12); }
 
-window.background.chromium.maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.125); }
+window.background.chromium.maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: none; -gtk-icon-transform: scale(1.12); }
 
 /************************** Misc. (Elementary OS) * */
 .h1 { font-size: 24pt; }

@@ -95,16 +95,16 @@ window.background.chromium {
       button.titlebutton {    
         &.close {
           background-image: none;
-          -gtk-icon-transform: scale(1.125);
+          -gtk-icon-transform: scale(1.12);
         }
     
         &.maximize {
           background-image: none;
-          -gtk-icon-transform: scale(1.125);
+          -gtk-icon-transform: scale(1.12);
         }    
         &.minimize {
           background-image: none;
-          -gtk-icon-transform: scale(1.125);
+          -gtk-icon-transform: scale(1.12);
         }
       }
     
@@ -112,7 +112,7 @@ window.background.chromium {
         button.titlebutton {
           &.maximize {
             background-image: none;
-            -gtk-icon-transform: scale(1.125);
+            -gtk-icon-transform: scale(1.12);
           }
         }
       }
