@@ -2297,58 +2297,60 @@ messagedialog.csd decoration { border-radius: 0; box-shadow: 0 1px 2px alpha(bla
 
 .solid-csd decoration:backdrop { box-shadow: inset 0 0 0 3px @theme_unfocused_bg_color; }
 
-button.titlebutton { /*  @extend %button_basic; @extend %button_basic.flat;*/ min-width: 36px; min-height: 30px; padding: 0; margin: 0; border-radius: 0; border-width: 0; border-color: transparent; margin-right: -3.5px; margin-left: -3.5px; color: transparent; background-image: none; background-color: transparent; color: @theme_titlebar_foreground; background-position: center; background-repeat: no-repeat; /*  &:not(.appmenu) { border-radius: 9999px; padding: $_hb_btn_pad; margin: 0 2px; min-width: 0; min-height: 0; }*/ }
+button.titlebutton { /*  @extend %button_basic; @extend %button_basic.flat;*/ min-width: 36px; min-height: 30px; padding: 0; margin: 0; border-radius: 0; border-width: 0; border-color: transparent; margin-right: -3.5px; margin-left: -3.5px; background-image: none; background-color: transparent; color: @theme_titlebar_foreground; background-position: center; background-repeat: no-repeat; /*  &:not(.appmenu) { border-radius: 9999px; padding: $_hb_btn_pad; margin: 0 2px; min-width: 0; min-height: 0; }*/ }
 
 /*.selection-mode headerbar button.titlebutton, .selection-mode .titlebar button.titlebutton, headerbar.selection-mode button.titlebutton, .titlebar.selection-mode button.titlebutton { &:backdrop { -gtk-icon-shadow: none; } }*/
 headerbar button.titlebutton:hover, .titlebar .button.titlebutton:hover { box-shadow: none; border-color: transparent; background-color: alpha(@theme_titlebar_foreground,0.1); }
 
 headerbar button.titlebutton:active, headerbar button.titlebutton:checked, .titlebar .button.titlebutton:active, .titlebar .button.titlebutton:checked { border-color: transparent; background-color: alpha(@theme_titlebar_foreground,0.2); color: @theme_titlebar_foreground; box-shadow: none; }
 
-headerbar button.titlebutton.close, .titlebar button.titlebutton.close, headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize, headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize, headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { color: transparent; opacity: 1; background-size: 18px 18px; -gtk-icon-source: none; }
+headerbar button.titlebutton:backdrop, .titlebar .button.titlebutton:backdrop { color: @theme_titlebar_foreground_backdrop; }
+
+headerbar button.titlebutton.close, .titlebar button.titlebutton.close, headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize, headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize, headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { opacity: 1; background-size: 18px 18px; -gtk-icon-source: none; }
 
 headerbar button.titlebutton.close image, .titlebar button.titlebutton.close image, headerbar button.titlebutton.maximize image, .titlebar button.titlebutton.maximize image, headerbar button.titlebutton.minimize image, .titlebar button.titlebutton.minimize image, headerbar button.titlebutton.restore image, .titlebar button.titlebutton.restore image { color: transparent; }
 
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { opacity: 1; }
 
-headerbar button.titlebutton.close, .titlebar button.titlebutton.close { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_text_color); }
+headerbar button.titlebutton.close, .titlebar button.titlebutton.close { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop { background-color: transparent; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover { background-color: #ff5555; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color white); }
+headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover { color: white; background-color: #ff5555; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active { background-color: #c83737; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg"), color white); }
+headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active { color: white; background-color: #c83737; background-image: -gtk-recolor(url("assets/close-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/max-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active { background-image: -gtk-recolor(url("assets/min-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-.fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize, .maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+.fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize, .maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-.fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop, .maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground_backdrop); }
+.fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop, .maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-.fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover, .maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+.fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover, .maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
-.fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active, .maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg"), color @theme_titlebar_foreground); }
+.fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active, .maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active { background-image: -gtk-recolor(url("assets/rest-icon-symbolic.svg")); }
 
 .view:selected:focus, .view:selected, iconview:selected, .view text:selected, iconview text:selected, textview text:selected, .view text selection:focus, iconview text selection:focus, .view text selection, iconview text selection, textview text selection:focus, textview text selection, flowbox flowboxchild:selected, spinbutton:not(.vertical) selection, entry selection, modelbutton.flat:selected, .menuitem.button.flat:selected, treeview.view:selected:focus, treeview.view:selected, row:selected, calendar:selected { background-color: @theme_selected_bg_color; }
 

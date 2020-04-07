@@ -1,8 +1,5 @@
-<svg version="1.1" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(0,-22)">
-        <rect x="1.7852178" y="23.785219" width="14.429564" height="14.429563" fill="none" stroke="#fff" stroke-width="1.5704372"/>
-        <rect x="5.6445327" y="26.814789" width="7.6605473" height="7.6605473" fill="none" stroke="#fff" stroke-width="1.1778281"/>
-        <rect x="2.2125163" y="36.589691" width="14.002263" height="1.6250883" fill="#fff"/>
-        <rect x="5.6445327" y="26.422436" width="8.0135441" height="1.3903625" fill="#fffffb"/>
-    </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg12" version="1.1" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+    <path class="color" d="m1 1v16h16v-16zm1.5703125 1.570312h12.859376v12.859376h-12.859376z" fill="#fff"/>
+    <path class="color" d="m4.9 4.902v8.838h8.84v-8.838zm1.57 1.57h5.7v5.698h-5.7z" fill="#fff"/>
 </svg>

@@ -4615,7 +4615,6 @@ button.titlebutton {
   border-color: transparent;
   margin-right: -3.5px;
   margin-left: -3.5px;
-  color: transparent;
   background-image: none;
   background-color: transparent;
   color: gtk("@theme_titlebar_foreground");
@@ -4657,11 +4656,12 @@ headerbar.selection-mode button.titlebutton,
     border-color: transparent;
     background-color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.2);
     color: gtk("@theme_titlebar_foreground");
-    box-shadow: none;
-}
+    box-shadow: none; }
+  headerbar button.titlebutton:backdrop, .titlebar .button.titlebutton:backdrop {
+    color: gtk("@theme_titlebar_foreground_backdrop");
+  }
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close, headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize, headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize, headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
-    color: transparent;
     opacity: 1;
     background-size: 18px 18px;
     -gtk-icon-source: none;
@@ -4676,94 +4676,96 @@ headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close {
     background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {
     background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover {
+    color: white;
     background-color: #ff5555;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color white);
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active {
+    color: white;
     background-color: #c83737;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'), color white);
+    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 .fullscreen headerbar button.titlebutton.maximize, .fullscreen .titlebar button.titlebutton.maximize,
 .maximized headerbar button.titlebutton.maximize,
 .maximized .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:backdrop, .fullscreen .titlebar button.titlebutton.maximize:backdrop,
 .maximized headerbar button.titlebutton.maximize:backdrop,
 .maximized .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground_backdrop"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:hover, .fullscreen .titlebar button.titlebutton.maximize:hover,
 .maximized headerbar button.titlebutton.maximize:hover,
 .maximized .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 .fullscreen headerbar button.titlebutton.maximize:active, .fullscreen .titlebar button.titlebutton.maximize:active,
 .maximized headerbar button.titlebutton.maximize:active,
 .maximized .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'), color gtk("@theme_titlebar_foreground"));
+    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
 }
 
 // catch all extend :)
