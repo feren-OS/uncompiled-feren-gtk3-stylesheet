@@ -89,30 +89,51 @@ frame > border.flat,
   * Chrome(ium) *
   ***************/
 window.background.chromium {
+    background-color: gtk("@theme_base_color");
+    color: gtk("@theme_fg_color");
+    &:backdrop {
+        background-color: gtk("@theme_unfocused_base_color");    
+        color: gtk("@theme_unfocused_fg_color");
+    }
+    menubar, .menubar {
+        color: gtk("@theme_fg_color");
+        background-color: gtk("@theme_bg_color");
+        &:backdrop {
+            background-color: gtk("@theme_unfocused_bg_color");    
+            color: gtk("@theme_unfocused_fg_color");
+        }
+    }
+    entry {
+        background-color: gtk("@theme_base_color");
+    }
     
     headerbar,
     .titlebar {
-      button.titlebutton {    
+      button.titlebutton {
+        margin-right: -2.5px;
+        margin-left: -2.5px;
         &.close {
           background-image: none;
-          -gtk-icon-transform: scale(1.12);
+          //-gtk-icon-transform: scale(1.125);
         }
     
         &.maximize {
           background-image: none;
-          -gtk-icon-transform: scale(1.12);
+          //-gtk-icon-transform: scale(1.125);
         }    
         &.minimize {
           background-image: none;
-          -gtk-icon-transform: scale(1.12);
+          //-gtk-icon-transform: scale(1.125);
         }
       }
     
       @at-root window.background.chromium.maximized headerbar {
         button.titlebutton {
+          margin-right: -2.5px;
+          margin-left: -2.5px;
           &.maximize {
             background-image: none;
-            -gtk-icon-transform: scale(1.12);
+            //-gtk-icon-transform: scale(1.125);
           }
         }
       }
@@ -169,4 +190,86 @@ label.primary {
 
 paned statusbar frame {
     border: none;
+}
+
+
+/****************
+* Slick Greeter *
+****************/
+
+.lightdm menubar {
+    background-image: none;
+    background-color: gtkalpha(black, 0.6);
+    
+    color: white;
+}
+
+.lightdm-combo cell,
+.lightdm-combo button,
+.lightdm-combo entry,
+.lightdm button,
+.lightdm entry {
+    background-image: none;
+    background-color: gtkalpha(black, 0.3);
+    border-color: gtkalpha(white, 0.6);
+    text-shadow: none;
+    label {
+        color: white;
+    }
+    color: white;
+    caret-color: white;
+}
+
+.lightdm button,
+.lightdm button:hover,
+.lightdm button:active,
+.lightdm button:active:focus,
+.lightdm entry,
+.lightdm entry:hover,
+.lightdm entry:active,
+.lightdm entry:active:focus {
+    background-image: none;
+    border-image: none;
+    color: white;
+    label {
+        color: white;
+    }
+    box-shadow: none;
+}
+
+.lightdm button:focus,
+.lightdm entry:focus {
+    border-color: gtkalpha(white, 0.9);
+    border-width: 1px;
+    border-style: solid;
+
+    color: white;
+}
+
+@keyframes dashentry_spinner {
+    to { -gtk-icon-transform: rotate(1turn); }
+}
+
+.lightdm entry:active {
+    -gtk-icon-source: -gtk-icontheme("process-working-symbolic");
+    animation: dashentry_spinner 1s infinite linear;
+}
+
+.lightdm .option-button {
+    padding: 2px;
+    background: none;
+    border: 0;
+    color: white;
+}
+
+.lightdm .toggle-button {
+    background: none;
+    border-width: 0;
+    color: white;
+}
+
+.lightdm .toggle-button.selected {
+    background-color: gtkalpha(black, 0.3);
+    border-width: 1px;
+    color: white;
 }

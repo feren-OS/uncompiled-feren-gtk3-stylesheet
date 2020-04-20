@@ -244,6 +244,7 @@
     $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 9%), gtk("@theme_selected_bg_color"));
     border-color: $button_bgcolor;
     background: if($c != gtk("@theme_button_background_normal"), $button_bgcolor linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent));
+    box-shadow: none;
   }
 
   @else if $t==activeib {
@@ -254,6 +255,7 @@
     color: $tc;
     border-color: $tc;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
+    box-shadow: none;
   }
 
   @else if $t==insensitive {
@@ -340,6 +342,7 @@
     
     border-color: gtkalpha($button_bgcolor, 0.8);
     background: gtkalpha($button_bgcolor, 0.8);
+    box-shadow: none;
   }
 
   @else if $t==backdrop-insensitive {
@@ -370,6 +373,7 @@
     
     border-color: gtkalpha($button_bgcolor, 0.8);
     background: gtkalpha($button_bgcolor, 0.8);
+    box-shadow: none;
   }
 
   @else if $t==osd {
@@ -413,6 +417,7 @@
     background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
     background-clip: padding-box;
     outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
+    box-shadow: none;
   }
 
   @else if $t==osd-insensitive {
@@ -564,39 +569,45 @@
   // possible $t values:
   // normal, hover, active, insensitive, backdrop, backdrop-insensitive
 
-  $_border_color: if($c==gtk("@theme_selected_bg_color"), $c rgba(0,0,0,0.3), rgba(0,0,0,0.17));
+  $_border_color: if($c==gtk("@theme_selected_bg_color"), $c rgba(0,0,0,0.17), rgba(0,0,0,0.17));
+  $_normal_border_color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
   $_dim_border_color: gtkalpha($_border_color, 0.7);
 
   @if $t==normal  {
     background-clip: if($checked, border-box, padding-box);
     background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 20%, rgba(255, 255, 255, 0) 90%);
-    border-color: $_border_color;
+    border: 1px solid $_normal_border_color;
     box-shadow: 0 1px gtkalpha(black, 0.05);
     color: $tc;
   }
 
   @if $t==hover {
     background: if($c == white, $c rgba(0, 0, 0, 0.05), $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 10%, rgba(255, 255, 255, 0.04) 90%));
+    border: 1px solid $_normal_border_color;
   }
 
   @if $t==active {
     box-shadow: inset 0 1px 1px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid $_border_color;
   }
 
   @if $t==insensitive {
     box-shadow: none;
     color: gtkalpha($tc, 0.7);
+    border: 1px solid $_normal_border_color;
   }
 
   @if $t==backdrop {
     background: $c;
     box-shadow: none;
     color: $tc;
+    border: 1px solid $_normal_border_color;
   }
 
   @if $t==backdrop-insensitive {
     box-shadow: none;
     color: gtkalpha($tc, 0.7);
+    border: 1px solid $_normal_border_color;
   }
 }
 
