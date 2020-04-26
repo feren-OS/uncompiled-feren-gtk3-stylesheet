@@ -82,13 +82,13 @@
 // (Elementary OS Compatibility) Brand Colors
 @define-color colorPrimary @theme_titlebar_background_breeze;
 @define-color colorAccent @selected_bg_color;
-@function gettextColorPrimary {
-    @return gtkmix(gtkbreezent("@colorPrimary"), gtk("@theme_text_color"), 0.75);
-}
+//@function gettextColorPrimary {
+//    @return gtkmix(gtkbreezent("@colorPrimary"), gtk("@theme_text_color"), 0.75);
+//}
 @function gettextColorPrimaryShadow {
-    @return gtkalpha(gtkshade(gtkbreezent("@colorPrimary"), 1.4), 0.4);
+    @return gtkalpha(gtkbreezent("@colorPrimary"), 0.4);
 }
-@define-color textColorPrimary #{"" + gettextColorPrimary()};
+@define-color textColorPrimary @theme_text_color;
 @define-color textColorPrimaryShadow #{"" + gettextColorPrimaryShadow()};
 @define-color tab_base_color @theme_base_color_breeze;
 @define-color STRAWBERRY_100 #{#ff8c82};

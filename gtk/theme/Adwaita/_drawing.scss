@@ -23,8 +23,7 @@
 
 // entries
 @function entry_focus_border($fc:gtk("@theme_selected_bg_color")) {
-  @if $variant == 'light' { @return $fc; }
-  @else { @return if($fc==gtk("@theme_selected_bg_color"), gtk("@selected_borders_color"), gtkdarken($fc, 35%)); }
+  @return $fc;
 }
 
 @function entry_focus_shadow($fc:gtk("@theme_selected_bg_color")) { @return inset 0 0 0 1px $fc; }
@@ -42,14 +41,14 @@
 // normal, focus, insensitive, backdrop, backdrop-insensitive, osd, osd-focus, osd-backdrop;
 //
 
-  $_blank_edge: if($edge == none, none, 0 1px gtktransparentize($edge, 1));
+  $_blank_edge: if($edge == none, none, 0 1px transparentize($edge, 1));
   $_entry_edge: if($edge == none, none, _widget_edge($edge));
 
   @if $t==normal {
     color: gtk("@theme_text_color");
     border-color: rgba(0,0,0,0.17);
     background-color: gtk("@theme_base_color");
-    @include _shadows(entry_focus_shadow(gtktransparentize($fc, 1)), $_entry_edge);
+    @include _shadows(entry_focus_shadow(transparent), $_entry_edge);
     // for the transition to work the number of shadows in different states needs to match, hence the transparent shadow here.
   }
   @if $t==focus {
@@ -69,7 +68,7 @@
     box-shadow: $_blank_edge;
   }
   @if $t==backdrop-insensitive {
-    color: gtkdarken(gtk("@theme_unfocused_bg_color"), 15%);
+    color: gtk("@insensitive_fg_color");
     border-color: rgba(0,0,0,0.17);
     background-color: gtk("@insensitive_bg_color");
     box-shadow: $_blank_edge;
@@ -77,38 +76,25 @@
   @if $t==osd {
     color: gtk("@theme_text_color");
     border-color: rgba(0,0,0,0.17);
-    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
-    background-clip: padding-box;
-    box-shadow: none;
-    text-shadow: 0 1px black;
-    -gtk-icon-shadow: 0 1px black;
+    background-color: gtk("@theme_base_color");
+    @include _shadows(entry_focus_shadow(transparent), $_entry_edge);
+    // for the transition to work the number of shadows in different states needs to match, hence the transparent shadow here.
   }
   @if $t==osd-focus {
-    color: gtk("@theme_text_color");
-    border-color: gtk("@theme_selected_bg_color");
-    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
-    background-clip: padding-box;
-    box-shadow: entry_focus_shadow($fc);
-    text-shadow: 0 1px black;
-    -gtk-icon-shadow: 0 1px black;
+    @include _shadows(entry_focus_shadow($fc), $_entry_edge);
+    border-color: entry_focus_border($fc);
   }
   @if $t==osd-insensitive {
     color: gtk("@insensitive_fg_color");
     border-color: rgba(0,0,0,0.17);
     background-color: gtk("@insensitive_bg_color");
-    background-clip: padding-box;
-    box-shadow: none;
-    text-shadow: none;
-    -gtk-icon-shadow: none;
+    box-shadow: $_entry_edge;
   }
   @if $t==osd-backdrop {
-    color: gtk("@theme_text_color");
+    color: gtk("@theme_unfocused_text_color");
     border-color: rgba(0,0,0,0.17);
-    background-color: gtktransparentize(gtkopacify(rgba(0,0,0,0.17), 1), 0.5);
-    background-clip: padding-box;
-    box-shadow: none;
-    text-shadow: none;
-    -gtk-icon-shadow: none;
+    background-color: gtk("@theme_unfocused_base_color");
+    box-shadow: $_blank_edge;
   }
 }
 
@@ -164,7 +150,7 @@
 //
   //$_hilight_color: _button_hilight_color($c);
   $_button_edge: if($edge == none, none, _widget_edge($edge));
-  $_blank_edge: if($edge == none, none, _widget_edge(gtktransparentize($edge,1)));
+  $_blank_edge: if($edge == none, none, _widget_edge(gtkalpha($edge,0)));
   $_button_shadow: 0 1px 2px rgba(0,0,0,0.1);
   // TODO: Make light-ish borders for buttons on light theme ala old Feren
 
@@ -175,7 +161,7 @@
     label, & { color: $tc; }
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to top, rgba(0,0,0,0.03), transparent);
   }
 
@@ -186,7 +172,7 @@
     label, & { color: $tc; }
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04));
     @include _shadows($_button_shadow);
   }
@@ -197,7 +183,7 @@
   //
     label, & { color: $tc; }
     color: $tc;
-    border-color: $tc;
+    border: 1px solid $tc;
     background: transparent;
   }
   
@@ -207,7 +193,7 @@
   //
     label, & { color: $tc; }
     color: $tc;
-    border-color: $tc;
+    border: 1px solid $tc;
     background: linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04));
   }
 
@@ -218,7 +204,7 @@
     label, & { color: $tc; }
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
   }
 
@@ -229,7 +215,7 @@
     label, & { color: $tc; }
     color: $tc;
     //outline-color: gtktransparentize($tc, 0.7);
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.17));
     background: $c linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
   }
 
@@ -242,7 +228,7 @@
     color: $button_fgcolor;
     //outline-color: gtktransparentize($tc, 0.7);
     $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 9%), gtk("@theme_selected_bg_color"));
-    border-color: $button_bgcolor;
+    border: 1px solid $button_bgcolor;
     background: if($c != gtk("@theme_button_background_normal"), $button_bgcolor linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent));
     box-shadow: none;
   }
@@ -253,7 +239,7 @@
   //
     label, & { color: $tc; }
     color: $tc;
-    border-color: $tc;
+    border: 1px solid $tc;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
     box-shadow: none;
   }
@@ -267,7 +253,7 @@
     label, & { color: gtkalpha($tc, 0.5); }
     color: gtkalpha($tc, 0.5);
 
-    border-color: if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.12));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), _border_color($c), rgba(0,0,0,0.12));
     background: $_bg;
   }
   
@@ -278,7 +264,7 @@
     label, & { color: gtkalpha($tc, 0.5); }
     color: gtkalpha($tc, 0.5);
 
-    border-color: gtkalpha($tc, 0.5);
+    border: 1px solid gtkalpha($tc, 0.5);
     background: transparent;
   }
 
@@ -292,7 +278,7 @@
     label, & { color: gtkalpha($button_fgcolor, 0.5); }
     color: gtkalpha($button_fgcolor, 0.5);
 
-    border-color: $button_bgcolor;
+    border: 1px solid $button_bgcolor;
     background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
   }
 
@@ -305,7 +291,7 @@
     label, & { color: gtkalpha($tc, 0.7); }
     color: gtkalpha($tc, 0.7);
 
-    border-color: if($c != gtk("@theme_button_background_normal"), gtkalpha(_border_color($c), 0.88), gtkalpha(rgba(0,0,0,0.17), 0.88));
+    border: 1px solid if($c != gtk("@theme_button_background_normal"), gtkalpha(_border_color($c), 0.88), gtkalpha(rgba(0,0,0,0.17), 0.88));
     background: $_bg;
   }
   
@@ -315,7 +301,7 @@
   //
     label, & { color: $tc; }
     color: $tc;
-    border-color: $tc;
+    border: 1px solid $tc;
     background: transparent;
   }
   
@@ -326,7 +312,7 @@
     label, & { color: gtkalpha($tc, 0.3); }
     color: gtkalpha($tc, 0.3);
 
-    border-color: gtkalpha($tc, 0.3);
+    border: 1px solid gtkalpha($tc, 0.3);
     background: transparent;
   }
 
@@ -340,7 +326,7 @@
     label, & { color: gtkalpha($button_fgcolor, 0.7); }
     color: gtkalpha($button_fgcolor, 0.7);
     
-    border-color: gtkalpha($button_bgcolor, 0.8);
+    border: 1px solid gtkalpha($button_bgcolor, 0.8);
     background: gtkalpha($button_bgcolor, 0.8);
     box-shadow: none;
   }
@@ -356,7 +342,7 @@
     label, & { color: gtkalpha($tc, 0.3); }
     color: gtkalpha($tc, 0.3);
 
-    border-color: rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.12);
     background: $_bg;
   }
 
@@ -371,7 +357,7 @@
     label, & { color: gtkalpha($button_fgcolor, 0.3); }
     color: gtkalpha($button_fgcolor, 0.3);
     
-    border-color: gtkalpha($button_bgcolor, 0.8);
+    border: 1px solid gtkalpha($button_bgcolor, 0.8);
     background: gtkalpha($button_bgcolor, 0.8);
     box-shadow: none;
   }
@@ -380,28 +366,28 @@
   //
   // normal osd button
   //
-    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtkalpha($c, 0.5), gtk("@theme_bg_color"));
 
     label, & { color: gtk("@theme_fg_color"); }
     color: gtk("@theme_fg_color");
-    border-color: rgba(0,0,0,0.17);
+    border: 1px solid rgba(0,0,0,0.17);
     background: $_bg;
     background-clip: padding-box;
-    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
+    outline-color: gtkalpha(gtk("@theme_fg_color"), 0.3);
   }
 
   @else if $t==osd-hover {
   //
   // active osd button
   //
-    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.3), gtklighten(gtk("@theme_bg_color"), 12%));
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtkalpha($c, 0.7), gtklighten(gtk("@theme_bg_color"), 12%));
 
     label, & { color: gtk("@theme_fg_color"); }
     color: gtk("@theme_fg_color");
-    border-color: rgba(0,0,0,0.17);
+    border: 1px solid rgba(0,0,0,0.17);
     background: $_bg;
     background-clip: padding-box;
-    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
+    outline-color: gtkalpha(gtk("@theme_fg_color"), 0.3);
   }
 
   @else if $t==osd-active {
@@ -413,10 +399,10 @@
     label, & { color: $button_fgcolor; }
     color: $button_fgcolor;
     $button_bgcolor: if($c != gtk("@theme_button_background_normal"), gtkdarken($c, 11%), gtk("@theme_selected_bg_color"));
-    border-color: $button_bgcolor;
+    border: 1px solid $button_bgcolor;
     background: $button_bgcolor linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
     background-clip: padding-box;
-    outline-color: gtktransparentize(gtk("@theme_fg_color"), 0.7);
+    outline-color: gtkalpha(gtk("@theme_fg_color"), 0.3);
     box-shadow: none;
   }
 
@@ -428,7 +414,7 @@
 
     label, & { color: gtkalpha(gtk("@theme_fg_color"), 0.5); }
     color: gtkalpha(gtk("@theme_fg_color"), 0.5);
-    border-color: rgba(0,0,0,0.17);
+    border: 1px solid rgba(0,0,0,0.17);
     background: $_bg;
     background: gtk("@insensitive_bg_color");
     background-clip: padding-box;
@@ -438,11 +424,11 @@
   //
   // backdrop osd button
   //
-    $_bg: if($c != gtk("@theme_button_background_normal"), gtktransparentize($c, 0.5), gtk("@theme_bg_color"));
+    $_bg: if($c != gtk("@theme_button_background_normal"), gtkalpha($c, 0.5), gtk("@theme_bg_color"));
 
     label, & { color: gtkalpha(gtk("@theme_fg_color"), 0.7); }
     color: gtkalpha(gtk("@theme_fg_color"), 0.7);
-    border-color: rgba(0,0,0,0.17);
+    border: 1px solid rgba(0,0,0,0.17);
     background: $_bg;
     background-clip: padding-box;
   }
@@ -451,7 +437,7 @@
   //
   // reset
   //
-    border-color: transparent;
+    border: 1px solid transparent;
     background-color: transparent;
     $button_fill: none !global;
     background: $button_fill;
@@ -527,13 +513,13 @@
                                   $_position, 0,
                                   $_position, 0.5,
                                   to($_small_gradient_color),
-                                  to(gtktransparentize($_small_gradient_color, 1)));
+                                  to(gtkalpha($_small_gradient_color, 0)));
 
   $_big_gradient: -gtk-gradient(radial,
                                 $_position, 0,
                                 $_position, 0.6,
-                                from(gtktransparentize($_big_gradient_color, 0.93)),
-                                to(gtktransparentize($_big_gradient_color, 1)));
+                                from(gtkalpha($_big_gradient_color, 0.07)),
+                                to(gtkalpha($_big_gradient_color, 0)));
 
   @if $t==normal {
     background-image: $_small_gradient, $_big_gradient;

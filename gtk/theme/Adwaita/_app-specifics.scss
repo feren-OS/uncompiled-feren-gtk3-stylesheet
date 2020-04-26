@@ -39,45 +39,51 @@
 .overlay-toolbar .mark {
     color: gtk("@theme_text_color");
 }
-scale.temperature trough {
-    background-image:
-        linear-gradient(
-            to right,
-            gtkbreezent("@BLUEBERRY_500"),
-            gtkbreezent("@BANANA_500")
-        );
-}
-scale.temperature:dir(rtl) trough {
-    background-image:
-        linear-gradient(
-            to left,
-            gtkbreezent("@BLUEBERRY_500"),
-            gtkbreezent("@BANANA_500")
-        );
-}
+
 scale.tint trough {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
+}
+
+scale.temperature trough {
     background-image:
         linear-gradient(
             to right,
-            #e41b79,
-            gtkbreezent("@LIME_500")
+            gtkbreezent("@BLUEBERRY_500"),
+            gtkbreezent("@SILVER_100"),
+            gtkbreezent("@ORANGE_500")
         );
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
 }
-scale.tint:dir(rtl) trough {
-    background-image:
+
+scale.temperature:dir(rtl) trough {
+    background:
         linear-gradient(
             to left,
-            #e41b79,
-            gtkbreezent("@LIME_500")
+            gtkbreezent("@BLUEBERRY_500"),
+            gtkbreezent("@SILVER_100"),
+            gtkbreezent("@ORANGE_500")
         );
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
 }
-scale.tint trough,
-scale.temperature trough {
-    box-shadow:
-        inset 0 0 0 1px gtkalpha(#000, 0.7),
-        inset 0 1px 0 gtkalpha(#000, 0.7),
-        inset 0 2px 0 gtkalpha(#fff, 0.15),
-        0 1px 0 0 gtkalpha(gtk("@theme_bg_color"), 0.3);
+
+scale.warmth trough {
+    background:
+        linear-gradient(
+            to right,
+            gtkbreezent("@ORANGE_100"),
+            gtkbreezent("@ORANGE_500")
+        );
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
+}
+
+scale.warmth:dir(rtl) trough {
+    background:
+        linear-gradient(
+            to left,
+            gtk("@theme_bg_color"),
+            gtkbreezent("@ORANGE_500")
+        );
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
 }
 frame.flat > border,
 frame > border.flat,
@@ -166,8 +172,6 @@ window.background.chromium headerbar.titlebar .button.titlebutton {
 .h4,
 .category-label {
     color: gtkalpha(gtk("@theme_text_color"), 0.7);
-    font-weight: bold;
-    text-shadow: 0 1px #000;
 }
 
 .h4 {
@@ -198,7 +202,7 @@ paned statusbar frame {
 ****************/
 
 .lightdm menubar {
-    background-image: none;
+    background: none;
     background-color: gtkalpha(black, 0.6);
     
     color: white;
@@ -209,7 +213,7 @@ paned statusbar frame {
 .lightdm-combo entry,
 .lightdm button,
 .lightdm entry {
-    background-image: none;
+    background: none;
     background-color: gtkalpha(black, 0.3);
     border-color: gtkalpha(white, 0.6);
     text-shadow: none;
@@ -228,7 +232,7 @@ paned statusbar frame {
 .lightdm entry:hover,
 .lightdm entry:active,
 .lightdm entry:active:focus {
-    background-image: none;
+    background: none;
     border-image: none;
     color: white;
     label {
@@ -272,4 +276,13 @@ paned statusbar frame {
     background-color: gtkalpha(black, 0.3);
     border-width: 1px;
     color: white;
+}
+
+
+/***********
+* Nautilus *
+***********/
+
+.nautilus-window grid {
+    background-color: gtk("@theme_base_color");
 }
