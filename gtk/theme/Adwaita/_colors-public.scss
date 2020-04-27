@@ -3,6 +3,12 @@
    ----------------
    use responsibly! */
 
+// Feren GTK Border Values
+@define-color ferengtk_darkening_bg rgba(0, 0, 0, 0.08);
+@define-color ferengtk_border_generic rgba(0, 0, 0, 0.15);
+@define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.2);
+
+
 @define-color base_color @theme_base_color;
 @define-color text_color @theme_text_color;
 @define-color bg_color @theme_bg_color;

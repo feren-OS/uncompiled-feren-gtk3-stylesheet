@@ -11,6 +11,10 @@
   @return unquote("#{$str}");
 }
 
+@function sasspass ($str) {
+  @return unquote("#{$str}");
+}    
+
 // alpha function
 @function gtkalpha($c,$a) {
   @return unquote("alpha(#{$c},#{$a})");

@@ -9,7 +9,6 @@ $button_radius: 4px;
 $menu_radius: 0px;
 $window_radius: 0;
 $popover_radius: $button_radius;
-$border_darkening: rgba(0, 0, 0, 0.15);
 
 // Optional compact sizes for buttons, headerbar and headerbar widgets
 $_sizevariant: 'default'; //compact otherwise
@@ -23,8 +22,6 @@ $_circ_btn_pad: if($_sizevariant=='default', 2px, 2px);
 $_switch_margin: if($_sizevariant=='default', 8px, 7px);
 $_shadow_color: transparentize(black, 0.9);
 
-//rgba(0,0,0,0.17) = gtkmix(@borders_breeze, @theme_bg_color_breeze, 80%);
-
 
 // THEME TRANSPARENCY VALUES FOR FEREN GTK:
 // backdrop: 0.7
@@ -35,6 +32,8 @@ $_shadow_color: transparentize(black, 0.9);
 // Insensitive should be kept intact (excluding exceptions),
 // but Backdrop should be standard but with 0.7 transparency
 //
+
+
 
 * {
   padding: 0;
@@ -79,7 +78,7 @@ $_shadow_color: transparentize(black, 0.9);
   background-color: gtk("@theme_bg_color");
 
   &:backdrop {
-    color: gtk("@theme_unfocused_fg_color");
+    color: gtkalpha(gtk("@theme_fg_color"), 0.7);
     background-color: gtk("@theme_unfocused_bg_color");
     //text-shadow: none;
     //-gtk-icon-shadow: none;
@@ -231,11 +230,11 @@ label {
 assistant {
   .sidebar {
     background-color: gtk("@theme_base_color");
-    border-top: 1px solid rgba(0,0,0,0.17);
+    border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
 
     &:backdrop {
       background-color: gtk("@theme_unfocused_base_color");
-      border-color: rgba(0,0,0,0.17);
+      border-color: gtkbreezent("@ferengtk_border_generic");
     }
   }
 
@@ -249,7 +248,7 @@ assistant {
 %osd,
 .osd {
   color: gtk("@theme_fg_color");
-  border: 1px solid $border_darkening;
+  border: 1px solid gtkbreezent("@ferengtk_darkening_bg");
   background-color: gtk("@theme_base_color");
   background-clip: padding-box;
   //text-shadow: 0 1px black;
@@ -271,7 +270,7 @@ assistant {
 
 spinner {
   background: none;
-  &:backdrop { color: gtk("@theme_unfocused_fg_color"); }
+  &:backdrop { color: gtkalpha(gtk("@theme_fg_color"), 0.7); }
   opacity: 0; // non spinning spinner makes no sense
   -gtk-icon-source: -gtk-icontheme('process-working-symbolic');
 
@@ -350,7 +349,7 @@ entry {
 
       &:active { color: gtk("@theme_selected_bg_color"); }
 
-      &:backdrop { color: gtk("@theme_unfocused_fg_color"); }
+      &:backdrop { color: gtkalpha(gtk("@theme_fg_color"), 0.7); }
     }
 
     &:drop(active) {
@@ -406,14 +405,14 @@ entry {
     // brighter border between linked entries
     &:not(:disabled) + entry:not(:disabled),
     &:not(:disabled) + %entry:not(:disabled) {
-      border-top-color: rgba(0,0,0,0.17);
+      border-top-color: gtkbreezent("@ferengtk_border_generic");
 
-      &:backdrop { border-top-color: rgba(0,0,0,0.17); }
+      &:backdrop { border-top-color: gtkbreezent("@ferengtk_border_generic"); }
     }
 
     // brighter border between linked insensitive entries
     &:disabled + %entry:disabled,
-    &:disabled + entry:disabled { border-top-color: rgba(0,0,0,0.17); }
+    &:disabled + entry:disabled { border-top-color: gtkbreezent("@ferengtk_border_generic"); }
 
     // color back the top border of a linked focused entry following another entry.
     // :not(:only-child) is a specificity bump hack.
@@ -495,12 +494,12 @@ treeview entry {
   background: $_entry_tag_bg;
 
   &:hover {
-    background: $_entry_tag_bg rgba(255, 255, 255, 0.1);
+    background: image($_entry_tag_bg), image(rgba(255, 255, 255, 0.1));
   }
 
   :backdrop & {
     color: gtk("@theme_unfocused_base_color");
-    background: gtk("@theme_selected_bg_color");
+    background: image(gtk("@theme_selected_bg_color"));
   }
 
   &.button {
@@ -646,7 +645,7 @@ button {
 
   @at-root %button_selected, & {
     row:selected & {
-      border-color: gtk("@theme_selected_bg_color") $border_darkening;
+      border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
 
       &.flat:not(:active):not(:checked):not(:hover):not(disabled) {
         color: gtk("@theme_selected_fg_color");
@@ -913,18 +912,18 @@ button {
 
 %needs_attention {
   animation: needs_attention 150ms ease-in;
-  $_dot_shadow: _text_shadow_color();
-  $_dot_shadow_r: 0.5;
+  //$_dot_shadow: _text_shadow_color();
+  //$_dot_shadow_r: 0.5;
   background-image: -gtk-gradient(radial,
                                   center center, 0,
                                   center center, 0.5,
                                   to($_dot_color),
-                                  to(transparent)),
-                    -gtk-gradient(radial,
-                                  center center, 0,
-                                  center center, $_dot_shadow_r,
-                                  to($_dot_shadow),
                                   to(transparent));
+                    //-gtk-gradient(radial,
+                    //              center center, 0,
+                    //              center center, $_dot_shadow_r,
+                    //              to($_dot_shadow),
+                    //              to(transparent));
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
 
@@ -1083,12 +1082,12 @@ modelbutton.flat,
 
   @extend %undecorated_button;
 
-  &:hover { background: gtk("@theme_selected_bg_color") linear-gradient(to top, rgba(0,0,0,0.03), transparent); color: gtk("@theme_selected_fg_color") }
+  &:hover { background: image(gtk("@theme_selected_bg_color")), linear-gradient(to top, rgba(0,0,0,0.03), transparent); color: gtk("@theme_selected_fg_color") }
 
   &:selected { @extend %selected_items; }
 
   &:backdrop,
-  &:backdrop:hover { @extend %undecorated_button; color: gtk("@theme_unfocused_fg_color"); }
+  &:backdrop:hover { @extend %undecorated_button; color: gtkalpha(gtk("@theme_fg_color"), 0.7); }
 }
 
 modelbutton.flat arrow {
@@ -1107,7 +1106,7 @@ button.color {
   colorswatch:only-child {
     &, overlay { border-radius: 0; }
 
-    box-shadow: 0 1px _text_shadow_color();
+    //box-shadow: 0 1px _text_shadow_color();
 
     .osd & { box-shadow: none; }
   }
@@ -1124,7 +1123,7 @@ button.color {
 /* tone down as per new designs, see issue #1473, #1748 */
 list row button.image-button:not(.flat) {
   @extend %undecorated_button;
-  border: 1px solid gtkalpha(rgba(0,0,0,0.17), .5);
+  border: 1px solid gtkalpha(gtkbreezent("@ferengtk_border_generic"), .5);
   &:hover { @include button(hover); }
   &:active,
   &:checked { @include button(active); }
@@ -1250,7 +1249,7 @@ spinbutton {
       &:backdrop {
         color: gtkalpha(gtk("@theme_fg_color"), 0.7);
         background-color: transparent;
-        border-color: rgba(0,0,0,0.12);
+        border-color: gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
         transition: $backdrop_transition;
       }
 
@@ -1280,7 +1279,7 @@ spinbutton {
 
       color: gtk("@theme_fg_color");
       border-style: none none none solid;
-      border-color: gtkalpha(rgba(0,0,0,0.17), 0.7);
+      border-color: gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
       border-radius: 0;
       box-shadow: none;
       //-gtk-icon-shadow: 0 1px black;
@@ -1291,7 +1290,7 @@ spinbutton {
         @include button(undecorated);
 
         color: gtk("@theme_fg_color");
-        border-color: gtkalpha(gtkalpha(rgba(0,0,0,0.17), 0), 0.5);
+        border-color: gtkalpha(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0), 0.5);
         background-color: gtkalpha(gtk("@theme_fg_color"), 0.1);
         //-gtk-icon-shadow: 0 1px black;
         box-shadow: none;
@@ -1301,7 +1300,7 @@ spinbutton {
         @include button(undecorated);
 
         color: gtk("@theme_fg_color");
-        border-color: gtkalpha(gtkalpha(rgba(0,0,0,0.17), 0), 0.5);
+        border-color: gtkalpha(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0), 0.5);
         //-gtk-icon-shadow: none;
         box-shadow: none;
       }
@@ -1310,7 +1309,7 @@ spinbutton {
         @include button(undecorated);
 
         color: gtk("@insensitive_fg_color");
-        border-color: gtkalpha(gtkalpha(rgba(0,0,0,0.17), 0), 0.5);
+        border-color: gtkalpha(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0), 0.5);
         //-gtk-icon-shadow: none;
         box-shadow: none;
       }
@@ -1331,7 +1330,7 @@ spinbutton {
     // color
     &:disabled { color: gtk("@insensitive_fg_color"); }
 
-    &:backdrop:disabled { color: gtk("@theme_unfocused_bg_color"); }
+    &:backdrop:disabled { color: gtkalpha(gtk("@insensitive_fg_color"), 0.7); }
 
     &:drop(active) {
       border-color: transparent;
@@ -1447,8 +1446,8 @@ combobox {
   
   &:backdrop {
       background-color: gtk("@theme_unfocused_bg_color");
-      color: gtk("@theme_unfocused_fg_color");
-/*       border-color: gtktransparentize(gtk("@theme_unfocused_fg_color"), 0.85); */
+      color: gtkalpha(gtk("@theme_fg_color"), 0.7);
+/*       border-color: gtktransparentize(gtkalpha(gtk("@theme_fg_color"), 0.7), 0.85); */
   }
   
 }
@@ -1516,9 +1515,9 @@ searchbar > revealer > box,
 
   border-width: 0 0 1px;
   padding: 3px;
-  box-shadow: inset 0 -1px rgba(0,0,0,0.17);
+  box-shadow: inset 0 -1px gtkbreezent("@ferengtk_border_generic");
   &:backdrop {
-      box-shadow: inset 0 -1px rgba(0,0,0,0.17);
+      box-shadow: inset 0 -1px gtkbreezent("@ferengtk_border_generic");
   }
 }
 
@@ -1530,12 +1529,12 @@ searchbar > revealer > box {
 
 //%darkbar {
 //  border-style: solid;
-//  border-color: rgba(0,0,0,0.17);
-//  $_bg: gtkmix(gtk("@theme_bg_color"), rgba(0,0,0,0.17), 70%);
+//  border-color: gtkbreezent("@ferengtk_border_generic");
+//  $_bg: gtkmix(gtk("@theme_bg_color"), gtkbreezent("@ferengtk_border_generic"), 70%);
 //  background-color: $_bg;
 //
 //  &:backdrop {
-//    border-color: gtkmix(rgba(0,0,0,0.17), gtk("@theme_bg_color"), 80%);
+//    border-color: gtkmix(gtkbreezent("@ferengtk_border_generic"), gtk("@theme_bg_color"), 80%);
 //    background-color: gtk("@theme_unfocused_bg_color") rgba(0,0,0,0.85);
 //    box-shadow: none;
 //    transition: $backdrop_transition;
@@ -1550,18 +1549,16 @@ searchbar > revealer > box {
 headerbar {
   padding: 0 6px;
   min-height: $_headerbar_height;
-  border-width: 0 0 1px;
-  border-style: solid;
-  border-color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.15);
+  box-shadow: 0 2px 1px -1px gtk("@theme_titlebar_background"), 0 2px 1px -1px gtkalpha(gtk("@theme_titlebar_foreground"), 0.15);
   border-radius: 0;
   color: gtk("@theme_titlebar_foreground");
-  background: gtk("@theme_titlebar_background") linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+  background: image(gtk("@theme_titlebar_background")), linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
   background-size: 1px 100%;
 
   &:backdrop {
-    border-color: gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.15);
+    box-shadow: 0 2px 1px -1px gtk("@theme_titlebar_background_backdrop"), 0 2px 1px -1px gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.15);
     color: gtk("@theme_titlebar_foreground_backdrop");
-    background: gtk("@theme_titlebar_background_backdrop");
+    background: image(gtk("@theme_titlebar_background_backdrop"));
     //box-shadow: inset 0 1px $top_hilight;
 
     transition: $backdrop_transition;
@@ -1601,14 +1598,14 @@ headerbar {
 //      &:active, &:checked {
 //        @extend %button:active;
 //      }
-//      &:insensitive {
+//      &:disabled {
 //        color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.5);
 //        label, & { color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.5); }
 //      }
 //      &:backdrop {
 //        color: gtk("@theme_titlebar_foreground_backdrop");
 //        label, & { color: gtk("@theme_titlebar_foreground_backdrop"); }
-//        &:insensitive {
+//        &:disabled {
 //            color: gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.5);
 //            label, & { color: gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.5); }
 //        }
@@ -1628,14 +1625,13 @@ headerbar {
   stackswitcher button:active,
   button.toggle:active,
   button:active,
-  stackswitcher button:checked:insensitive,
-  button.toggle:checked:insensitive,
-  button:checked:insensitive,
-  stackswitcher button:active:insensitive,
-  button.toggle:active:insensitive,
-  button:active:insensitive {
-
-    border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.13);
+  stackswitcher button:checked:disabled,
+  button.toggle:checked:disabled,
+  button:checked:disabled,
+  stackswitcher button:active:disabled,
+  button.toggle:active:disabled,
+  button:active:disabled {
+    border: 1px solid gtk("@theme_selected_bg_color");
   }
 
   .selection-mode &,
@@ -1646,7 +1642,7 @@ headerbar {
     //border-color: $suggested_border_color;
     //text-shadow: 0 -1px gtktransparentize(black, 0.5);
 
-    background: gtk("@theme_selected_bg_color") linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05));
+    background: image(gtk("@theme_selected_bg_color")), linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05));
     background-size: 1px 100%;
 
     &:backdrop {
@@ -1679,24 +1675,24 @@ headerbar {
           @include button(backdrop, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
 
           -gtk-icon-effect: none;
-          border-color: gtk("@theme_selected_bg_color") $border_darkening;
+          border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
 
           &:active,
           &:checked {
             @include button(backdrop-active, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
 
-            border-color: gtk("@theme_selected_bg_color") $border_darkening;
+            border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
           }
 
           &:disabled {
             @include button(backdrop-insensitive, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
 
-            border-color: gtk("@theme_selected_bg_color") $border_darkening;
+            border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
 
             &:active, &:checked {
               @include button(backdrop-insensitive-active, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
 
-              border-color: gtk("@theme_selected_bg_color") $border_darkening;
+              border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
             }
           }
         }
@@ -1714,36 +1710,36 @@ headerbar {
       &.suggested-action {
         @include button(normal);
 
-        border-color: gtk("@success_color") $border_darkening;
+        border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
 
         &:hover {
           @include button(hover);
 
-          border-color: gtk("@success_color") $border_darkening;
+          border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
         }
 
         &:active {
           @include button(active);
 
-          border-color: gtk("@success_color") $border_darkening;
+          border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
         }
 
         &:disabled {
           @include button(insensitive);
 
-          border-color: gtk("@success_color") $border_darkening;
+          border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
         }
 
         &:backdrop {
           @include button(backdrop);
 
-          border-color: gtk("@success_color") $border_darkening;
+          border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
         }
 
         &:backdrop:disabled {
           @include button(backdrop-insensitive);
 
-          border-color: gtk("@success_color") $border_darkening;
+          border-color: gtk("@success_color") gtkbreezent("@ferengtk_darkening_bg");
         }
       }
     }
@@ -1903,7 +1899,7 @@ headerbar { // headerbar border rounding
     box-shadow: none;
   }
 
-  separator { background-color: rgba(0,0,0,0.17); }  // FIXME: use darker border?
+  separator { background-color: gtkbreezent("@ferengtk_border_generic"); }  // FIXME: use darker border?
 
   @extend %titlebar;
 }
@@ -1916,17 +1912,17 @@ window.devel {
     $gradient: -gtk-icontheme("system-run-symbolic") 90% 0/256px 256px no-repeat,
                linear-gradient(to right, transparent 65%, gtkalpha(gtk("@theme_selected_bg_color"), 0.2)), $c;
 
-    background: gtk("@theme_bg_color") $gradient;
+    background: image(gtk("@theme_bg_color")), $gradient;
     color: gtkalpha(gtk("@theme_fg_color"), 0.1);
 
     label { color: gtk("@theme_fg_color"); }
 
     &:backdrop {
-      background: gtk("@theme_bg_color") -gtk-icontheme("system-run-symbolic") 90% 0/256px 256px no-repeat,
+      background: image(gtk("@theme_bg_color")), -gtk-icontheme("system-run-symbolic") 90% 0/256px 256px no-repeat,
                   image(gtk("@theme_bg_color")); /* background-color would flash */
       color: gtkalpha(gtk("@theme_fg_color"), 0.05);
 
-      label { color: gtk("@theme_unfocused_fg_color"); }
+      label { color: gtkalpha(gtk("@theme_fg_color"), 0.7); }
     }
   }
 }
@@ -2026,7 +2022,7 @@ treeview.view {
   &:drop(active) {
     border-style: solid none;
     border-width: 1px;
-    border-color: gtk("@theme_selected_bg_color") $border_darkening;
+    border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_darkening_bg");
 
     &.after { border-top-style: none; }
 
@@ -2155,7 +2151,7 @@ treeview.view {
   }
 
   &:backdrop {
-    color: gtkalpha(gtk("@theme_unfocused_fg_color"), 0.7);
+    color: gtkalpha(gtkalpha(gtk("@theme_fg_color"), 0.7), 0.7);
     border-color: gtk("@theme_unfocused_bg_color");
     border-style: none solid solid none;
     background-image: none;
@@ -2185,8 +2181,8 @@ menubar,
   
   &:backdrop {
       background-color: gtk("@theme_unfocused_bg_color");
-      color: gtk("@theme_unfocused_fg_color");
-//      border-color: gtktransparentize(gtk("@theme_unfocused_fg_color"), 0.85);
+      color: gtkalpha(gtk("@theme_fg_color"), 0.7);
+//      border-color: gtktransparentize(gtkalpha(gtk("@theme_fg_color"), 0.7), 0.85);
   }
 
   > menuitem {
@@ -2202,7 +2198,7 @@ menubar,
     }
 
     &:hover { //Seems like it :hover even with keyboard focus
-      background: gtk("@theme_selected_bg_color") linear-gradient(to top, rgba(0,0,0,0.03), transparent);
+      background: image(gtk("@theme_selected_bg_color")), linear-gradient(to top, rgba(0,0,0,0.03), transparent);
       //box-shadow: inset 0 -3px gtk("@theme_selected_bg_color");
       color: gtk("@theme_selected_fg_color");
     }
@@ -2226,8 +2222,8 @@ menu,
 .context-menu {
   margin: 4px; // see https://bugzilla.gnome.org/show_bug.cgi?id=591258
   padding: 0px 0px;
-  background: gtkalpha(gtk("@theme_base_color"), 0.94) linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.12));
-  border: 1px solid gtk("@theme_base_color") rgba(0,0,0,0.17); // adds borders in a non composited env
+  background: image(gtkalpha(gtk("@theme_base_color"), 0.94)), linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
+  border: 1px solid gtk("@theme_base_color"); // adds borders in a non composited env
 
   .csd & {
     border: none; // axes borders in a composited env
@@ -2244,7 +2240,7 @@ menu,
 
     &:hover {
       color: gtk("@theme_selected_fg_color");
-      background: gtk("@theme_selected_bg_color") linear-gradient(to top, rgba(0,0,0,0.03), transparent);
+      background: image(gtk("@theme_selected_bg_color")), linear-gradient(to top, rgba(0,0,0,0.03), transparent);
     }
 
     &:disabled {
@@ -2254,7 +2250,7 @@ menu,
 
     &:backdrop,
     &:backdrop:hover {
-      color: gtk("@theme_unfocused_fg_color");
+      color: gtkalpha(gtk("@theme_fg_color"), 0.7);
       background-color: transparent;
     }
 
@@ -2337,10 +2333,10 @@ menuitem {
 
 popover.background {
   padding: 2px;
-  background: gtkalpha(gtk("@theme_base_color"), 0.9) linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.12));
+  background: image(gtkalpha(gtk("@theme_base_color"), 0.9)), linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
 
   .csd &, & {
-    border: 1px solid rgba(0,0,0,0.17);
+    border: 1px solid gtkbreezent("@ferengtk_border_generic");
     border-radius: $popover_radius;
   }
 
@@ -2348,7 +2344,7 @@ popover.background {
 
   &:backdrop {
     //background-color: gtk("@theme_unfocused_bg_color");
-    background: gtkalpha(gtk("@theme_base_color"), 0.9) linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.12)); //for some reason this gets overridden if not here too
+    background: image(gtkalpha(gtk("@theme_base_color"), 0.9)), linear-gradient(to bottom left, transparent, rgba(0, 0, 0, 0.03), gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7)); //for some reason this gets overridden if not here too
     box-shadow: none;
   }
 
@@ -2383,12 +2379,12 @@ popover.background {
 notebook {
   > header {
     padding: 1px;
-    border-color: rgba(0, 0, 0, 0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
     border-width: 1px;
     background-color: gtk("@theme_base_color");
 
     &:backdrop {
-      border-color: rgba(0, 0, 0, 0.17);
+      border-color: gtkbreezent("@ferengtk_border_generic");
       background-color: gtk("@theme_unfocused_base_color");
     }
 
@@ -2399,7 +2395,7 @@ notebook {
       > tabs {
         margin-bottom: -2px;
         > tab {
-          &:hover { box-shadow: inset 0 -3px rgba(0, 0, 0, 0.17); }
+          &:hover { box-shadow: inset 0 -3px gtkbreezent("@ferengtk_border_generic"); }
 
           &:backdrop { box-shadow: none; }
 
@@ -2413,7 +2409,7 @@ notebook {
       > tabs {
         margin-top: -2px;
         > tab {
-          &:hover { box-shadow: inset 0 3px rgba(0, 0, 0, 0.17); }
+          &:hover { box-shadow: inset 0 3px gtkbreezent("@ferengtk_border_generic"); }
 
           &:backdrop { box-shadow: none; }
 
@@ -2427,7 +2423,7 @@ notebook {
       > tabs {
         margin-right: -2px;
         > tab {
-          &:hover { box-shadow: inset -3px 0 rgba(0, 0, 0, 0.17); }
+          &:hover { box-shadow: inset -3px 0 gtkbreezent("@ferengtk_border_generic"); }
 
           &:backdrop { box-shadow: none; }
 
@@ -2441,7 +2437,7 @@ notebook {
       > tabs {
         margin-left: -2px;
         > tab {
-          &:hover { box-shadow: inset 3px 0 rgba(0, 0, 0, 0.17); }
+          &:hover { box-shadow: inset 3px 0 gtkbreezent("@ferengtk_border_generic"); }
 
           &:backdrop { box-shadow: none; }
 
@@ -2507,7 +2503,7 @@ notebook {
 
       &:hover:not(:active):not(:backdrop) {
         background-clip: padding-box;
-        background-image: none;
+        //background-image: none;
         background-color: gtkalpha(white, 0.3);
         border-color: transparent;
         box-shadow: none;
@@ -2530,7 +2526,7 @@ notebook {
       border-color: transparent; //
 
       &:hover {
-        border-color: rgba(0, 0, 0, 0.17);
+        border-color: gtkbreezent("@ferengtk_border_generic");
         background-color: gtkalpha(gtk("@theme_bg_color"), 0.2);
       }
 
@@ -2544,15 +2540,17 @@ notebook {
       &:checked {
         color: gtk("@theme_fg_color");
         
-        border-color: 0 1px solid gtkalpha(gtk("@theme_fg_color"), 0.14);
+        border-width: 0 1px;
+        border-color: gtkalpha(gtk("@theme_fg_color"), 0.14);
         background-color: gtkalpha(gtk("@theme_fg_color"), 0.07);
         &:hover { background-color: gtkalpha(gtk("@theme_fg_color"), 0.1); }
       }
 
       &:backdrop:checked {
-        color: gtk("@theme_unfocused_fg_color");
+        color: gtkalpha(gtk("@theme_fg_color"), 0.7);
         
-        border: 0 1px solid gtkalpha(gtk("@theme_fg_color"), 0.14);
+        border-width: 0 1px;
+        border-color: gtkalpha(gtk("@theme_fg_color"), 0.14);
         background-color: gtkalpha(gtk("@theme_fg_color"), 0.07);
       }
     }
@@ -2585,14 +2583,14 @@ scrollbar {
   transition: 300ms $ease-out-quad;
 
   // scrollbar border
-  &.top { border-bottom: 1px solid rgba(0,0,0,0.17); }
-  &.bottom { border-top: 1px solid rgba(0,0,0,0.17); }
-  &.left { border-right: 1px solid rgba(0,0,0,0.17); }
-  &.right { border-left: 1px solid rgba(0,0,0,0.17); }
+  &.top { border-bottom: 1px solid gtkbreezent("@ferengtk_border_generic"); }
+  &.bottom { border-top: 1px solid gtkbreezent("@ferengtk_border_generic"); }
+  &.left { border-right: 1px solid gtkbreezent("@ferengtk_border_generic"); }
+  &.right { border-left: 1px solid gtkbreezent("@ferengtk_border_generic"); }
 
   &:backdrop {
     background-color: gtk("@theme_unfocused_bg_color");
-    border-color: rgba(0,0,0,0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
     transition: $backdrop_transition;
   }
 
@@ -2742,7 +2740,7 @@ scrollbar {
 }
 
 treeview ~ scrollbar.vertical {
-  border-top: 1px solid rgba(0,0,0,0.17);
+  border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
   margin-top: -1px;
 }
 
@@ -2753,38 +2751,38 @@ switch {
   outline-offset: -4px;
 
   // similar to the .scale
-  border: 1px solid rgba(0,0,0,0.17);
+  box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
   border-radius: 14px;
   color: transparent;
-  background-color: gtk("@theme_bg_color");
+  background: image(gtk("@theme_bg_color")), image(gtkbreezent("@ferengtk_darkening_bg"));
 
   &:checked {
     color: transparent;
-    border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.17);
-    background-color: gtk("@theme_selected_bg_color");
+    box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+    background: image(gtk("@theme_selected_bg_color"));
   }
 
   &:disabled {
     color: transparent;
-    border: 1px solid rgba(0,0,0,0.17);
-    background-color: gtk("@insensitive_bg_color");
+    box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+    background: image(gtk("@insensitive_bg_color"));
   }
 
   &:backdrop {
     color: transparent;
-    border: 1px solid rgba(0,0,0,0.17);
-    background-color: gtk("@theme_bg_color");
+    box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+    background: image(gtk("@theme_bg_color"));
     transition: $backdrop_transition;
 
     &:checked {
-      border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.12);
-      background-color: gtkalpha(gtk("@theme_selected_bg_color"), 0.8);
+      box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.8));
     }
 
     &:disabled {
       color: transparent;
-      border: 1px solid rgba(0,0,0,0.17);
-      background-color: gtk("@insensitive_bg_color");
+      box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+      background: image(gtk("@insensitive_bg_color"));
     }
   }
 
@@ -2806,7 +2804,7 @@ switch {
     @include button(hover-alt, $edge: $_shadow_color);
   }
 
-  &:checked > slider { border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.3); }
+  &:checked > slider { border: 1px solid gtk("@theme_selected_bg_color"); }
 
   &:disabled slider { @include button(insensitive); }
 
@@ -2817,18 +2815,19 @@ switch {
       @include button(backdrop);
     }
 
-    &:checked > slider { border-color: gtk("@theme_unfocused_selected_bg_color") rgba(0,0,0,0.24); }
+    &:checked > slider {
+        border: 1px solid gtk("@theme_unfocused_selected_bg_color"); }
 
     &:disabled slider { @include button(backdrop-insensitive); }
   }
 
   row:selected & {
     box-shadow: none;
-    border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.3);
+    box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_selected_items_border");
 
-    &:backdrop { border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.3); }
+    &:backdrop { box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_selected_items_border"); }
 
-    > slider { &:checked, & { border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.3); } }
+    > slider { &:checked, & { border: 1px solid gtk("@theme_selected_bg_color"); } }
   }
 
 }
@@ -2942,7 +2941,7 @@ radio {
   
   // the borders of the light variant versions of checks and radios are too similar in luminosity to the selected background
   // color, hence we need special casing.
-  row:selected & { border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.17); }
+  row:selected & { box-shadow: inset 0 0 0 1px gtk("@theme_selected_bg_color"), gtkbreezent("@ferengtk_border_generic"); }
 
   .osd & {
     @include button(osd);
@@ -3023,7 +3022,7 @@ treeview.view radio {
     &:focus, & {
       color: gtk("@theme_selected_fg_color");
 
-      border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.3);
+      border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_selected_items_border");
     }
   }
 }
@@ -3035,36 +3034,36 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
  * GtkScale *
  ************/
 %scale_trough {
-  border: 1px solid rgba(0,0,0,0.17);
+  border: 1px solid gtkbreezent("@ferengtk_border_generic");
   box-shadow: none;
   border-radius: 3px;
-  background-color: $border_darkening;
+  background-color: gtkbreezent("@ferengtk_darkening_bg");
   background-size: 100%;
 
   &:disabled { background-color: gtk("@theme_insensitive_bg_color"); }
 
   &:backdrop {
-    background-color: $border_darkening;
-    border-color: rgba(0,0,0,0.17);
+    background-color: gtkbreezent("@ferengtk_darkening_bg");
+    border-color: gtkbreezent("@ferengtk_border_generic");
     transition: $backdrop_transition;
 
     &:disabled { background-color: gtk("@theme_insensitive_bg_color"); }
   }
 
   // ...on selected list rows
-  row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.17); }}
+  row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_border_generic"); }}
 
   // OSD
   .osd & {
-    border-color: rgba(0,0,0,0.17);
-    background-color: gtkalpha(rgba(0,0,0,0.17), 0.8);
+    border-color: gtkbreezent("@ferengtk_border_generic");
+    background-color: gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.8);
 
     &:disabled { background-color: gtk("@insensitive_fg_color"); }
   }
 }
 
 %scale_highlight {
-  border: 1px solid gtk("@theme_selected_bg_color") rgba(0,0,0,0.17);
+  border: 1px solid gtk("@theme_selected_bg_color");
   border-radius: 3px;
   background-color: gtk("@theme_selected_bg_color");
 
@@ -3074,7 +3073,7 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
   }
 
   &:backdrop {
-    border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.17);
+    border-color: gtk("@theme_selected_bg_color");
     &:disabled {
       background-color: transparent;
       border-color: transparent;
@@ -3082,11 +3081,11 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
   }
 
   // ...on selected list rows
-  row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.17); }}
+  row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_border_generic"); }}
 
   // OSD
   .osd & {
-    border-color: rgba(0,0,0,0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
 
     &:disabled { border-color: transparent; }
   }
@@ -3154,7 +3153,7 @@ scale {
   fill {
     @extend %scale_trough;
 
-    &:backdrop, & { background-color: rgba(0,0,0,0.17); }
+    &:backdrop, & { background-color: gtkbreezent("@ferengtk_border_generic"); }
 
     &:disabled {
       &:backdrop, & {
@@ -3179,7 +3178,7 @@ scale {
   slider {
     @include button(normal-alt, $edge: $_shadow_color);
 
-    border: 1px solid rgba(0,0,0,0.17);
+    border: 1px solid gtkbreezent("@ferengtk_border_generic");
     border-radius: 100%;
     transition: $button_transition;
     transition-property: background, border, box-shadow;
@@ -3199,12 +3198,12 @@ scale {
     }
 
     // ...on selected list rows
-    row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") rgba(0,0,0,0.17); } }
+    row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_border_generic"); } }
 
     // OSD
     .osd & {
       @include button(osd);
-      border-color: rgba(0,0,0,0.17);
+      border-color: gtkbreezent("@ferengtk_border_generic");
       background-color: gtk("@theme_base_color"); // solid background needed here
 
       &:hover {
@@ -3237,7 +3236,7 @@ scale {
   marks,
   value {
     color: gtkalpha(currentColor, 0.55);
-    font-feature-settings: "tnum";
+    //font-feature-settings: "tnum";
   }
 
   //marks margins
@@ -3371,7 +3370,7 @@ scale {
     min-width: 0;
 
     trough {
-      background-image: image(rgba(0,0,0,0.17));
+      background-image: image(gtkbreezent("@ferengtk_border_generic"));
       background-repeat: no-repeat;
     }
 
@@ -3604,7 +3603,7 @@ levelbar {
     border-radius: 1px;
 
     &.low {
-      border-color: gtk("@error_color") rgba(0,0,0,0.17);
+      border-color: gtk("@error_color") gtkbreezent("@ferengtk_border_generic");
       background-color: gtk("@error_color");
 
       &:backdrop { border-color: gtk("@error_color_backdrop"); };
@@ -3612,14 +3611,14 @@ levelbar {
 
     &.high,
     &:not(.empty) {
-      border-color: gtk("@warning_color") rgba(0,0,0,0.17);
+      border-color: gtk("@warning_color") gtkbreezent("@ferengtk_border_generic");
       background-color: gtk("@warning_color");
 
       &:backdrop { border-color: gtk("@warning_color_backdrop"); }
     }
 
     &.full {
-      border-color: gtk("@success_color") rgba(0,0,0,0.17);
+      border-color: gtk("@success_color") gtkbreezent("@ferengtk_border_generic");
       background-color: gtk("@success_color");
 
       &:backdrop { border-color: gtk("@success_color_backdrop"); };
@@ -3629,7 +3628,7 @@ levelbar {
       background-color: transparent;
       border-color: gtkalpha(gtk("@theme_fg_color"), 0.2);
 
-      &:backdrop { border-color: gtkalpha(gtk("@theme_unfocused_fg_color"), 0.15); }
+      &:backdrop { border-color: gtkalpha(gtkalpha(gtk("@theme_fg_color"), 0.7), 0.15); }
     }
   }
 }
@@ -3641,13 +3640,13 @@ levelbar {
 printdialog {
   paper {
     color: gtk("@theme_fg_color");
-    border: 1px solid rgba(0,0,0,0.17);
-    background: white;
+    border: 1px solid gtkbreezent("@ferengtk_border_generic");
+    background: image(white);
     padding: 0;
 
     &:backdrop {
-      color: gtk("@theme_unfocused_fg_color");
-      border-color: rgba(0,0,0,0.17);
+      color: gtkalpha(gtk("@theme_fg_color"), 0.7);
+      border-color: gtkbreezent("@ferengtk_border_generic");
     }
   }
 
@@ -3664,16 +3663,16 @@ frame > border,
   margin: 0;
   padding: 0;
   border-radius: 0;
-  border: 1px solid rgba(0,0,0,0.17);
+  border: 1px solid gtkbreezent("@ferengtk_border_generic");
 
-  &:backdrop { border-color: rgba(0,0,0,0.17); }
+  &:backdrop { border-color: gtkbreezent("@ferengtk_border_generic"); }
 }
 
 actionbar > revealer >  box {
   padding: 6px;
-  border-top: 1px solid rgba(0,0,0,0.17);
+  border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
 
-  &:backdrop { border-color: rgba(0,0,0,0.17); }
+  &:backdrop { border-color: gtkbreezent("@ferengtk_border_generic"); }
 }
 
 scrolledwindow {
@@ -3713,13 +3712,13 @@ scrolledwindow {
   junction { // the small square between two scrollbars
     border-color: transparent;
     // the border image is used to add the missing dot between the borders, details, details, details...
-    border-image: linear-gradient(to bottom, rgba(0,0,0,0.17) 1px, transparent 1px) 0 0 0 1 / 0 1px stretch;
+    border-image: linear-gradient(to bottom, gtkbreezent("@ferengtk_border_generic") 1px, transparent 1px) 0 0 0 1 / 0 1px stretch;
     background-color: gtk("@theme_bg_color");
 
     &:dir(rtl) { border-image-slice: 0 1 0 0; }
 
     &:backdrop {
-      border-image-source: linear-gradient(to bottom, rgba(0,0,0,0.17) 1px, transparent 1px);
+      border-image-source: linear-gradient(to bottom, gtkbreezent("@ferengtk_border_generic") 1px, transparent 1px);
       background-color: gtk("@theme_unfocused_bg_color");
       transition: $backdrop_transition;
     }
@@ -3728,7 +3727,7 @@ scrolledwindow {
 
 //vbox and hbox separators
 separator {
-  background: gtkalpha(black, 0.2);
+  background: image(gtkalpha(black, 0.2));
   min-width: 1px;
   min-height: 1px;
 }
@@ -3740,11 +3739,11 @@ separator {
 list {
   color: gtk("@theme_text_color");
   background-color: gtk("@theme_base_color");
-  border-color: rgba(0,0,0,0.17);
+  border-color: gtkbreezent("@ferengtk_border_generic");
 
   &:backdrop {
     background-color: gtk("@theme_unfocused_base_color");
-    border-color: rgba(0,0,0,0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
   }
 
   row { padding: 2px; }
@@ -3760,7 +3759,7 @@ row {
   &.activatable {
     &.has-open-popup, // this is for indicathing which row generated a popover see https://bugzilla.gnome.org/show_bug.cgi?id=754411
 
-    &:hover { background: gtkalpha(gtk("@theme_fg_color"), 0.1); }
+    &:hover { background: image(gtkalpha(gtk("@theme_fg_color"), 0.1)); }
 
     &:active { box-shadow: inset 0 2px 2px -2px gtkalpha(black, 0.2); }
 
@@ -3770,9 +3769,9 @@ row {
       &:active { box-shadow: inset 0 2px 3px -1px gtkalpha(black, 0.5); }
 
       &.has-open-popup,
-      &:hover { background: gtk("@theme_selected_bg_color"); }
+      &:hover { background: image(gtk("@theme_selected_bg_color")); }
 
-      &:backdrop { background: gtk("@theme_selected_bg_color"); }
+      &:backdrop { background: image(gtk("@theme_selected_bg_color")); }
     }
   }
 
@@ -3789,7 +3788,7 @@ row {
 
   padding: 10px;
   border-radius: 0 0 5px 5px;
-  border: 1px solid $border_darkening;
+  border: 1px solid gtkbreezent("@ferengtk_darkening_bg");
   border-top: none;
   background-color: gtk("@theme_base_color");
   background-image: linear-gradient(to bottom, gtkalpha(black, 0.2),
@@ -3831,7 +3830,7 @@ expander {
  ***********/
 calendar {
   color: gtk("@theme_text_color");
-  border: 1px solid rgba(0,0,0,0.17);
+  border: 1px solid gtkbreezent("@ferengtk_border_generic");
 
   &:selected {
     @extend %selected_items;
@@ -3852,7 +3851,7 @@ calendar {
 
     &:hover { color: gtk("@theme_fg_color"); }
 
-    &:backdrop { color: gtkalpha(gtk("@theme_unfocused_fg_color"),0.45); }
+    &:backdrop { color: gtkalpha(gtkalpha(gtk("@theme_fg_color"), 0.7),0.45); }
 
     &:disabled { color:  gtkalpha(gtk("@insensitive_fg_color"),0.45); }
   }
@@ -3865,7 +3864,7 @@ calendar {
 
   &:backdrop {
     color: gtk("@theme_unfocused_text_color");
-    border-color: rgba(0,0,0,0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
   }
 
   &:indeterminate { color: gtkalpha(currentColor, 0.1); }
@@ -3915,9 +3914,9 @@ messagedialog { // Message Dialog styling
 
 filechooser {
   .dialog-action-box {
-    border-top: 1px solid rgba(0,0,0,0.17);
+    border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
 
-    &:backdrop { border-top-color: rgba(0,0,0,0.17); }
+    &:backdrop { border-top-color: gtkbreezent("@ferengtk_border_generic"); }
   }
 
   #pathbarbox { border-bottom: 1px solid gtk("@theme_bg_color"); }
@@ -3941,21 +3940,21 @@ filechooserbutton:drop(active) {
     &:dir(ltr),
     &.left,
     &.left:dir(rtl) {
-      border-right: 1px solid rgba(0,0,0,0.17);
+      border-right: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-left-style: none;
     }
 
     @at-root %sidebar_right,
     &:dir(rtl),
     &.right {
-      border-left: 1px solid rgba(0,0,0,0.17);
+      border-left: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-right-style: none;
     }
   }
 
   &:backdrop {
     background-color: gtk("@theme_unfocused_base_color");
-    border-color: rgba(0,0,0,0.17);
+    border-color: gtkbreezent("@ferengtk_border_generic");
     transition: $backdrop_transition;
   }
 
@@ -3991,15 +3990,15 @@ stacksidebar {
 }
 
 separator.sidebar {
-  background: rgba(0,0,0,0.17);
+  background: image(gtkbreezent("@ferengtk_border_generic"));
 
   &:backdrop {
-    background: rgba(0,0,0,0.12);
+    background: image(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
   }
 
   &.selection-mode,
   .selection-mode & {
-    background: gtk("@theme_selected_bg_color");
+    background: image(gtk("@theme_selected_bg_color"));
   }
 }
 
@@ -4038,7 +4037,7 @@ placessidebar {
     &:disabled { color: gtk("@insensitive_fg_color"); }
 
     &:backdrop {
-      color: gtk("@theme_unfocused_fg_color");
+      color: gtkalpha(gtk("@theme_fg_color"), 0.7);
 
       &:selected { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8); }
 
@@ -4128,21 +4127,23 @@ paned {
     -gtk-icon-source: none; // defeats the ugly default handle decoration
     border-style: none; // just to be sure
     //background-color: transparent;
-    background: rgba(0,0,0,0.17);
+    background: image(gtkbreezent("@ferengtk_border_generic"));
     background-size: 1px 1px;
 
-    &:selected { background: gtk("@theme_selected_bg_color"); } // FIXME is this needed?
+    &:selected { background: image(gtk("@theme_selected_bg_color")); } // FIXME is this needed?
 
-    &:backdrop { background: rgba(0,0,0,0.17); }
+    &:backdrop { background: image(gtkbreezent("@ferengtk_border_generic"));
+    background-size: 1px 1px; }
 
     &.wide {
       min-width: 5px;
       min-height: 5px;
-      background: gtk("@theme_bg_color") rgba(0,0,0,0.17);
+      background: image(gtk("@theme_bg_color")), image(gtkbreezent("@ferengtk_border_generic"));
       background-size: 1px 1px, 1px 1px;
 
       &:backdrop {
-        background: gtk("@theme_unfocused_bg_color") rgba(0,0,0,0.12);
+        background: image(gtk("@theme_unfocused_bg_color")), image(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
+        background-size: 1px 1px, 1px 1px;
       }
     }
   }
@@ -4195,12 +4196,12 @@ infobar {
   &.question {
     color: gtk("@theme_selected_fg_color");
     label, & { color: gtk("@theme_selected_fg_color"); }
-    background: gtk("@theme_selected_bg_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
+    background: image(gtk("@theme_selected_bg_color")), linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
       color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8);
       label, & { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8); }
-      background: gtkalpha(gtk("@theme_selected_bg_color"), 0.8);
+      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.8));
     }
     
     button {
@@ -4227,12 +4228,12 @@ infobar {
   &.warning {
     color: white;
     label, & { color: white; }
-    background: gtk("@warning_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
+    background: image(gtk("@warning_color")), linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
       label, & { color: gtkalpha(white, 0.8); }
-      background: gtk("@warning_color_backdrop");
+      background: image(gtk("@warning_color_backdrop"));
     }
     
     button {
@@ -4259,12 +4260,12 @@ infobar {
   &.error {
     color: white;
     label, & { color: white; }
-    background: gtk("@error_color") linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
+    background: image(gtk("@error_color")), linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
       label, & { color: gtkalpha(white, 0.8); }
-      background: gtk("@error_color_backdrop");
+      background: image(gtk("@error_color_backdrop"));
     }
     
     button {
@@ -4293,7 +4294,7 @@ infobar {
   &.question,
   &.warning,
   &.error {
-    border-bottom: 1px solid rgba(0,0,0,0.17);
+    border-bottom: 1px solid gtkbreezent("@ferengtk_border_generic");
 
     //text-shadow: none;
 
@@ -4313,9 +4314,9 @@ tooltip {
   &.background {
     // background-color needs to be set this way otherwise it gets drawn twice
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
-    background: gtk("@tooltip_background") linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.01));
+    background: image(gtk("@tooltip_background")), linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.01));
     background-clip: padding-box;
-    border: 1px solid gtk("@tooltip_background") rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 0 1px gtk("@tooltip_background"), rgba(0, 0, 0, 0.13);
   }
 
   padding: 1px; /* not working */
@@ -4423,18 +4424,18 @@ colorswatch {
     &.light overlay {
       border-color: gtk("@theme_selected_bg_color");
       box-shadow: inset 0 0 0 1px gtk("@theme_selected_bg_color"),
-                  inset 0 0 0 2px rgba(0,0,0,0.17);
+                  inset 0 0 0 2px gtkbreezent("@ferengtk_border_generic");
     }
 
     &.dark overlay {
       border-color: gtk("@theme_selected_bg_color");
       box-shadow: inset 0 0 0 1px gtk("@theme_selected_bg_color"),
-                  inset 0 0 0 2px rgba(0,0,0,0.17);
+                  inset 0 0 0 2px gtkbreezent("@ferengtk_border_generic");
     }
   }
 
   overlay {
-    border: 1px solid rgba(0,0,0,0.3);
+    border: 1px solid gtkbreezent("@ferengtk_selected_items_border");
 
     &:hover {
       box-shadow: inset 0 1px gtkalpha(white, 0.4),
@@ -4516,9 +4517,9 @@ colorchooser .popover.osd { border-radius: 4px; }
 }
 
 .nemo-window .primary-toolbar {
-    box-shadow: inset 0 -1px rgba(0,0,0,0.17);
+    box-shadow: inset 0 -1px gtkbreezent("@ferengtk_border_generic");
     &:backdrop {
-        box-shadow: inset 0 -1px rgba(0,0,0,0.17);
+        box-shadow: inset 0 -1px gtkbreezent("@ferengtk_border_generic");
     }
 }
 
@@ -4587,8 +4588,8 @@ decoration {
   .solid-csd & {
     margin: 0;
     padding: 0px; //was 4px
-    background-color: rgba(0,0,0,0.17);
-    border: solid 1px rgba(0,0,0,0.17);
+    background-color: gtkbreezent("@ferengtk_border_generic");
+    border: solid 1px gtkbreezent("@ferengtk_border_generic");
     border-radius: 0;
     //box-shadow: inset 0 0 0 3px $headerbar_color, inset 0 1px $top_hilight;
 
@@ -4821,7 +4822,6 @@ cursor-handle {
   box-shadow: none;
   border-style: none;
   color: gtk("@theme_base_color");
-  width: 20px;
 
   @each $s,$as in ('',''),
                   (':hover',''),
@@ -4830,20 +4830,17 @@ cursor-handle {
       $_url: 'assets/text-select-start#{$as}#{$asset_suffix}';
       -gtk-icon-source: -gtk-recolor(url('#{$_url}-symbolic.svg'));
       padding-left: 10px;
-      height: 24px;
     }
 
     &.bottom#{$s}:dir(ltr), &.top#{$s}:dir(rtl) {
       $_url: 'assets/text-select-end#{$as}#{$asset_suffix}';
       -gtk-icon-source: -gtk-recolor(url('#{$_url}-symbolic.svg'));
       padding-right: 10px;
-      height: 24px;
     }
 
     &.insertion-cursor#{$s}:dir(ltr), &.insertion-cursor#{$s}:dir(rtl) {
       $_url: 'assets/slider-horz-scale-has-marks-above#{$as}#{$asset_suffix}';
       -gtk-icon-source: -gtk-recolor(url('#{$_url}-symbolic.svg'));
-      height: 25px;
     }
   }
 }
@@ -4869,7 +4866,7 @@ cursor-handle {
 
   &:backdrop {
     background-color: gtk("@theme_unfocused_base_color");
-    color: gtk("@theme_unfocused_fg_color");
+    color: gtkalpha(gtk("@theme_fg_color"), 0.7);
     transition: $backdrop_transition;
   }
 }
@@ -4897,7 +4894,7 @@ stackswitcher button.text-button.circular { // FIXME aggregate with buttons
 .lowres-icon {
     //-gtk-icon-shadow: 0 -1px rgba(0,0,0,0.05),
       //1px 0 rgba(0,0,0,0.1),
-      //0 1px rgba(0,0,0,0.3),
+      //0 1px gtkbreezent("@ferengtk_selected_items_border"),
       //-1px 0 rgba(0,0,0,0.1);
 }
 
@@ -4906,7 +4903,7 @@ stackswitcher button.text-button.circular { // FIXME aggregate with buttons
   //-gtk-icon-shadow: 0 1px 12px rgba(0,0,0,0.05),
       //0 -1px rgba(0,0,0,0.05),
       //1px 0 rgba(0,0,0,0.1),
-      //0 1px rgba(0,0,0,0.3),
+      //0 1px gtkbreezent("@ferengtk_selected_items_border"),
       //-1px 0 rgba(0,0,0,0.1);
 }
 
@@ -4935,7 +4932,7 @@ button.emoji-section {
   outline-offset: -5px;
 
   &:backdrop:not(:checked) { border-color: transparent; }
-  &:hover { border-color: rgba(0,0,0,0.17); }
+  &:hover { border-color: gtkbreezent("@ferengtk_border_generic"); }
   &:checked { border-color: gtk("@theme_selected_bg_color"); }
 
   label {
@@ -4954,7 +4951,7 @@ popover.emoji-picker .emoji {
   border-radius: 6px;
 
   :hover {
-    background: gtk("@theme_selected_bg_color");
+    background: image(gtk("@theme_selected_bg_color"));
   }
 }
 
