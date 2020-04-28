@@ -20,7 +20,7 @@ $_img_btn_pad: if($_sizevariant=='default', 3px, 2px);
 $_sel_menu_pad: if($_sizevariant=='default', 5px 10px, 4px 10px);
 $_circ_btn_pad: if($_sizevariant=='default', 2px, 2px);
 $_switch_margin: if($_sizevariant=='default', 8px, 7px);
-$_hb_entry_margin: 3.25px;
+$_hb_entry_margin: 3px;
 $_shadow_color: transparentize(black, 0.9);
 
 
@@ -1603,7 +1603,9 @@ headerbar {
   }
   
   button:not(.titlebutton) {
-      @extend %button.flat;
+      &:not(.suggested-action):not(.destructive-action):not(:hover):not(:active):not(:checked) {
+        @extend %button.flat;
+      }
       color: gtk("@theme_titlebar_foreground");
       label, & { color: gtk("@theme_titlebar_foreground"); }
       &:hover {
@@ -1613,13 +1615,16 @@ headerbar {
         @extend %button:active;
       }
       &:disabled {
+        @extend %button:disabled;
         color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.5);
         label, & { color: gtkalpha(gtk("@theme_titlebar_foreground"), 0.5); }
       }
       &:backdrop {
+        @extend %button:backdrop;
         color: gtk("@theme_titlebar_foreground_backdrop");
         label, & { color: gtk("@theme_titlebar_foreground_backdrop"); }
         &:disabled {
+            @extend %button:backdrop:disabled;
             color: gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.5);
             label, & { color: gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.5); }
         }
@@ -1627,6 +1632,13 @@ headerbar {
             @extend %button:backdrop:active;
         }
       }
+  }
+  
+  button.suggested-action {
+      @include button(normal, gtk("@success_color"), white);
+  }
+  button.destructive-action {
+      @include button(normal, gtk("@error_color"), white);
   }
 
   .selection-mode &,
