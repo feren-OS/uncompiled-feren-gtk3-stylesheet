@@ -153,7 +153,6 @@
   $_button_edge: if($edge == none, none, _widget_edge($edge));
   $_blank_edge: if($edge == none, none, _widget_edge(gtkalpha($edge,0)));
   $_button_shadow: 0 1px 2px rgba(0,0,0,0.1);
-  // TODO: Make light-ish borders for buttons on light theme ala old Feren
   
   border: none;
 
@@ -338,7 +337,6 @@
   //
 
     $_bg: if($c != gtk("@theme_button_background_normal"), gtkalpha($c, 0.3), gtk("@theme_button_background_backdrop_insensitive"));
-    $_bc: if($variant == 'light', $_bg,_border_color($c));
 
     label, & { color: gtkalpha($tc, 0.3); }
     color: gtkalpha($tc, 0.3);

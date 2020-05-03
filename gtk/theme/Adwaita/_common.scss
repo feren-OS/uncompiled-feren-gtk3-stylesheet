@@ -559,11 +559,6 @@ button {
     &:backdrop:hover {
         box-shadow: none;
     }
-    
-    &.radio {
-        margin-left: 1px;
-        margin-right: 1px;
-    }
 
     &.flat {
       @include button(undecorated);
@@ -868,7 +863,7 @@ button {
   .inline-toolbar &, .inline-toolbar &:backdrop {
     border-radius: 2px;
     border-width: 1px;
-    //@extend %linked;
+    @extend %linked;
   }
 
   .primary-toolbar & { //-gtk-icon-shadow: none;
@@ -879,22 +874,22 @@ button {
       @extend %button_basic.flat;
   }
 
-  //.linked > &,
-  //.linked > &:hover,
-  //.linked > &:active,
-  //.linked > &:checked,
-  //.linked > &:backdrop { @extend %linked; }
+  .linked > &,
+  .linked > &:hover,
+  .linked > &:active,
+  .linked > &:checked,
+  .linked > &:backdrop { @extend %linked; }
 
-  //.linked.vertical > &,
-  //.linked.vertical > &:hover,
-  //.linked.vertical > &:active,
-  //.linked.vertical > &:checked,
-  //.linked.vertical > &:backdrop { @extend %linked_vertical; }
+  .linked.vertical > &,
+  .linked.vertical > &:hover,
+  .linked.vertical > &:active,
+  .linked.vertical > &:checked,
+  .linked.vertical > &:backdrop { @extend %linked_vertical; }
 
   &.circular { // The Bloody Circul Button
     border-radius: 9999px;
     -gtk-outline-radius: 9999px;
-    padding: $_circ_btn_pad; /* circles instead of ellipses */
+    padding: $_circ_btn_pad + 1px; /* circles instead of ellipses */
 
     label { padding: 0; }
 
@@ -996,7 +991,7 @@ toolbar.inline-toolbar toolbutton:backdrop {
   &:only-child > button.flat { @extend %linked:only-child; }
 }
 
-%linked_middle {
+/*%linked_middle {
   border-radius: 0;
   border-right-style: none;
 }
@@ -1069,6 +1064,51 @@ toolbar.inline-toolbar toolbutton:backdrop {
     border-style: solid;
   }
 
+  &:only-child {
+    border-radius: $button_radius;
+    border-style: solid;
+  }
+}*/
+
+%linked_middle {
+  border-radius: $button_radius;
+  &:dir(rtl) {
+    border-radius: $button_radius; // needed when including %linked_middle:dir(rtl)
+  }
+}
+
+%linked {
+  margin-left: 2px;
+  margin-right: 2px;
+  @extend %linked_middle;
+  &:first-child {
+    border-radius: $button_radius;
+    border-style: solid;
+  }
+  &:last-child {
+    border-radius: $button_radius;
+    &:dir(rtl) { }
+  }
+  &:only-child {
+    border-radius: $button_radius;
+    border-style: solid;
+  }
+}
+
+%linked_vertical_middle {
+  border-style: solid;
+  border-radius: $button_radius;
+}
+
+%linked_vertical{
+  @extend %linked_vertical_middle;
+  &:first-child {
+    border-radius: $button_radius;
+  }
+  &:last-child {
+    border-radius: $button_radius;
+    border-style: solid;
+  }
   &:only-child {
     border-radius: $button_radius;
     border-style: solid;
@@ -1435,8 +1475,8 @@ combobox {
   // work, special case needed. See
   // https://bugzilla.gnome.org/show_bug.cgi?id=733979
 
-  //&:dir(ltr),
-  //&:dir(rtl) { @extend %linked_middle; } // specificity bump
+  &:dir(ltr),
+  &:dir(rtl) { @extend %linked_middle; } // specificity bump
 }
 
 .linked:not(.vertical) > combobox:first-child > box > button.combo { @extend %linked:first-child; }
@@ -1568,6 +1608,7 @@ headerbar {
   color: gtk("@theme_titlebar_foreground");
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)), image(gtk("@theme_titlebar_background"));
   background-size: 1px 100%;
+  transition: 0;
 
   &:backdrop {
     box-shadow: 0 2px 1px -1px gtk("@theme_titlebar_background_backdrop"), 0 2px 1px -1px gtkalpha(gtk("@theme_titlebar_foreground_backdrop"), 0.15);
@@ -1575,7 +1616,7 @@ headerbar {
     background: image(gtk("@theme_titlebar_background_backdrop"));
     //box-shadow: inset 0 1px $top_hilight;
 
-    transition: $backdrop_transition;
+    transition: 0;
   }
   
   .pathbar {
@@ -1927,9 +1968,10 @@ headerbar { // headerbar border rounding
 // GtkPathBar does not work with just .linked, so we must override that. But we
 // can’t simply remove .linked from the widget as that might break other themes.
 // Note also we select on filechooser to avoid interfering with NautilusPathBar.
-//filechooser .path-bar.linked > button {
+filechooser .path-bar.linked > button {
     //@extend %linked_flippable;
-//}
+    @extend %linked;
+}
 
 .path-bar button {
   @extend %button_basic.flat;
@@ -2745,15 +2787,18 @@ treeview ~ scrollbar.vertical {
  * Switch *
  **********/
 switch {
+  //TODO: Fix switch margins
   outline-offset: -4px;
 
   // similar to the .scale
   box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
   border-radius: 14px;
+  border: none;
   color: transparent;
-  background: image(gtk("@theme_bg_color")), image(gtkbreezent("@ferengtk_darkening_bg"));
+  background: image(gtkbreezent("@ferengtk_darkening_bg"));
 
   &:checked {
+    background-clip: padding-box;
     color: transparent;
     box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
     background: image(gtk("@theme_selected_bg_color"));
@@ -2761,25 +2806,25 @@ switch {
 
   &:disabled {
     color: transparent;
-    box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
-    background: image(gtk("@insensitive_bg_color"));
+    box-shadow: 0 0 0 1px gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.5);
+    background: image(gtkalpha(gtkbreezent("@ferengtk_darkening_bg"), 0.5));
   }
 
   &:backdrop {
     color: transparent;
-    box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
-    background: image(gtk("@theme_bg_color"));
+    box-shadow: 0 0 0 1px gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
+    background: image(gtkalpha(gtkbreezent("@ferengtk_darkening_bg"), 0.7));
     transition: $backdrop_transition;
 
     &:checked {
       box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
-      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.8));
+      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.7));
     }
 
     &:disabled {
       color: transparent;
-      box-shadow: 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
-      background: image(gtk("@insensitive_bg_color"));
+      box-shadow: 0 0 0 1px gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.3);
+      background: image(gtkalpha(gtkbreezent("@ferengtk_darkening_bg"), 0.3));
     }
   }
 
@@ -2787,44 +2832,49 @@ switch {
     margin: -1px;
     min-width: 24px;
     min-height: 24px;
-    border: 1px solid;
     border-radius: 50%;
-    transition: $button_transition;
+    transition: 0;
     -gtk-outline-radius: 20px;
 
     @include button(normal-alt, $edge: $_shadow_color);
+    box-shadow: none;
+    border: 1px solid gtkdarker(gtk("@theme_bg_color"));
   }
   
   image { color: transparent; } /* only show i / o for the accessible theme */
 
   &:hover slider {
     @include button(hover-alt, $edge: $_shadow_color);
+    box-shadow: none;
+    border: 1px solid gtkdarker(gtk("@theme_bg_color"));
   }
 
-  &:checked > slider { border: 1px solid gtk("@theme_selected_bg_color"); }
+  &:checked > slider { box-shadow: none; border: 1px solid gtkdarker(gtk("@theme_selected_bg_color")); }
 
-  &:disabled slider { @include button(insensitive); }
+  &:disabled slider { @include button(insensitive); box-shadow: none; border: 1px solid gtkalpha(gtkdarker(gtkbreezent("@insensitive_bg_color")), 0.5); }
 
   &:backdrop {
     slider {
-      transition: $backdrop_transition;
+      transition: 0;
 
       @include button(backdrop);
+      box-shadow: none;
+      border: 1px solid gtkalpha(gtkdarker(gtkbreezent("@theme_bg_color")), 0.7);
     }
 
-    &:checked > slider {
-        border: 1px solid gtk("@theme_unfocused_selected_bg_color"); }
+    &:checked slider {
+        box-shadow: none;
+        border: 1px solid gtkalpha(gtkdarker(gtk("@theme_selected_bg_color")), 0.7);
+    }
 
-    &:disabled slider { @include button(backdrop-insensitive); }
+    &:disabled slider { @include button(backdrop-insensitive); box-shadow: none; border: 1px solid gtkalpha(gtkdarker(gtk("@insensitive_bg_color")), 0.3); }
   }
 
   row:selected & {
-    box-shadow: none;
     box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_selected_items_border");
 
-    &:backdrop { box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_selected_items_border"); }
-
-    > slider { &:checked, & { border: 1px solid gtk("@theme_selected_bg_color"); } }
+    > slider {
+        &:checked, & { border: 1px solid gtkdarker(gtk("@theme_selected_bg_color")); } }
   }
 
 }
@@ -4313,7 +4363,7 @@ tooltip {
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.01)), image(gtk("@tooltip_background"));
     background-clip: padding-box;
-    box-shadow: 0 0 0 1px gtk("@tooltip_background"), rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 0 1px gtk("@tooltip_background"), gtk("@ferengtk_border_generic");
   }
 
   padding: 1px; /* not working */

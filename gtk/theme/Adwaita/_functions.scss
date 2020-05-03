@@ -13,7 +13,12 @@
 
 @function sasspass ($str) {
   @return unquote("#{$str}");
-}    
+}
+
+// darker function
+@function gtkdarker($c) {
+  @return unquote("darker(#{$c})");
+}
 
 // alpha function
 @function gtkalpha($c,$a) {
