@@ -223,40 +223,24 @@ paned statusbar frame {
 .lightdm-combo entry,
 .lightdm button,
 .lightdm entry {
-    background: none;
-    background-color: gtkalpha(black, 0.3);
-    border-color: gtkalpha(white, 0.6);
+    background-image: none;
+    background-color: gtkalpha(black, 0.5);
+    border: 1px solid gtkalpha(white, 0.6);
     text-shadow: none;
     label {
         color: white;
     }
     color: white;
     caret-color: white;
-}
-
-.lightdm button,
-.lightdm button:hover,
-.lightdm button:active,
-.lightdm button:active:focus,
-.lightdm entry,
-.lightdm entry:hover,
-.lightdm entry:active,
-.lightdm entry:active:focus {
-    background: none;
-    border-image: none;
-    color: white;
-    label {
-        color: white;
-    }
     box-shadow: none;
 }
 
 .lightdm button:focus,
-.lightdm entry:focus {
-    border-color: gtkalpha(white, 0.9);
-    border-width: 1px;
-    border-style: solid;
-
+.lightdm button:active,
+.lightdm button:checked,
+.lightdm entry:focus,
+.lightdm entry:active {
+    border: 1px solid white;
     color: white;
 }
 

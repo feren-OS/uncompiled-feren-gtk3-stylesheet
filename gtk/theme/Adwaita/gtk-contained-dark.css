@@ -78,8 +78,8 @@
 @define-color theme_titlebar_foreground_insensitive_backdrop #B6B6B6;
 /* GTK NAMED COLORS ---------------- use responsibly! */
 @define-color ferengtk_darkening_bg rgba(0, 0, 0, 0.08);
-@define-color ferengtk_border_generic rgba(0, 0, 0, 0.17);
-@define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.2);
+@define-color ferengtk_border_generic rgba(0, 0, 0, 0.19);
+@define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.23);
 @define-color base_color @theme_base_color;
 @define-color text_color @theme_text_color;
 @define-color bg_color @theme_bg_color;
@@ -654,7 +654,7 @@ toolbar.inline-toolbar toolbutton > button.flat:dir(rtl), toolbar.inline-toolbar
 
 .linked.vertical > spinbutton:only-child:not(.vertical), .linked.vertical > entry:only-child, .titlebar:not(headerbar) .linked.vertical > button:only-child:not(.titlebutton):hover, headerbar .linked.vertical > button:only-child:not(.titlebutton):hover, .titlebar:not(headerbar) .linked.vertical > button:only-child:not(.titlebutton):active, .titlebar:not(headerbar) .linked.vertical > button:only-child:not(.titlebutton):checked, headerbar .linked.vertical > button:only-child:not(.titlebutton):active, headerbar .linked.vertical > button:only-child:not(.titlebutton):checked, .titlebar:not(headerbar) .linked.vertical > button:only-child:not(.titlebutton):backdrop, headerbar .linked.vertical > button:only-child:not(.titlebutton):backdrop, .linked.vertical > button:only-child, .linked.vertical > combobox:only-child > box > button.combo { border-radius: 4px; border-style: solid; }
 
-modelbutton.flat, .menuitem.button.flat, modelbutton.flat:backdrop, modelbutton.flat:backdrop:hover, .menuitem.button.flat:backdrop, .menuitem.button.flat:backdrop:hover, list row button.image-button:not(.flat), button:link, button:visited, button:link:hover, button:link:active, button:link:checked, button:visited:hover, button:visited:active, button:visited:checked, calendar.button, .scale-popup button:hover, .scale-popup button:backdrop:hover, .scale-popup button:backdrop:disabled, .scale-popup button:backdrop { background-color: transparent; background-image: none; border-color: transparent; }
+modelbutton.flat, .menuitem.button.flat, modelbutton.flat:backdrop, modelbutton.flat:backdrop:hover, .menuitem.button.flat:backdrop, .menuitem.button.flat:backdrop:hover, list row button.image-button:not(.flat), button:link, button:link:hover, button:link:active, button:link:checked, button:link:backdrop, button:link:backdrop:hover, button:link:backdrop:disabled, button:link:disabled, button:visited, button:visited:hover, button:visited:active, button:visited:checked, button:visited:backdrop, button:visited:backdrop:hover, button:visited:backdrop:disabled, button:visited:disabled, calendar.button, .scale-popup button:hover, .scale-popup button:backdrop:hover, .scale-popup button:backdrop:disabled, .scale-popup button:backdrop { background-color: transparent; background-image: none; border-color: transparent; }
 
 /* menu buttons */
 modelbutton.flat, .menuitem.button.flat { min-height: 26px; padding-left: 5px; padding-right: 5px; border-radius: 4px; outline-offset: -2px; }
@@ -681,8 +681,6 @@ button.color colorswatch:only-child, button.color colorswatch:only-child overlay
 
 /* list buttons */
 /* tone down as per new designs, see issue #1473, #1748 */
-list row button.image-button:not(.flat) { border: 1px solid alpha(@ferengtk_border_generic,0.5); }
-
 list row button.image-button:not(.flat):hover { border: none; color: @theme_button_foreground_normal; box-shadow: inset 0 0 0 1px @theme_button_background_normal, inset 0 0 0 1px @ferengtk_border_generic, 0 1px 2px rgba(0, 0, 0, 0.1); background: linear-gradient(to top, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.04)), image(@theme_button_background_normal); }
 
 list row button.image-button:not(.flat):hover label, list row button.image-button:not(.flat):hover { color: @theme_button_foreground_normal; }
@@ -692,27 +690,29 @@ list row button.image-button:not(.flat):active, list row button.image-button:not
 list row button.image-button:not(.flat):active label, list row button.image-button:not(.flat):active, list row button.image-button:not(.flat):checked label, list row button.image-button:not(.flat):checked { color: @theme_selected_fg_color; }
 
 /********* Links * */
-button:link > label, button:visited > label, *:link, button:link, button:visited { color: @link_color; }
+button:link > label, button:link:hover > label, button:link:active > label, button:link:checked > label, button:link:backdrop > label, button:link:backdrop:hover > label, button:link:backdrop:disabled > label, button:link:disabled > label, button:visited > label, button:visited:hover > label, button:visited:active > label, button:visited:checked > label, button:visited:backdrop > label, button:visited:backdrop:hover > label, button:visited:backdrop:disabled > label, button:visited:disabled > label, *:link, button:link, button:link:hover, button:link:active, button:link:checked, button:link:backdrop, button:link:backdrop:hover, button:link:backdrop:disabled, button:link:disabled, button:visited, button:visited:hover, button:visited:active, button:visited:checked, button:visited:backdrop, button:visited:backdrop:hover, button:visited:backdrop:disabled, button:visited:disabled { color: @link_color; }
 
-button:link > label:visited, button:visited > label:visited, *:link:visited, button:visited { color: @link_visited_color; }
+button:link > label:visited, button:link:backdrop:hover > label:visited, button:visited > label:visited, button:visited:backdrop:hover > label:visited, *:link:visited, button:visited, button:visited:hover, button:visited:active, button:visited:checked, button:visited:backdrop, button:visited:backdrop:hover, button:visited:backdrop:disabled, button:visited:disabled { color: @link_visited_color; }
 
-*:selected button:link > label:visited, *:selected button:visited > label:visited, *:selected *:link:visited, *:selected button:visited:link, *:selected button:visited { color: @theme_selected_bg_color; }
+*:selected button:link > label:visited, *:selected button:visited > label:visited, *:selected *:link:visited, *:selected button:visited:link, *:selected button:visited, *:selected button:visited:hover, *:selected button:visited:active, *:selected button:visited:checked, *:selected button:visited:backdrop, *:selected button:visited:disabled { color: @theme_selected_bg_color; }
 
-button:link > label:hover, button:visited > label:hover, *:link:hover, button:hover:link, button:hover:visited { color: @link_color; }
+button:link > label:hover, button:link:backdrop:hover > label:hover, button:visited > label:hover, button:visited:backdrop:hover > label:hover, *:link:hover, button:hover:link, button:hover:visited { color: @link_color; }
 
 *:selected button:link > label:hover, *:selected button:visited > label:hover, *:selected *:link:hover, *:selected button:hover:link, *:selected button:hover:visited { color: @theme_selected_bg_color; }
 
-button:link > label:active, button:visited > label:active, *:link:active, button:active:link, button:active:visited { color: @link_color; }
+button:link > label:active, button:link:backdrop:hover > label:active, button:visited > label:active, button:visited:backdrop:hover > label:active, *:link:active, button:active:link, button:active:link:backdrop:hover, button:active:visited, button:active:visited:backdrop:hover { color: @link_color; }
 
 *:selected button:link > label:active, *:selected button:visited > label:active, *:selected *:link:active, *:selected button:active:link, *:selected button:active:visited { color: @theme_selected_bg_color; }
 
-button:link > label:disabled, button:visited > label:disabled, button:link > label:disabled:backdrop, button:visited > label:disabled:backdrop, *:link:disabled, button:disabled:link, button:disabled:visited, *:link:disabled:backdrop, button:disabled:backdrop:link, button:disabled:backdrop:visited { color: alpha(@link_color,0.5); }
+button:link > label:disabled, button:link:backdrop:hover > label:disabled, button:visited > label:disabled, button:visited:backdrop:hover > label:disabled, button:link > label:disabled:backdrop, button:visited > label:disabled:backdrop, *:link:disabled, button:disabled:link, button:disabled:link:backdrop:hover, button:disabled:visited, button:disabled:visited:backdrop:hover, *:link:disabled:backdrop, button:disabled:backdrop:link, button:disabled:backdrop:visited { color: alpha(@link_color,0.5); }
 
-button:link > label:backdrop:backdrop:hover, button:visited > label:backdrop:backdrop:hover, button:link > label:backdrop:backdrop:hover:selected, button:visited > label:backdrop:backdrop:hover:selected, button:link > label:backdrop, button:visited > label:backdrop, *:link:backdrop:backdrop:hover, button:backdrop:backdrop:hover:link, button:backdrop:backdrop:hover:visited, *:link:backdrop:backdrop:hover:selected, button:backdrop:backdrop:hover:selected:link, button:backdrop:backdrop:hover:selected:visited, .selection-mode .titlebar:not(headerbar) .subtitle:backdrop:backdrop:hover:link, .selection-mode.titlebar:not(headerbar) .subtitle:backdrop:backdrop:hover:link, .selection-mode headerbar .subtitle:backdrop:backdrop:hover:link, headerbar.selection-mode .subtitle:backdrop:backdrop:hover:link, *:link:backdrop, button:backdrop:link, button:backdrop:visited { color: @theme_selected_bg_color; }
+button:link > label:backdrop:backdrop:hover, button:visited > label:backdrop:backdrop:hover, button:link > label:backdrop:backdrop:hover:selected, button:visited > label:backdrop:backdrop:hover:selected, button:link > label:backdrop, button:link:backdrop:hover > label:backdrop, button:visited > label:backdrop, button:visited:backdrop:hover > label:backdrop, *:link:backdrop:backdrop:hover, button:backdrop:backdrop:hover:link, button:backdrop:backdrop:hover:visited, *:link:backdrop:backdrop:hover:selected, button:backdrop:backdrop:hover:selected:link, button:backdrop:backdrop:hover:selected:visited, .selection-mode .titlebar:not(headerbar) .subtitle:backdrop:backdrop:hover:link, .selection-mode.titlebar:not(headerbar) .subtitle:backdrop:backdrop:hover:link, .selection-mode headerbar .subtitle:backdrop:backdrop:hover:link, headerbar.selection-mode .subtitle:backdrop:backdrop:hover:link, *:link:backdrop, button:backdrop:link, button:backdrop:link:disabled, button:backdrop:visited, button:backdrop:visited:disabled { color: alpha(@link_color,0.7); }
 
-button:link > label:selected, button:visited > label:selected, *:selected button:link > label, *:selected button:visited > label, *:link:selected, button:selected:link, button:selected:visited, .selection-mode .titlebar:not(headerbar) .subtitle:link, .selection-mode.titlebar:not(headerbar) .subtitle:link, .selection-mode headerbar .subtitle:link, headerbar.selection-mode .subtitle:link, *:selected *:link, *:selected button:link, *:selected button:visited { color: @theme_selected_bg_color; }
+button:link > label:selected, button:link:backdrop:hover > label:selected, button:visited > label:selected, button:visited:backdrop:hover > label:selected, *:selected button:link > label, *:selected button:link:backdrop:hover > label, *:selected button:visited > label, *:selected button:visited:backdrop:hover > label, *:link:selected, button:selected:link, button:selected:link:backdrop:hover, button:selected:visited, button:selected:visited:backdrop:hover, .selection-mode .titlebar:not(headerbar) .subtitle:link, .selection-mode.titlebar:not(headerbar) .subtitle:link, .selection-mode headerbar .subtitle:link, headerbar.selection-mode .subtitle:link, *:selected *:link, *:selected button:link, *:selected button:link:backdrop:hover, *:selected button:visited, *:selected button:visited:backdrop:hover { color: @theme_selected_bg_color; }
 
-button:link > label, button:visited > label { text-decoration-line: underline; }
+button:link, button:link:hover, button:link:active, button:link:checked, button:link:backdrop, button:link:backdrop:hover, button:link:backdrop:disabled, button:link:disabled, button:visited, button:visited:hover, button:visited:active, button:visited:checked, button:visited:backdrop, button:visited:backdrop:hover, button:visited:backdrop:disabled, button:visited:disabled { box-shadow: none; }
+
+button:link > label, button:link:hover > label, button:link:active > label, button:link:checked > label, button:link:backdrop > label, button:link:backdrop:hover > label, button:link:backdrop:disabled > label, button:link:disabled > label, button:visited > label, button:visited:hover > label, button:visited:active > label, button:visited:checked > label, button:visited:backdrop > label, button:visited:backdrop:hover > label, button:visited:backdrop:disabled > label, button:visited:disabled > label { text-decoration-line: underline; }
 
 /***************** GtkSpinButton * */
 spinbutton:not(.vertical) { padding: 0; }
@@ -721,19 +721,19 @@ spinbutton:not(.vertical) entry, .osd spinbutton:not(.vertical) entry { min-widt
 
 spinbutton:not(.vertical) entry:backdrop:disabled { background-color: transparent; }
 
-spinbutton:not(.vertical) button { min-height: 16px; margin: 0; padding-bottom: 0; padding-top: 0; color: @theme_fg_color; background-color: transparent; border: 1px solid transparent; border-radius: 0; box-shadow: none; }
+spinbutton:not(.vertical) button { min-height: 16px; margin: 0; padding-bottom: 0; padding-top: 0; color: @theme_fg_color; background: none; border: 1px solid transparent; border-radius: 0; box-shadow: none; }
 
 spinbutton:not(.vertical) button:dir(rtl) { border-style: none solid none none; }
 
-spinbutton:not(.vertical) button:hover { color: @theme_fg_color; background-color: alpha(@theme_fg_color,0.05); }
+spinbutton:not(.vertical) button:hover { color: @theme_fg_color; background: image(alpha(@theme_fg_color,0.05)); }
 
-spinbutton:not(.vertical) button:disabled { color: alpha(@insensitive_fg_color,0.3); background-color: transparent; }
+spinbutton:not(.vertical) button:disabled { color: alpha(@insensitive_fg_color,0.3); background: none; }
 
-spinbutton:not(.vertical) button:active { background-color: alpha(black,0.1); box-shadow: inset 0 2px 3px -1px alpha(black,0.2); }
+spinbutton:not(.vertical) button:active { background: image(alpha(@theme_fg_color,0.1)); box-shadow: inset 0 2px 3px -1px alpha(black,0.2); }
 
-spinbutton:not(.vertical) button:backdrop { color: alpha(@theme_fg_color,0.7); background-color: transparent; border-color: alpha(@ferengtk_border_generic,0.7); transition: 200ms ease-out; }
+spinbutton:not(.vertical) button:backdrop { color: alpha(@theme_fg_color,0.7); background: none; border-color: alpha(@ferengtk_border_generic,0.7); transition: 200ms ease-out; box-shadow: none; }
 
-spinbutton:not(.vertical) button:backdrop:disabled { color: alpha(@theme_bg_color,0.3); background-color: transparent; background-image: none; border: 1px solid transparent; }
+spinbutton:not(.vertical) button:backdrop:disabled { color: alpha(@theme_fg_color,0.3); background: none; border: 1px solid transparent; }
 
 spinbutton:not(.vertical) button:backdrop:disabled:dir(rtl) { border-style: none solid none none; }
 
@@ -1499,41 +1499,29 @@ scale fill:disabled:backdrop, scale fill:disabled { border-color: transparent; b
 
 .osd scale fill:disabled:backdrop, .osd scale fill:disabled { border-color: transparent; background-color: transparent; }
 
-scale slider { border: none; color: @theme_button_foreground_normal; box-shadow: inset 0 0 0 1px @theme_button_background_normal, inset 0 0 0 1px @ferengtk_border_generic; background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent), image(@theme_button_background_normal); border: 1px solid @ferengtk_border_generic; border-radius: 100%; transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-property: background, border, box-shadow; }
+scale slider { border: none; color: @theme_button_foreground_normal; border: 1px solid @ferengtk_border_generic; background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent), image(@theme_button_background_normal); border-radius: 100%; transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94); transition-property: background, border, box-shadow; }
 
 scale slider label, scale slider { color: @theme_button_foreground_normal; }
 
-scale slider:hover { border: none; color: @theme_button_foreground_normal; box-shadow: inset 0 0 0 1px @theme_button_background_normal, inset 0 0 0 1px @ferengtk_border_generic; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04)), image(@theme_button_background_normal); }
+scale slider:hover { border: none; color: @theme_button_foreground_normal; border: 1px solid @ferengtk_border_generic; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04)), image(@theme_button_background_normal); }
 
 scale slider:hover label, scale slider:hover { color: @theme_button_foreground_normal; }
 
 scale slider:active { border: 1px solid @theme_selected_bg_color; }
 
-scale slider:disabled { border: none; color: alpha(@theme_button_foreground_normal,0.5); box-shadow: inset 0 0 0 1px alpha(@theme_button_background_normal,0.5), inset 0 0 0 1px alpha(@ferengtk_border_generic,0.5); background: image(@theme_button_background_insensitive); }
+scale slider:disabled { border: none; color: alpha(@theme_button_foreground_normal,0.5); border: 1px solid alpha(@ferengtk_border_generic,0.5); background: image(@theme_button_background_insensitive); }
 
 scale slider:disabled label, scale slider:disabled { color: alpha(@theme_button_foreground_normal,0.5); }
 
-scale slider:backdrop { transition: 200ms ease-out; border: none; color: alpha(@theme_button_foreground_normal,0.7); box-shadow: inset 0 0 0 1px alpha(@theme_button_background_normal,0.7), inset 0 0 0 1px alpha(@ferengtk_border_generic,0.7); background: image(@theme_button_background_backdrop); }
+scale slider:backdrop { transition: 200ms ease-out; border: none; color: alpha(@theme_button_foreground_normal,0.7); border: 1px solid alpha(@ferengtk_border_generic,0.7); background: image(@theme_button_background_backdrop); }
 
 scale slider:backdrop label, scale slider:backdrop { color: alpha(@theme_button_foreground_normal,0.7); }
 
-scale slider:backdrop:disabled { border: none; color: alpha(@theme_button_foreground_normal,0.3); box-shadow: inset 0 0 0 1px alpha(@theme_button_background_normal,0.3), inset 0 0 0 1px alpha(@ferengtk_border_generic,0.3); background: image(@theme_button_background_backdrop_insensitive); }
+scale slider:backdrop:disabled { border: none; color: alpha(@theme_button_foreground_normal,0.3); border: 1px solid alpha(@ferengtk_border_generic,0.3); background: image(@theme_button_background_backdrop_insensitive); }
 
 scale slider:backdrop:disabled label, scale slider:backdrop:disabled { color: alpha(@theme_button_foreground_normal,0.3); }
 
 row:selected scale slider:disabled, row:selected scale slider { border-color: @theme_selected_bg_color @ferengtk_border_generic; }
-
-.osd scale slider { border: none; border-color: @ferengtk_border_generic; background-color: @theme_base_color; }
-
-.osd scale slider:hover { border: none; background-color: @theme_base_color; }
-
-.osd scale slider:active { border: none; background-color: @theme_base_color; }
-
-.osd scale slider:disabled { border: none; background-color: @theme_base_color; }
-
-.osd scale slider:backdrop { border: none; background-color: @theme_base_color; }
-
-.osd scale slider:backdrop:disabled { border: none; background-color: @theme_base_color; }
 
 scale marks, scale value { color: alpha(currentColor,0.55); }
 
@@ -1560,6 +1548,54 @@ scale.horizontal.fine-tune indicator { min-height: 3px; }
 scale.vertical indicator { min-height: 1px; min-width: 6px; }
 
 scale.vertical.fine-tune indicator { min-width: 3px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider { margin: -10px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider:hover { margin: -10px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider:active { margin: -10px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider:disabled { margin: -10px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider:backdrop { margin: -10px; }
+
+scale.horizontal.marks-before:not(.marks-after) slider:backdrop:disabled { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider:hover { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider:active { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider:disabled { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider:backdrop { margin: -10px; }
+
+scale.horizontal.marks-after:not(.marks-before) slider:backdrop:disabled { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider:hover { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider:active { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider:disabled { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider:backdrop { margin: -10px; }
+
+scale.vertical.marks-before:not(.marks-after) slider:backdrop:disabled { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider:hover { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider:active { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider:disabled { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider:backdrop { margin: -10px; }
+
+scale.vertical.marks-after:not(.marks-before) slider:backdrop:disabled { margin: -10px; }
 
 scale.color { min-height: 0; min-width: 0; }
 
@@ -1705,7 +1741,7 @@ scrolledwindow junction:dir(rtl) { border-image-slice: 0 1 0 0; }
 
 scrolledwindow junction:backdrop { border-image-source: linear-gradient(to bottom, @ferengtk_border_generic 1px, transparent 1px); background-color: @theme_unfocused_bg_color; transition: 200ms ease-out; }
 
-separator { background: image(alpha(black,0.2)); min-width: 1px; min-height: 1px; }
+separator { background: image(@ferengtk_border_generic); min-width: 1px; min-height: 1px; }
 
 /********* Lists * */
 list { color: @theme_text_color; background-color: @theme_base_color; border-color: @ferengtk_border_generic; }
@@ -1718,11 +1754,11 @@ row { transition: all 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
 row:hover { transition: none; }
 
-row:backdrop { transition: 200ms ease-out; }
+row:backdrop { transition: none; }
 
 row.activatable.has-open-popup, row.activatable:hover { background: image(alpha(@theme_fg_color,0.1)); }
 
-row.activatable:active { box-shadow: inset 0 2px 2px -2px alpha(black,0.2); }
+row.activatable:active { box-shadow: inset 0 2px 2px -2px @ferengtk_border_generic; }
 
 row.activatable:backdrop:hover { background: transparent; }
 
@@ -1731,6 +1767,8 @@ row.activatable:selected:active { box-shadow: inset 0 2px 3px -1px alpha(black,0
 row.activatable:selected.has-open-popup, row.activatable:selected:hover { background: image(@theme_selected_bg_color); }
 
 row.activatable:selected:backdrop { background: image(@theme_selected_bg_color); }
+
+row:selected { transition: none; }
 
 /********************* App Notifications * */
 .app-notification, .app-notification.frame { padding: 10px; border-radius: 0 0 5px 5px; border: 1px solid @ferengtk_darkening_bg; border-top: none; background-color: @theme_base_color; background-image: linear-gradient(to bottom, alpha(black,0.2), transparent 2px); background-clip: padding-box; }
@@ -1757,9 +1795,7 @@ calendar { color: @theme_text_color; border: 1px solid @ferengtk_border_generic;
 
 calendar:selected { border-radius: 4px; }
 
-calendar.header { border-bottom-color: alpha(black,0.2); }
-
-calendar.header:backdrop { border-bottom-color: alpha(black,0.2); }
+calendar.header { border-width: 0 0 1px 0; border-color: @ferengtk_border_generic; }
 
 calendar.button { color: alpha(@theme_fg_color,0.45); }
 
@@ -1773,7 +1809,7 @@ calendar.highlight { color: @insensitive_fg_color; }
 
 calendar.highlight:backdrop { color: alpha(@insensitive_fg_color,0.7); }
 
-calendar:backdrop { color: @theme_unfocused_text_color; border-color: @ferengtk_border_generic; }
+calendar:backdrop { color: alpha(@theme_text_color,0.7); }
 
 calendar:indeterminate { color: alpha(currentColor,0.1); }
 
@@ -2000,7 +2036,7 @@ infobar.info, infobar.question, infobar.warning, infobar.error { border-bottom: 
 
 infobar.info selection, infobar.question selection, infobar.warning selection, infobar.error selection { background-color: @theme_fg_color; color: @theme_bg_color; }
 
-infobar.info *:link, infobar.info button:link, infobar.info button:visited, infobar.question *:link, infobar.question button:link, infobar.question button:visited, infobar.warning *:link, infobar.warning button:link, infobar.warning button:visited, infobar.error *:link, infobar.error button:link, infobar.error button:visited { color: @link_color; }
+infobar.info *:link, infobar.info button:link, infobar.info button:link:backdrop:hover, infobar.info button:visited, infobar.info button:visited:backdrop:hover, infobar.question *:link, infobar.question button:link, infobar.question button:link:backdrop:hover, infobar.question button:visited, infobar.question button:visited:backdrop:hover, infobar.warning *:link, infobar.warning button:link, infobar.warning button:link:backdrop:hover, infobar.warning button:visited, infobar.warning button:visited:backdrop:hover, infobar.error *:link, infobar.error button:link, infobar.error button:link:backdrop:hover, infobar.error button:visited, infobar.error button:visited:backdrop:hover { color: @link_color; }
 
 /************ Tooltips * */
 tooltip { padding: 1px; /* not working */ border-radius: 3px; box-shadow: none; }
@@ -2333,15 +2369,11 @@ paned statusbar frame { border: none; }
 /**************** Slick Greeter * */
 .lightdm menubar { background: none; background-color: alpha(black,0.6); color: white; }
 
-.lightdm-combo cell, .lightdm-combo button, .lightdm-combo entry, .lightdm button, .lightdm entry { background: none; background-color: alpha(black,0.3); border-color: alpha(white,0.6); text-shadow: none; color: white; caret-color: white; }
+.lightdm-combo cell, .lightdm-combo button, .lightdm-combo entry, .lightdm button, .lightdm entry { background-image: none; background-color: alpha(black,0.5); border: 1px solid alpha(white,0.6); text-shadow: none; color: white; caret-color: white; box-shadow: none; }
 
 .lightdm-combo cell label, .lightdm-combo button label, .lightdm-combo entry label, .lightdm button label, .lightdm entry label { color: white; }
 
-.lightdm button, .lightdm button:hover, .lightdm button:active, .lightdm button:active:focus, .lightdm entry, .lightdm entry:hover, .lightdm entry:active, .lightdm entry:active:focus { background: none; border-image: none; color: white; box-shadow: none; }
-
-.lightdm button label, .lightdm button:hover label, .lightdm button:active label, .lightdm button:active:focus label, .lightdm entry label, .lightdm entry:hover label, .lightdm entry:active label, .lightdm entry:active:focus label { color: white; }
-
-.lightdm button:focus, .lightdm entry:focus { border-color: alpha(white,0.9); border-width: 1px; border-style: solid; color: white; }
+.lightdm button:focus, .lightdm button:active, .lightdm button:checked, .lightdm entry:focus, .lightdm entry:active { border: 1px solid white; color: white; }
 
 @keyframes dashentry_spinner { to { -gtk-icon-transform: rotate(1turn); } }
 

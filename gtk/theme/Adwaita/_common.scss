@@ -1177,7 +1177,7 @@ button.color {
 /* tone down as per new designs, see issue #1473, #1748 */
 list row button.image-button:not(.flat) {
   @extend %undecorated_button;
-  border: 1px solid gtkalpha(gtkbreezent("@ferengtk_border_generic"), .5);
+  //border: 1px solid gtkalpha(gtkbreezent("@ferengtk_border_generic"), .5);
   &:hover { @include button(hover); }
   &:active,
   &:checked { @include button(active); }
@@ -1211,7 +1211,7 @@ list row button.image-button:not(.flat) {
 
   &:disabled, &:disabled:backdrop { color: gtkalpha(gtk("@link_color"), 0.5); }
 
-  &:backdrop { &:backdrop:hover, &:backdrop:hover:selected, & { color: gtk("@theme_selected_bg_color"); }}
+  &:backdrop { &:backdrop:hover, &:backdrop:hover:selected, & { color: gtkalpha(gtk("@link_color"), 0.7); }}
 
   @at-root %link_selected,
   &:selected,
@@ -1219,20 +1219,39 @@ list row button.image-button:not(.flat) {
 }
 
 button:link,
-button:visited {
+button:link:hover,
+button:link:active,
+button:link:checked,
+button:link:backdrop,
+button:link:backdrop:hover,
+button:link:backdrop:disabled,
+button:link:disabled,
+button:visited,
+button:visited:hover,
+button:visited:active,
+button:visited:checked,
+button:visited:backdrop,
+button:visited:backdrop:hover,
+button:visited:backdrop:disabled,
+button:visited:disabled {
   @extend %undecorated_button;
+  box-shadow: none;
 
   @extend *:link;
 
   //text-shadow: none;
 
-  &:hover,
-  &:active,
-  &:checked {
-    @extend %undecorated_button;
-
-    //text-shadow: none;
-  }
+  //&:hover,
+  //&:active,
+  //&:checked,
+  //&:backdrop,
+  //&:backdrop:hover,
+  //&:backdrop:disabled,
+  //&:disabled {
+  //  @extend %undecorated_button;
+  //
+  //  //text-shadow: none;
+  //}
 
   > label {
     @extend %link;
@@ -1278,7 +1297,7 @@ spinbutton {
       padding-bottom: 0;
       padding-top: 0;
       color: gtk("@theme_fg_color");
-      background-color: transparent;
+      background: none;
       border: 1px solid transparent;
       border-radius: 0;
       box-shadow: none;
@@ -1287,30 +1306,30 @@ spinbutton {
 
       &:hover {
         color: gtk("@theme_fg_color");
-        background-color: gtkalpha(gtk("@theme_fg_color"), 0.05);
+        background: image(gtkalpha(gtk("@theme_fg_color"), 0.05));
       }
 
       &:disabled {
         color: gtkalpha(gtk("@insensitive_fg_color"), 0.3);
-        background-color: transparent;
+        background: none;
       }
 
       &:active {
-        background-color: gtkalpha(black, 0.1);
+        background: image(gtkalpha(gtk("@theme_fg_color"), 0.1));
         box-shadow: inset 0 2px 3px -1px gtkalpha(black, 0.2);
       }
 
       &:backdrop {
         color: gtkalpha(gtk("@theme_fg_color"), 0.7);
-        background-color: transparent;
+        background: none;
         border-color: gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
         transition: $backdrop_transition;
+        box-shadow: none;
       }
 
       &:backdrop:disabled {
-        color: gtkalpha(gtk("@theme_bg_color"),0.3);
-        background-color: transparent;
-        background-image: none;
+        color: gtkalpha(gtk("@theme_fg_color"), 0.3);
+        background: none;
         border: 1px solid transparent; // It is needed or it gets overridden
 
         &:dir(rtl) { border-style: none solid none none; }
@@ -3223,61 +3242,59 @@ scale {
   }
 
   slider {
-    @include button(normal-alt, $edge: $_shadow_color);
-
-    border: 1px solid gtkbreezent("@ferengtk_border_generic");
+    @include button(normal-slider, $edge: $_shadow_color);
     border-radius: 100%;
     transition: $button_transition;
     transition-property: background, border, box-shadow;
 
-    &:hover { @include button(hover-alt, $edge: $_shadow_color); }
+    &:hover { @include button(hover-slider, $edge: $_shadow_color); }
 
     &:active { border: 1px solid gtk("@theme_selected_bg_color"); }
 
-    &:disabled { @include button(insensitive); }
+    &:disabled { @include button(insensitive-slider); }
 
     &:backdrop {
       transition: $backdrop_transition;
 
-      @include button(backdrop);
+      @include button(backdrop-slider);
 
-      &:disabled { @include button(backdrop-insensitive); }
+      &:disabled { @include button(backdrop-insensitive-slider); }
     }
 
     // ...on selected list rows
     row:selected & { &:disabled, & { border-color: gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_border_generic"); } }
 
-    // OSD
-    .osd & {
-      @include button(osd);
-      border-color: gtkbreezent("@ferengtk_border_generic");
-      background-color: gtk("@theme_base_color"); // solid background needed here
+    //// OSD
+    //.osd & {
+    //  @include button(osd);
+    //  border-color: gtkbreezent("@ferengtk_border_generic");
+    //  background-color: gtk("@theme_base_color"); // solid background needed here
 
-      &:hover {
-        @include button(osd-hover);
-        background-color: gtk("@theme_base_color"); // solid background needed here
-      }
+    //  &:hover {
+    //    @include button(osd-hover);
+    //    background-color: gtk("@theme_base_color"); // solid background needed here
+    //  }
 
-      &:active {
-        @include button(osd-active);
-        background-color: gtk("@theme_base_color"); // solid background needed here
-      }
+    //  &:active {
+    //    @include button(osd-active);
+    //    background-color: gtk("@theme_base_color"); // solid background needed here
+    //  }
 
-      &:disabled {
-        @include button(osd-insensitive);
-        background-color: gtk("@theme_base_color"); // solid background needed here
-      }
+    //  &:disabled {
+    //    @include button(osd-insensitive);
+    //    background-color: gtk("@theme_base_color"); // solid background needed here
+    //  }
 
-      &:backdrop {
-        @include button(osd-backdrop);
-        background-color: gtk("@theme_base_color"); // solid background needed here
+    //  &:backdrop {
+    //    @include button(osd-backdrop);
+    //    background-color: gtk("@theme_base_color"); // solid background needed here
 
-        &:disabled {
-          @include button(osd-backdrop-insensitive);
-          background-color: gtk("@theme_base_color"); // solid background needed here
-        }
-      }
-    }
+    //    &:disabled {
+    //      @include button(osd-backdrop-insensitive);
+    //      background-color: gtk("@theme_base_color"); // solid background needed here
+    //    }
+    //  }
+    //}
   }
 
   marks,
@@ -3329,23 +3346,23 @@ scale {
   // FIXME: OSD and selected list rows missing, I don't feel like adding the other 144 assets needed for those...
 //  $suffix: if($variant == 'light', '', '-dark');
 
-//  @each $dir_class, $dir_infix in ('horizontal', 'horz'),
-//                                  ('vertical', 'vert') {
-//    @each $marks_infix, $marks_class in ('scale-has-marks-above', 'marks-before:not(.marks-after)'),
-//                                        ('scale-has-marks-below', 'marks-after:not(.marks-before)') {
-//      @each $state, $state_infix in ('', ''),
-//                                    (':hover', '-hover'),
-//                                    (':active', '-active'),
-//                                    (':disabled', '-insensitive'),
-//                                    (':backdrop', '-backdrop'),
-//                                    (':backdrop:disabled', '-backdrop-insensitive') {
-//        &.#{$dir_class}.#{$marks_class} {
+  @each $dir_class, $dir_infix in ('horizontal', 'horz'),
+                                  ('vertical', 'vert') {
+    @each $marks_infix, $marks_class in ('scale-has-marks-above', 'marks-before:not(.marks-after)'),
+                                        ('scale-has-marks-below', 'marks-after:not(.marks-before)') {
+      @each $state, $state_infix in ('', ''),
+                                    (':hover', '-hover'),
+                                    (':active', '-active'),
+                                    (':disabled', '-insensitive'),
+                                    (':backdrop', '-backdrop'),
+                                    (':backdrop:disabled', '-backdrop-insensitive') {
+        &.#{$dir_class}.#{$marks_class} {
 
-//          slider {
-//            &#{$state} {
+          slider {
+            &#{$state} {
 //              // an asymmetric slider asset is used here, so the margins are uneven, the smaller
-//              // margin is set on the point side.
-//              margin: -10px;
+              // margin is set on the point side.
+              margin: -10px;
 //              $_scale_asset: 'assets/slider-#{$dir_infix}-#{$marks_infix}#{$state_infix}#{$suffix}';
 //              border-style: none;
 //              border-radius: 0;
@@ -3405,12 +3422,12 @@ scale {
 //              @if $marks_infix == 'scale-has-marks-above' { margin-left: -11px; }
 
 //              @else { margin-right: -11px; }
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
+            }
+          }
+        }
+      }
+    }
+  }
 
   &.color {
     min-height: 0;
@@ -3774,7 +3791,7 @@ scrolledwindow {
 
 //vbox and hbox separators
 separator {
-  background: image(gtkalpha(black, 0.2));
+  background: image(gtkbreezent("@ferengtk_border_generic"));
   min-width: 1px;
   min-height: 1px;
 }
@@ -3801,14 +3818,14 @@ row {
 
   &:hover { transition: none; }
 
-  &:backdrop { transition: $backdrop_transition; }
+  &:backdrop { transition: none; }
 
   &.activatable {
     &.has-open-popup, // this is for indicathing which row generated a popover see https://bugzilla.gnome.org/show_bug.cgi?id=754411
 
     &:hover { background: image(gtkalpha(gtk("@theme_fg_color"), 0.1)); }
 
-    &:active { box-shadow: inset 0 2px 2px -2px gtkalpha(black, 0.2); }
+    &:active { box-shadow: inset 0 2px 2px -2px gtkbreezent("@ferengtk_border_generic"); }
 
     &:backdrop:hover { background: transparent; }
 
@@ -3822,7 +3839,7 @@ row {
     }
   }
 
-  &:selected { @extend %selected_items; }
+  &:selected { @extend %selected_items; transition: none; }
 }
 
 
@@ -3886,9 +3903,11 @@ calendar {
   }
 
   &.header {
-    border-bottom-color: gtkalpha(black, 0.2);
+      border-width: 0 0 1px 0;
+      border-color: gtkbreezent("@ferengtk_border_generic");
+  //  border-bottom-color: gtkbreezent("@ferengtk_border_generic");
 
-    &:backdrop { border-bottom-color: gtkalpha(black, 0.2); }
+  //  &:backdrop { border-bottom-color: gtkbreezent("@ferengtk_border_generic"); }
   }
 
   &.button {
@@ -3898,7 +3917,7 @@ calendar {
 
     &:hover { color: gtk("@theme_fg_color"); }
 
-    &:backdrop { color: gtkalpha(gtkalpha(gtk("@theme_fg_color"), 0.7),0.45); }
+    &:backdrop { color: gtkalpha(gtkalpha(gtk("@theme_fg_color"), 0.7), 0.45); }
 
     &:disabled { color:  gtkalpha(gtk("@insensitive_fg_color"),0.45); }
   }
@@ -3910,8 +3929,8 @@ calendar {
   }
 
   &:backdrop {
-    color: gtk("@theme_unfocused_text_color");
-    border-color: gtkbreezent("@ferengtk_border_generic");
+    color: gtkalpha(gtk("@theme_text_color"), 0.7);
+    //border-color: gtkbreezent("@ferengtk_border_generic");
   }
 
   &:indeterminate { color: gtkalpha(currentColor, 0.1); }
