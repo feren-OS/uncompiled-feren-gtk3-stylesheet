@@ -16,6 +16,16 @@
         @extend %button.flat;
     }
 }
+.nemo-window .nemo-window-pane widget.entry {
+    border: 1.4px solid gtk("@theme_selected_bg_color");
+    border-radius: $button_radius;
+    color: gtk("@theme_fg_color");
+    background-color: gtk("@theme_base_color");
+}
+.nemo-window .nemo-window-pane widget.entry:selected:focus, .nemo-window .nemo-window-pane widget.entry:selected {
+    background-color: gtk("@theme_selected_bg_color");
+    color: gtk("@theme_selected_fg_color");
+}
 
 /**********
  * Photos *

@@ -1310,7 +1310,7 @@ spinbutton {
       }
 
       &:disabled {
-        color: gtkalpha(gtk("@insensitive_fg_color"), 0.3);
+        color: gtk("@insensitive_fg_color");
         background: none;
       }
 
@@ -1325,10 +1325,11 @@ spinbutton {
         border-color: gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
         transition: $backdrop_transition;
         box-shadow: none;
+        border: 1px solid transparent;
       }
 
       &:backdrop:disabled {
-        color: gtkalpha(gtk("@theme_fg_color"), 0.3);
+        color: gtkalpha(gtk("@insensitive_fg_color"), 0.7);
         background: none;
         border: 1px solid transparent; // It is needed or it gets overridden
 
@@ -1625,7 +1626,7 @@ headerbar {
   box-shadow: 0 2px 1px -1px gtk("@theme_titlebar_background"), 0 2px 1px -1px gtkalpha(gtk("@theme_titlebar_foreground"), 0.15);
   border-radius: 0;
   color: gtk("@theme_titlebar_foreground");
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)), image(gtk("@theme_titlebar_background"));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)), image(gtk("@theme_titlebar_background"));
   background-size: 1px 100%;
   transition: 0;
 
@@ -1712,6 +1713,7 @@ headerbar {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(gtk("@theme_selected_bg_color"));
     background-size: 1px 100%;
     box-shadow: 0 2px 1px -1px gtk("@theme_selected_bg_color"), 0 2px 1px -1px gtkalpha(gtk("@theme_selected_fg_color"), 0.15);
+    transition: 0;
     
     label { 
       //text-shadow: none;
@@ -1722,6 +1724,7 @@ headerbar {
       background: image(gtkalpha(gtk("@theme_unfocused_bg_color"), 0.3)), image(gtk("@theme_selected_bg_color"));
       box-shadow: 0 2px 1px -1px gtk("@theme_selected_bg_color"), 0 2px 1px -1px gtkalpha(gtk("@theme_selected_fg_color"), 0.15), 0 2px 1px -1px gtkalpha(gtk("@theme_unfocused_bg_color"), 0.3);
       //box-shadow: inset 0 1px gtkmix($top_hilight, gtk("@theme_selected_bg_color"), 60%);
+      transition: 0;
       
       label { 
         //text-shadow: none;
@@ -2345,7 +2348,7 @@ window.popup > menu { // DO NOT REMOVE THIS LINE - IT WILL BREAK THE GTKPOPUPMEN
 
     &.top {
       margin-top: -4px;
-      border-bottom: 1px solid gtk("@theme_fg_color");
+      border-bottom: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-top-right-radius: $menu_radius;
       border-top-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
@@ -2354,13 +2357,13 @@ window.popup > menu { // DO NOT REMOVE THIS LINE - IT WILL BREAK THE GTKPOPUPMEN
     &.bottom {
       margin-top: 8px;
       margin-bottom: -12px;
-      border-top: 1px solid gtk("@theme_fg_color");
+      border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-bottom-right-radius: $menu_radius;
       border-bottom-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
     }
 
-    &:hover { background-color: gtk("@theme_fg_color"); }
+    &:hover { background-color: gtkalpha(gtk("@theme_fg_color"), 0.1); }
 
     //&:backdrop { background-color: $backdrop_menu_color; }
 
@@ -2622,6 +2625,11 @@ notebook {
 
     &:backdrop { background-color: gtk("@theme_unfocused_base_color"); }
   }
+}
+
+notebook viewport.frame {
+    background: image(gtk("@theme_base_color"));
+    border-width: 0;
 }
 
 
@@ -3949,6 +3957,10 @@ messagedialog { // Message Dialog styling
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
   }
+    
+  .dialog-action-area {
+    padding: 8px;
+  }
 
   &.csd { // rounded bottom border styling for csd version
     &.background {
@@ -3959,7 +3971,7 @@ messagedialog { // Message Dialog styling
 
     .dialog-action-area button {
       padding: 10px 14px; // labels are not vertically centered on message dialog, this is a workaround
-      border-radius: 0;
+      //border-radius: 0;
       border-left-style: solid;
       border-right-style: none;
       border-bottom-style: none;
@@ -4262,7 +4274,7 @@ infobar {
   &.question {
     color: gtk("@theme_selected_fg_color");
     label, & { color: gtk("@theme_selected_fg_color"); }
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(gtk("@theme_selected_bg_color"));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05)), image(gtk("@theme_selected_bg_color"));
         
     &:backdrop {
       color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8);
@@ -4294,7 +4306,7 @@ infobar {
   &.warning {
     color: white;
     label, & { color: white; }
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(gtk("@warning_color"));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05)), image(gtk("@warning_color"));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
@@ -4326,7 +4338,7 @@ infobar {
   &.error {
     color: white;
     label, & { color: white; }
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(gtk("@error_color"));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05)), image(gtk("@error_color"));
         
     &:backdrop {
       color: gtkalpha(white, 0.8);
@@ -4380,9 +4392,10 @@ tooltip {
   &.background {
     // background-color needs to be set this way otherwise it gets drawn twice
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.01)), image(gtk("@tooltip_background"));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05)), image(gtk("@tooltip_background"));
     background-clip: padding-box;
-    box-shadow: 0 0 0 1px gtk("@tooltip_background"), gtk("@ferengtk_border_generic");
+    box-shadow: inset 0 0 0 1px gtk("@tooltip_background"), inset 0 0 0 1px gtk("@ferengtk_border_generic");
+    padding: 1px;
   }
 
   padding: 1px; /* not working */
@@ -4605,6 +4618,7 @@ decoration {
 
   box-shadow: 0 7px 13px 0px gtkalpha(black, 0.4);
               //0 0 0 1px $_wm_border; //doing borders with box-shadow
+  transition: 0;
 
   // FIXME rationalize shadows
 
@@ -4618,7 +4632,7 @@ decoration {
     // or the jumping will happen during the transition.
     box-shadow: 0 7px 13px 0px transparent,
                 0 7px 13px 0px gtkalpha(black, 0.4);
-    transition: $backdrop_transition;
+    transition: 0;
   }
 
   .maximized &,

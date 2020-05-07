@@ -12,10 +12,10 @@
 @define-color theme_button_decoration_focus #006aff;
 @define-color theme_button_foreground_normal #000000;
 @define-color theme_button_foreground_active #ffffff;
-@define-color borders rgba(0, 0, 0, 0.17);
-@define-color warning_color #ff5500;
-@define-color success_color #00aa00;
-@define-color error_color #ff0000;
+@define-color borders #a5a5a5;
+@define-color warning_color #e36b1a;
+@define-color success_color #169c39;
+@define-color error_color #dc293b;
 @define-color theme_unfocused_fg_color #000000;
 @define-color theme_unfocused_text_color #000000;
 @define-color theme_unfocused_bg_color #dcdcdc;
@@ -29,9 +29,9 @@
 @define-color theme_button_foreground_backdrop #000000;
 @define-color theme_button_foreground_active_backdrop #000000;
 @define-color unfocused_borders #a5a5a5;
-@define-color warning_color_backdrop #ff5500;
-@define-color success_color_backdrop #00aa00;
-@define-color error_color_backdrop #ff0000;
+@define-color warning_color_backdrop #e36b1a;
+@define-color success_color_backdrop #169c39;
+@define-color error_color_backdrop #dc293b;
 @define-color insensitive_fg_color #888888;
 @define-color insensitive_base_fg_color #959595;
 @define-color insensitive_bg_color #d2d2d2;
@@ -44,9 +44,9 @@
 @define-color theme_button_foreground_insensitive #949494;
 @define-color theme_button_foreground_active_insensitive #888888;
 @define-color insensitive_borders #c0c0c0;
-@define-color warning_color_insensitive #f5af88;
-@define-color success_color_insensitive #95ce95;
-@define-color error_color_insensitive #f69090;
+@define-color warning_color_insensitive #eab793;
+@define-color success_color_insensitive #9dcaa9;
+@define-color error_color_insensitive #e89fa7;
 @define-color insensitive_unfocused_fg_color #888888;
 @define-color theme_unfocused_view_text_color #959595;
 @define-color insensitive_unfocused_bg_color #d2d2d2;
@@ -59,22 +59,22 @@
 @define-color theme_button_foreground_backdrop_insensitive #949494;
 @define-color theme_button_foreground_active_backdrop_insensitive #888888;
 @define-color unfocused_insensitive_borders #c0c0c0;
-@define-color warning_color_insensitive_backdrop #f5af88;
-@define-color success_color_insensitive_backdrop #95ce95;
-@define-color error_color_insensitive_backdrop #f69090;
+@define-color warning_color_insensitive_backdrop #eab793;
+@define-color success_color_insensitive_backdrop #9dcaa9;
+@define-color error_color_insensitive_backdrop #e89fa7;
 @define-color link_color #2980b9;
 @define-color link_visited_color #7f8c8d;
 @define-color tooltip_text #000000;
 @define-color tooltip_background #fbfbfb;
 @define-color tooltip_border #bcbcbc;
 @define-color content_view_bg #f1f1f1;
-@define-color theme_titlebar_background #DCDCDC;
+@define-color theme_titlebar_background #dcdcdc;
 @define-color theme_titlebar_foreground #000000;
-@define-color theme_titlebar_background_light #DCDCDC;
-@define-color theme_titlebar_foreground_backdrop #494949;
-@define-color theme_titlebar_background_backdrop #DCDCDC;
-@define-color theme_titlebar_foreground_insensitive #494949;
-@define-color theme_titlebar_foreground_insensitive_backdrop #494949;
+@define-color theme_titlebar_background_light #dcdcdc;
+@define-color theme_titlebar_foreground_backdrop #5a5a5a;
+@define-color theme_titlebar_background_backdrop #dcdcdc;
+@define-color theme_titlebar_foreground_insensitive #5a5a5a;
+@define-color theme_titlebar_foreground_insensitive_backdrop #5a5a5a;
 /* GTK NAMED COLORS ---------------- use responsibly! */
 @define-color ferengtk_darkening_bg rgba(0, 0, 0, 0.08);
 @define-color ferengtk_border_generic rgba(0, 0, 0, 0.19);
@@ -726,13 +726,13 @@ spinbutton:not(.vertical) button:dir(rtl) { border-style: none solid none none; 
 
 spinbutton:not(.vertical) button:hover { color: @theme_fg_color; background: image(alpha(@theme_fg_color,0.05)); }
 
-spinbutton:not(.vertical) button:disabled { color: alpha(@insensitive_fg_color,0.3); background: none; }
+spinbutton:not(.vertical) button:disabled { color: @insensitive_fg_color; background: none; }
 
 spinbutton:not(.vertical) button:active { background: image(alpha(@theme_fg_color,0.1)); box-shadow: inset 0 2px 3px -1px alpha(black,0.2); }
 
-spinbutton:not(.vertical) button:backdrop { color: alpha(@theme_fg_color,0.7); background: none; border-color: alpha(@ferengtk_border_generic,0.7); transition: 200ms ease-out; box-shadow: none; }
+spinbutton:not(.vertical) button:backdrop { color: alpha(@theme_fg_color,0.7); background: none; border-color: alpha(@ferengtk_border_generic,0.7); transition: 200ms ease-out; box-shadow: none; border: 1px solid transparent; }
 
-spinbutton:not(.vertical) button:backdrop:disabled { color: alpha(@theme_fg_color,0.3); background: none; border: 1px solid transparent; }
+spinbutton:not(.vertical) button:backdrop:disabled { color: alpha(@insensitive_fg_color,0.7); background: none; border: 1px solid transparent; }
 
 spinbutton:not(.vertical) button:backdrop:disabled:dir(rtl) { border-style: none solid none none; }
 
@@ -817,7 +817,7 @@ searchbar > revealer > box, .location-bar { border-width: 0 0 1px; padding: 3px;
 searchbar > revealer > box { margin: -6px; padding: 6px; }
 
 /*************** Header bars * */
-.titlebar:not(headerbar), headerbar { padding: 0 6px; min-height: 30px; box-shadow: 0 2px 1px -1px @theme_titlebar_background, 0 2px 1px -1px alpha(@theme_titlebar_foreground,0.15); border-radius: 0; color: @theme_titlebar_foreground; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)), image(@theme_titlebar_background); background-size: 1px 100%; transition: 0; /* hide the close button separator */ }
+.titlebar:not(headerbar), headerbar { padding: 0 6px; min-height: 30px; box-shadow: 0 2px 1px -1px @theme_titlebar_background, 0 2px 1px -1px alpha(@theme_titlebar_foreground,0.15); border-radius: 0; color: @theme_titlebar_foreground; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)), image(@theme_titlebar_background); background-size: 1px 100%; transition: 0; /* hide the close button separator */ }
 
 .titlebar:backdrop:not(headerbar), headerbar:backdrop { box-shadow: 0 2px 1px -1px @theme_titlebar_background_backdrop, 0 2px 1px -1px alpha(@theme_titlebar_foreground_backdrop,0.15); color: @theme_titlebar_foreground_backdrop; background: image(@theme_titlebar_background_backdrop); transition: 0; }
 
@@ -855,11 +855,11 @@ searchbar > revealer > box { margin: -6px; padding: 6px; }
 
 .titlebar:not(headerbar) button.destructive-action label, .titlebar:not(headerbar) button.destructive-action, headerbar button.destructive-action label, headerbar button.destructive-action { color: white; }
 
-.selection-mode .titlebar:not(headerbar), .selection-mode.titlebar:not(headerbar), .selection-mode headerbar, headerbar.selection-mode { color: @theme_selected_fg_color; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(@theme_selected_bg_color); background-size: 1px 100%; box-shadow: 0 2px 1px -1px @theme_selected_bg_color, 0 2px 1px -1px alpha(@theme_selected_fg_color,0.15); }
+.selection-mode .titlebar:not(headerbar), .selection-mode.titlebar:not(headerbar), .selection-mode headerbar, headerbar.selection-mode { color: @theme_selected_fg_color; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(@theme_selected_bg_color); background-size: 1px 100%; box-shadow: 0 2px 1px -1px @theme_selected_bg_color, 0 2px 1px -1px alpha(@theme_selected_fg_color,0.15); transition: 0; }
 
 .selection-mode .titlebar:not(headerbar) label, .selection-mode.titlebar:not(headerbar) label, .selection-mode headerbar label, headerbar.selection-mode label { color: @theme_selected_fg_color; }
 
-.selection-mode .titlebar:backdrop:not(headerbar), .selection-mode.titlebar:backdrop:not(headerbar), .selection-mode headerbar:backdrop, headerbar.selection-mode:backdrop { background: image(alpha(@theme_unfocused_bg_color,0.3)), image(@theme_selected_bg_color); box-shadow: 0 2px 1px -1px @theme_selected_bg_color, 0 2px 1px -1px alpha(@theme_selected_fg_color,0.15), 0 2px 1px -1px alpha(@theme_unfocused_bg_color,0.3); }
+.selection-mode .titlebar:backdrop:not(headerbar), .selection-mode.titlebar:backdrop:not(headerbar), .selection-mode headerbar:backdrop, headerbar.selection-mode:backdrop { background: image(alpha(@theme_unfocused_bg_color,0.3)), image(@theme_selected_bg_color); box-shadow: 0 2px 1px -1px @theme_selected_bg_color, 0 2px 1px -1px alpha(@theme_selected_fg_color,0.15), 0 2px 1px -1px alpha(@theme_unfocused_bg_color,0.3); transition: 0; }
 
 .selection-mode .titlebar:backdrop:not(headerbar) label, .selection-mode.titlebar:backdrop:not(headerbar) label, .selection-mode headerbar:backdrop label, headerbar.selection-mode:backdrop label { color: alpha(@theme_selected_fg_color,0.7); }
 
@@ -1098,11 +1098,11 @@ menu menuitem label:dir(rtl), menu menuitem label:dir(ltr), .menu menuitem label
 
 menu > arrow, .menu > arrow, .context-menu > arrow, window.popup > menu > arrow { border: none; box-shadow: none; background-color: transparent; background: none; min-height: 16px; min-width: 16px; padding: 4px; background-color: alpha(@theme_base_color,0.9); border-radius: 0; }
 
-menu > arrow.top, .menu > arrow.top, .context-menu > arrow.top, window.popup > menu > arrow.top { margin-top: -4px; border-bottom: 1px solid @theme_fg_color; border-top-right-radius: 0px; border-top-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-up-symbolic"); }
+menu > arrow.top, .menu > arrow.top, .context-menu > arrow.top, window.popup > menu > arrow.top { margin-top: -4px; border-bottom: 1px solid @ferengtk_border_generic; border-top-right-radius: 0px; border-top-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-up-symbolic"); }
 
-menu > arrow.bottom, .menu > arrow.bottom, .context-menu > arrow.bottom, window.popup > menu > arrow.bottom { margin-top: 8px; margin-bottom: -12px; border-top: 1px solid @theme_fg_color; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-down-symbolic"); }
+menu > arrow.bottom, .menu > arrow.bottom, .context-menu > arrow.bottom, window.popup > menu > arrow.bottom { margin-top: 8px; margin-bottom: -12px; border-top: 1px solid @ferengtk_border_generic; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-down-symbolic"); }
 
-menu > arrow:hover, .menu > arrow:hover, .context-menu > arrow:hover, window.popup > menu > arrow:hover { background-color: @theme_fg_color; }
+menu > arrow:hover, .menu > arrow:hover, .context-menu > arrow:hover, window.popup > menu > arrow:hover { background-color: alpha(@theme_fg_color,0.1); }
 
 menu > arrow:disabled, .menu > arrow:disabled, .context-menu > arrow:disabled, window.popup > menu > arrow:disabled { color: transparent; background-color: transparent; border-color: transparent; }
 
@@ -1219,6 +1219,8 @@ notebook > header.bottom tab { padding-top: 4px; }
 notebook > stack:not(:only-child) { background-color: @theme_base_color; }
 
 notebook > stack:not(:only-child):backdrop { background-color: @theme_unfocused_base_color; }
+
+notebook viewport.frame { background: image(@theme_base_color); border-width: 0; }
 
 /************** Scrollbars * */
 scrollbar { background-color: @theme_bg_color; transition: 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
@@ -1815,9 +1817,11 @@ calendar:indeterminate { color: alpha(currentColor,0.1); }
 /*********** Dialogs * */
 messagedialog .titlebar { min-height: 20px; background-image: none; background-color: @theme_bg_color; border-style: none; border-top-left-radius: 7px; border-top-right-radius: 7px; }
 
+messagedialog .dialog-action-area { padding: 8px; }
+
 messagedialog.csd.background { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 
-messagedialog.csd .dialog-action-area button { padding: 10px 14px; border-radius: 0; border-left-style: solid; border-right-style: none; border-bottom-style: none; }
+messagedialog.csd .dialog-action-area button { padding: 10px 14px; border-left-style: solid; border-right-style: none; border-bottom-style: none; }
 
 messagedialog.csd .dialog-action-area button:first-child { border-left-style: none; border-bottom-left-radius: 7px; -gtk-outline-bottom-left-radius: 5px; }
 
@@ -1935,7 +1939,7 @@ paned.vertical > separator.wide { margin: 0; padding: 0; background-repeat: repe
 /************** GtkInfoBar * */
 infobar { border-style: none; }
 
-infobar.info, infobar.question { color: @theme_selected_fg_color; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(@theme_selected_bg_color); }
+infobar.info, infobar.question { color: @theme_selected_fg_color; background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05)), image(@theme_selected_bg_color); }
 
 infobar.info label, infobar.info, infobar.question label, infobar.question { color: @theme_selected_fg_color; }
 
@@ -1967,7 +1971,7 @@ infobar.info button:backdrop:disabled, infobar.question button:backdrop:disabled
 
 infobar.info button:backdrop:disabled label, infobar.info button:backdrop:disabled, infobar.question button:backdrop:disabled label, infobar.question button:backdrop:disabled { color: alpha(alpha(@theme_selected_fg_color,0.8),0.3); }
 
-infobar.warning { color: white; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(@warning_color); }
+infobar.warning { color: white; background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05)), image(@warning_color); }
 
 infobar.warning label, infobar.warning { color: white; }
 
@@ -1999,7 +2003,7 @@ infobar.warning button:backdrop:disabled { border: none; color: alpha(alpha(whit
 
 infobar.warning button:backdrop:disabled label, infobar.warning button:backdrop:disabled { color: alpha(alpha(white,0.8),0.3); }
 
-infobar.error { color: white; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.11), rgba(0, 0, 0, 0.16)), image(@error_color); }
+infobar.error { color: white; background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05)), image(@error_color); }
 
 infobar.error label, infobar.error { color: white; }
 
@@ -2040,7 +2044,7 @@ infobar.info *:link, infobar.info button:link, infobar.info button:link:backdrop
 /************ Tooltips * */
 tooltip { padding: 1px; /* not working */ border-radius: 3px; box-shadow: none; }
 
-tooltip.background { background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.01)), image(@tooltip_background); background-clip: padding-box; box-shadow: 0 0 0 1px @tooltip_background, @ferengtk_border_generic; }
+tooltip.background { background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05)), image(@tooltip_background); background-clip: padding-box; box-shadow: inset 0 0 0 1px @tooltip_background, inset 0 0 0 1px @ferengtk_border_generic; padding: 1px; }
 
 tooltip decoration { background-color: transparent; }
 
@@ -2137,9 +2141,9 @@ colorchooser .popover.osd { border-radius: 4px; }
 .nemo-window .primary-toolbar:backdrop { box-shadow: inset 0 -1px @ferengtk_border_generic; }
 
 /********************** Window Decorations * */
-decoration { border-radius: 0 0 0 0; border-width: 0px; box-shadow: 0 7px 13px 0px alpha(black,0.4); margin: 10px; }
+decoration { border-radius: 0 0 0 0; border-width: 0px; box-shadow: 0 7px 13px 0px alpha(black,0.4); transition: 0; margin: 10px; }
 
-decoration:backdrop { box-shadow: 0 7px 13px 0px transparent, 0 7px 13px 0px alpha(black,0.4); transition: 200ms ease-out; }
+decoration:backdrop { box-shadow: 0 7px 13px 0px transparent, 0 7px 13px 0px alpha(black,0.4); transition: 0; }
 
 .maximized decoration, .fullscreen decoration, .tiled decoration, .tiled-top decoration, .tiled-right decoration, .tiled-bottom decoration, .tiled-left decoration { border-radius: 0; }
 
@@ -2298,6 +2302,10 @@ statusbar > frame > border { border: none; }
 .nemo-window .nemo-places-sidebar.frame { border-width: 0; }
 
 .floating-bar { background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(@theme_selected_bg_color); color: @theme_selected_fg_color; border-radius: 4px 4px 0 0; box-shadow: inset 0 0 0 1px @theme_selected_bg_color, inset 0 0 0 1px alpha(@ferengtk_border_generic,0.8); padding: 1px; }
+
+.nemo-window .nemo-window-pane widget.entry { border: 1.4px solid @theme_selected_bg_color; border-radius: 4px; color: @theme_fg_color; background-color: @theme_base_color; }
+
+.nemo-window .nemo-window-pane widget.entry:selected:focus, .nemo-window .nemo-window-pane widget.entry:selected { background-color: @theme_selected_bg_color; color: @theme_selected_fg_color; }
 
 /********** Photos * */
 .checkerboard-layout { color: @theme_text_color; }
