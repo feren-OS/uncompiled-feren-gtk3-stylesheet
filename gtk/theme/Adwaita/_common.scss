@@ -3132,7 +3132,7 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
 }
 
 %scale_highlight {
-  border: 1px solid gtk("@theme_selected_bg_color");
+  border: 1px solid gtk("@theme_selected_bg_color") gtkbreezent("@ferengtk_border_generic");
   border-radius: 3px;
   background-color: gtk("@theme_selected_bg_color");
 
@@ -3142,7 +3142,7 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
   }
 
   &:backdrop {
-    border-color: gtk("@theme_selected_bg_color");
+    border: 1px solid gtk("@theme_selected_bg_color") gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
     &:disabled {
       background-color: transparent;
       border-color: transparent;
