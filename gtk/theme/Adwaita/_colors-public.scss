@@ -29,61 +29,34 @@
 @define-color popover_bg_color @menu_color; // Replace with menu BG colour
 @define-color popover_hover_color @theme_selected_bg_color; // Replace with selected_bg_color to simulate a menu
 
-//@define-color scrollbar_bg_color #{"" + $scrollbar_bg_color};
-//@define-color scrollbar_slider_color #{"" + $scrollbar_slider_color};
-//@define-color scrollbar_slider_hover_color #{"" + $scrollbar_slider_hover_color};
-//@define-color scrollbar_slider_active_color #{"" + $scrollbar_slider_active_color}; // Not needed as we'll use selected_bg_color anyway
+/*
+ * GTK API color re-defs (from BreezeGTK3)
+ */
 
-//@define-color warning_color #{"" + $warning_color};
-//@define-color error_color #{"" + $error_color};
-//@define-color success_color #{"" + $success_color};
-//@define-color destructive_color #{"" + $destructive_color}; // error_color is Negative Colour
+@define-color theme_fg_color @theme_fg_color_breeze;
+@define-color theme_text_color @theme_text_color_breeze;
+@define-color theme_bg_color @theme_bg_color_breeze;
+@define-color theme_base_color @theme_base_color_breeze;
+@define-color theme_selected_bg_color @theme_selected_bg_color_breeze;
+@define-color theme_selected_fg_color @theme_selected_fg_color_breeze;
+@define-color insensitive_bg_color @insensitive_bg_color_breeze;
+@define-color insensitive_fg_color @insensitive_fg_color_breeze;
+@define-color insensitive_base_color @insensitive_base_color_breeze;
+@define-color theme_unfocused_fg_color @theme_unfocused_fg_color_breeze;
+@define-color theme_unfocused_text_color @theme_unfocused_text_color_breeze;
+@define-color theme_unfocused_bg_color @theme_unfocused_bg_color_breeze;
+@define-color theme_unfocused_base_color @theme_unfocused_base_color_breeze;
+@define-color theme_unfocused_selected_bg_color @theme_unfocused_selected_bg_color_breeze;
+@define-color theme_unfocused_selected_fg_color @theme_unfocused_selected_fg_color_breeze;
+@define-color unfocused_insensitive_color @unfocused_insensitive_color_breeze;
+@define-color borders @borders_breeze;
+@define-color unfocused_borders @unfocused_borders_breeze;
+@define-color warning_color @warning_color_breeze;
+@define-color error_color @error_color_breeze;
+@define-color success_color @success_color_breeze;
+@define-color content_view_bg @content_view_bg_breeze;
 
-//@define-color osd_fg_color #{"" + $osd_fg_color};
-//@define-color osd_text_color #{"" + $osd_text_color};
-//@define-color osd_bg_color #{"" + $osd_bg_color};
-//@define-color osd_insensitive_bg_color #{"" + $osd_insensitive_bg_color};
-//@define-color osd_insensitive_fg_color #{"" + $osd_insensitive_fg_color};
-//@define-color osd_borders_color #{"" + $osd_borders_color};
-//TODO: Figure out what uses the OSD styles to test theme on
 
-//@define-color sidebar_bg_color #{"" + $sidebar_bg_color};
-//@define-color base_hover_color #{"" + $base_hover_color};
-
-//@define-color tooltip_borders_color #{"" + $tooltip_borders_color};
-//@define-color shadow_color #{"rgba(0, 0, 0, 0.1)"};
-
-//@define-color drop_target_color #{"" + $drop_target_color}; // IDK
-
-//insensitive state derived colors
-//@define-color insensitive_fg_color #{"" + $insensitive_fg_color};
-//@define-color insensitive_bg_color #{"" + $insensitive_bg_color};
-//@define-color insensitive_borders_color #{"" + $insensitive_borders_color};
-
-//colors for the backdrop state, derived from the main colors.
-//@define-color backdrop_base_color #{"" + $backdrop_base_color};
-//@define-color backdrop_text_color #{"" + $backdrop_text_color};
-//@define-color backdrop_bg_color #{"" + $backdrop_bg_color};
-//@define-color backdrop_fg_color #{"" + $backdrop_fg_color};
-//@define-color backdrop_insensitive_color #{"" + $backdrop_insensitive_color};
-//@define-color backdrop_selected_fg_color #{"" + $backdrop_selected_fg_color};
-//@define-color backdrop_borders_color_breeze '#{gtkmix(@borders_breeze, @theme_bg_color_breeze, 80%)}';
-//@define-color backdrop_dark_fill #{"" + $backdrop_dark_fill};
-//@define-color backdrop_sidebar_bg_color #{"" + $backdrop_sidebar_bg_color};
-
-//@define-color backdrop_scrollbar_bg_color #{"" + $backdrop_scrollbar_bg_color};
-//@define-color backdrop_scrollbar_slider_color #{"" + $backdrop_scrollbar_slider_color}; // Still unused
-
-//@define-color backdrop_menu_color #{"" + $backdrop_menu_color}; // ??
-
-//special cased widget colors
-//@define-color suggested_bg_color #{"" + $suggested_bg_color};
-//@define-color suggested_border_color #{"" + $suggested_border_color};
-//@define-color progress_bg_color #{"" + $progress_bg_color};
-//@define-color progress_border_color #{"" + $progress_border_color};
-//@define-color checkradio_bg_color #{"" + $checkradio_bg_color};
-//@define-color checkradio_fg_color #{"" + $checkradio_fg_color};
-//@define-color checkradio_borders_color #{"" + $checkradio_borders_color};
 
 // (Elementary OS Compatibility) Brand Colors
 @define-color colorPrimary @theme_titlebar_background_breeze;
