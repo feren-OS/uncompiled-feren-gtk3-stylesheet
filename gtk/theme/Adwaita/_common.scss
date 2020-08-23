@@ -499,8 +499,8 @@ treeview entry {
   }
 
   :backdrop & {
-    color: gtk("@theme_unfocused_base_color");
-    background: image(gtk("@theme_selected_bg_color"));
+    color: gtk("@theme_unfocused_selected_fg_color");
+    background: image(gtk("@theme_unfocused_selected_bg_color"));
   }
 
   &.button {
@@ -1716,14 +1716,14 @@ headerbar {
     }
 
     &:backdrop {
-      background: image(gtkalpha(gtk("@theme_unfocused_bg_color"), 0.3)), image(gtk("@theme_selected_bg_color"));
-      box-shadow: 0 2px 1px -1px gtk("@theme_selected_bg_color"), 0 2px 1px -1px gtkalpha(gtk("@theme_selected_fg_color"), 0.15), 0 2px 1px -1px gtkalpha(gtk("@theme_unfocused_bg_color"), 0.3);
+      background: image(gtk("@theme_unfocused_selected_bg_color"));
+      box-shadow: 0 2px 1px -1px gtk("@theme_unfocused_selected_bg_color"), 0 2px 1px -1px gtkalpha(gtk("@theme_unfocused_selected_fg_color"), 0.15), 0 2px 1px -1px gtkalpha(gtk("@theme_unfocused_bg_color"), 0.3);
       //box-shadow: inset 0 1px gtkmix($top_hilight, gtk("@theme_selected_bg_color"), 60%);
       transition: 0;
       
       label { 
         //text-shadow: none;
-        color: gtkalpha(gtk("@theme_selected_fg_color"), 0.7);
+        color: gtkalpha(gtk("@theme_unfocused_selected_fg_color"), 0.7);
       }
     }
 
@@ -1743,25 +1743,25 @@ headerbar {
 
       &:backdrop {
         &.flat, & {
-          @include button(backdrop, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
+          @include button(backdrop, gtk("@theme_unfocused_selected_bg_color"), gtk("@theme_unfocused_selected_fg_color"));
 
           -gtk-icon-effect: none;
           
 
           &:active,
           &:checked {
-            @include button(backdrop-active, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
+            @include button(backdrop-active, gtk("@theme_unfocused_selected_bg_color"), gtk("@theme_unfocused_selected_fg_color"));
 
             
           }
 
           &:disabled {
-            @include button(backdrop-insensitive, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
+            @include button(backdrop-insensitive, gtk("@theme_unfocused_selected_bg_color"), gtk("@theme_unfocused_selected_fg_color"));
 
             
 
             &:active, &:checked {
-              @include button(backdrop-insensitive-active, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"));
+              @include button(backdrop-insensitive-active, gtk("@theme_unfocused_selected_bg_color"), gtk("@theme_unfocused_selected_fg_color"));
 
               
             }
@@ -2119,7 +2119,7 @@ treeview.view {
         background-image: image(gtk("@theme_base_color"));
 
         &:backdrop {
-          color: gtk("@theme_selected_bg_color");
+          color: gtk("@theme_unfocused_selected_bg_color");
           background-color: gtk("@theme_unfocused_base_color");
         }
       }
@@ -2839,8 +2839,8 @@ switch {
     transition: $backdrop_transition;
 
     &:checked {
-      box-shadow: 0 0 0 1px gtk("@theme_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
-      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.7));
+      box-shadow: 0 0 0 1px gtk("@theme_unfocused_selected_bg_color"), 0 0 0 1px gtkbreezent("@ferengtk_border_generic");
+      background: image(gtkalpha(gtk("@theme_unfocused_selected_bg_color"), 0.7));
     }
 
     &:disabled {
@@ -2886,7 +2886,7 @@ switch {
 
     &:checked slider {
         box-shadow: none;
-        border: 1px solid gtkalpha(gtkdarker(gtk("@theme_selected_bg_color")), 0.7);
+        border: 1px solid gtkalpha(gtkdarker(gtk("@theme_unfocused_selected_bg_color")), 0.7);
     }
 
     &:disabled slider { @include button(backdrop-insensitive); box-shadow: none; border: 1px solid gtkalpha(gtkdarker(gtk("@insensitive_bg_color")), 0.3); }
@@ -2992,14 +2992,14 @@ radio {
     // for checked
     @each $t in (':checked'), (':indeterminate') {
       &#{$t} {
-        @each $state, $t in ("", "normal"),
-                            (":hover", "hover"),
-                            (":active", "active"),
-                            (":disabled", "insensitive"),
-                            (":backdrop", "backdrop"),
-                            (":backdrop:disabled", 'backdrop-insensitive') {
+        @each $state, $t, $bg, $tc in ("", "normal", gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color")),
+                            (":hover", "hover", gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color")),
+                            (":active", "active", gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color")),
+                            (":disabled", "insensitive", gtk("@insensitive_selected_bg_color"), gtk("@insensitive_selected_fg_color")),
+                            (":backdrop", "backdrop", gtk("@theme_unfocused_selected_bg_color"), gtk("@theme_text_color")),
+                            (":backdrop:disabled", 'backdrop-insensitive', gtk("@insensitive_unfocused_selected_bg_color"), gtk("@insensitive_unfocused_selected_fg_color")) {
           &#{$state} {
-            @include check($t, gtk("@theme_selected_bg_color"), gtk("@theme_selected_fg_color"), $checked: true);
+            @include check($t, $bg, $tc, $checked: true);
           }
         }
       }
@@ -3142,7 +3142,8 @@ treeview.view radio:selected { &:focus, & { @extend %radio; }} // This is a work
   }
 
   &:backdrop {
-    border: 1px solid gtk("@theme_selected_bg_color") gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
+    background-color: gtk("@theme_unfocused_selected_bg_color");
+    border: 1px solid gtk("@theme_unfocused_selected_bg_color") gtkbreezent("@ferengtk_border_generic");
     &:disabled {
       background-color: transparent;
       border-color: transparent;
@@ -3838,7 +3839,7 @@ row {
       &.has-open-popup,
       &:hover { background: image(gtk("@theme_selected_bg_color")); }
 
-      &:backdrop { background: image(gtk("@theme_selected_bg_color")); }
+      &:backdrop { background: image(gtk("@theme_unfocused_selected_bg_color")); }
     }
   }
 
@@ -4272,9 +4273,9 @@ infobar {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05)), image(gtk("@theme_selected_bg_color"));
         
     &:backdrop {
-      color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8);
-      label, & { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.8); }
-      background: image(gtkalpha(gtk("@theme_selected_bg_color"), 0.8));
+      color: gtk("@theme_unfocused_selected_fg_color");
+      label, & { color: gtk("@theme_unfocused_selected_fg_color"); }
+      background: image(gtk("@theme_unfocused_selected_bg_color"));
     }
     
     button {
@@ -4290,10 +4291,10 @@ infobar {
       &:disabled { @include button(insensitiveib, transparent, gtk("@theme_selected_fg_color"), none); }
 
       &:backdrop {
-        @include button(backdropib, transparent, gtkalpha(gtk("@theme_selected_fg_color"), 0.8), none);
+        @include button(backdropib, transparent, gtk("@theme_unfocused_selected_fg_color"), none);
 
         &:disabled {
-          @include button(backdropinsensitiveib, transparent, gtkalpha(gtk("@theme_selected_fg_color"), 0.8), none);
+          @include button(backdropinsensitiveib, transparent, gtkalpha(gtk("@theme_unfocused_selected_fg_color"), 0.8), none);
         }
       }
     }
@@ -4878,9 +4879,11 @@ headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restor
     &:disabled { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.5); }
 
     &:backdrop {
-      color: gtkalpha(gtk("@theme_selected_fg_color"), 0.7);
+      color: gtk("@theme_unfocused_selected_fg_color");
+      background-color: gtk("@theme_unfocused_selected_bg_color");
 
-      &:disabled { color: gtkalpha(gtk("@theme_selected_fg_color"), 0.3); }
+      &:disabled { color: gtk("insensitive_unfocused_selected_fg_color");
+        background-color: gtk("insensitive_unfocused_selected_bg_color"); }
     }
   }
 }
