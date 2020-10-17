@@ -15,6 +15,10 @@
     button {
         @extend %button.flat;
     }
+    &:backdrop {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(gtk("@theme_unfocused_selected_bg_color"));
+        color: gtk("@theme_text_color");
+    }
 }
 .nemo-window .nemo-window-pane widget.entry {
     border: 1.4px solid gtk("@theme_selected_bg_color");
@@ -60,51 +64,61 @@
     color: gtk("@theme_text_color");
 }
 
-scale.tint trough {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
+scale {
+    &.tint {
+        trough {
+            padding: 1px;
+            border: transparent;
+        }
+    }
+    
+    
+    &.temperature {
+        trough {
+            background-image:
+                linear-gradient(
+                    to right,
+                    gtk("@BLUEBERRY_500"),
+                    gtk("@BANANA_500")
+                );
+            padding: 1px;
+            border: transparent;
+        }
+
+        &:dir(rtl) trough {
+            background-image:
+                linear-gradient(
+                    to left,
+                    gtk("@BLUEBERRY_500"),
+                    gtk("@BANANA_500")
+                );
+        }
+    }
+
+
+    &.warmth {
+        trough {
+            background-image:
+                linear-gradient(
+                    to right,
+                    gtkalpha(gtk("@ORANGE_100"), 0.5),
+                    gtk("@ORANGE_500")
+                );
+            padding: 1px;
+            border: transparent;
+        }
+
+        &:dir(rtl) trough {
+            background-image:
+                linear-gradient(
+                    to left,
+                    gtkalpha(gtk("@ORANGE_100"), 0.5),
+                    gtk("@ORANGE_500")
+                );
+        }
+    }
 }
 
-scale.temperature trough {
-    background-image:
-        linear-gradient(
-            to right,
-            gtkbreezent("@BLUEBERRY_500"),
-            gtkbreezent("@SILVER_100"),
-            gtkbreezent("@ORANGE_500")
-        );
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
-}
-
-scale.temperature:dir(rtl) trough {
-    background:
-        linear-gradient(
-            to left,
-            gtkbreezent("@BLUEBERRY_500"),
-            gtkbreezent("@SILVER_100"),
-            gtkbreezent("@ORANGE_500")
-        );
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
-}
-
-scale.warmth trough {
-    background:
-        linear-gradient(
-            to right,
-            gtkbreezent("@ORANGE_100"),
-            gtkbreezent("@ORANGE_500")
-        );
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
-}
-
-scale.warmth:dir(rtl) trough {
-    background:
-        linear-gradient(
-            to left,
-            gtk("@theme_bg_color"),
-            gtkbreezent("@ORANGE_500")
-        );
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.17) !important;
-}
 frame.flat > border,
 frame > border.flat,
 .frame.flat {
@@ -181,7 +195,6 @@ window.background.chromium headerbar.titlebar .button.titlebutton {
 }
 
 .h2 {
-    font-weight: 300;
     font-size: 18pt;
 }
 
@@ -189,24 +202,21 @@ window.background.chromium headerbar.titlebar .button.titlebutton {
     font-size: 11pt;
 }
 
-.h4,
-.category-label {
-    color: gtkalpha(gtk("@theme_text_color"), 0.7);
+label.h4,
+.h4 label {
+    opacity: 0.8;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
 }
 
-.h4 {
-    padding-bottom: 6px;
-    padding-top: 6px;
+.dim-label {
+    opacity: 0.75;
 }
 
-list .h4 {
-    padding-left: 6px;
+:link:hover label {
+  text-decoration: underline;
 }
 
-label.primary {
-    font-weight: 700;
-    font-size: 1.2em;
-}
 
 /********
 * Geary *
