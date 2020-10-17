@@ -1,5 +1,5 @@
 project('gtk+-3.0', 'c',
-        version: '3.24.14',
+        version: '3.24.23',
         default_options: [
           'buildtype=debugoptimized',
           'warning_level=1'
@@ -26,11 +26,12 @@ endif
 glib_req           = '>= @0@.@1@.@2@'.format(glib_major_req, glib_minor_req, glib_micro_req)
 pango_req          = '>= 1.41.0'
 fribidi_req        = '>= 0.19.7'
-atk_req            = '>= 2.15.1'
+atk_req            = '>= 2.35.1'
+at_spi2_atk_req    = '>= 2.15.1'
 cairo_req          = '>= 1.14.0'
 gdk_pixbuf_req     = '>= 2.30.0'
 introspection_req  = '>= 1.39.0'
-wayland_proto_req  = '>= 1.14'
+wayland_proto_req  = '>= 1.17'
 wayland_req        = '>= 1.14.91'
 epoxy_req          = '>= 1.4'
 cloudproviders_req = '>= 0.2.5'
@@ -51,19 +52,20 @@ gtk_version       = meson.project_version()
 gtk_major_version = gtk_version.split('.')[0].to_int()
 gtk_minor_version = gtk_version.split('.')[1].to_int()
 gtk_micro_version = gtk_version.split('.')[2].to_int()
-gtk_interface_age = 7
+gtk_interface_age = 19
 add_project_arguments('-DGTK_VERSION="@0@"'.format(meson.project_version()), language: 'c')
 
 add_project_arguments('-D_GNU_SOURCE', language: 'c')
 
 gtk_debug_cflags = []
-buildtype = get_option('buildtype')
-if buildtype.startswith('debug')
+debug = get_option('debug')
+optimization = get_option('optimization')
+if debug
   gtk_debug_cflags += '-DG_ENABLE_DEBUG'
-#  if buildtype == 'debug'
-#    gtk_debug_cflags += '-DG_ENABLE_CONSISTENCY_CHECKS'
-#  endif
-elif buildtype == 'release'
+  if optimization in ['0', 'g']
+    gtk_debug_cflags += '-DG_ENABLE_CONSISTENCY_CHECKS'
+  endif
+elif optimization in ['2', '3', 's']
   gtk_debug_cflags += '-DG_DISABLE_CAST_CHECKS'
 endif
 
@@ -274,9 +276,12 @@ endif
 if cc.get_id() == 'msvc'
   # Compiler options taken from msvc_recommended_pragmas.h
   # in GLib, based on _Win32_Programming_ by Rector and Newcomer
-  test_cflags = []
-  add_project_arguments('-FImsvc_recommended_pragmas.h', language: 'c')
-  add_project_arguments('-D_USE_MATH_DEFINES', language: 'c')
+  test_cflags = [
+    '-FImsvc_recommended_pragmas.h',
+    '-D_USE_MATH_DEFINES',
+    '-utf-8',
+  ]
+  add_project_arguments(cc.get_supported_arguments(test_cflags), language: 'c')
 elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
   test_cflags = [
     '-fno-strict-aliasing',
@@ -477,6 +482,16 @@ if require_harfbuzz and not harfbuzz_dep.found()
                               fallback: ['harfbuzz', 'libharfbuzz_dep'])
 endif
 
+tracker3_enabled = get_option('tracker3')
+if tracker3_enabled
+  tracker3_dep = dependency('tracker-sparql-3.0', required: false)
+  if tracker3_dep.found()
+    cdata.set('HAVE_TRACKER3', tracker3_dep.found())
+  else
+    error('Tracker3 not found, but was explicitly requested.')
+  endif
+endif
+
 if iso_codes_dep.found()
   cdata.set_quoted('ISO_CODES_PREFIX', iso_codes_dep.get_pkgconfig_variable('prefix'))
 else
@@ -561,7 +576,7 @@ if x11_enabled
   xfixes_dep     = dependency('xfixes', required: false)
   xcomposite_dep = dependency('xcomposite', required: false)
   fontconfig_dep = dependency('fontconfig', fallback: ['fontconfig', 'fontconfig_dep'])
-  atkbridge_dep  = dependency('atk-bridge-2.0', version: atk_req)
+  atkbridge_dep  = dependency('atk-bridge-2.0', version: at_spi2_atk_req)
 
   x11_pkgs = ['fontconfig', 'x11', 'xext', 'xi', 'xrandr']
 
@@ -636,7 +651,7 @@ if broadway_enabled
 endif
 
 if quartz_enabled
-  pc_gdk_extra_libs += ['-framework Cocoa', '-framework Carbon', '-framework CoreGraphics']
+  pc_gdk_extra_libs += ['-Wl,-framework,Cocoa', '-Wl,-framework,Carbon', '-Wl,-framework,CoreGraphics']
 endif
 
 extra_demo_ldflags = []
@@ -652,19 +667,11 @@ if win32_enabled
   endif
   pc_gdk_extra_libs += ['-lwinmm', '-ldwmapi', '-lsetupapi', '-lcfgmgr32']
 
-# Check whether libepoxy is built with EGL support on Windows
-  win32_has_egl = cc.links(
-     '''
-     #include <epoxy/egl.h>
-
-     int main(int argc, char *argv[]) {
-       return epoxy_egl_version (EGL_NO_DISPLAY);
-     }
-     ''',
-     dependencies : epoxy_dep,
-     name : 'libepoxy supports EGL on Windows'
-    )
-
+  # Check whether libepoxy is built with EGL support on Windows
+  win32_has_egl = epoxy_dep.get_variable(
+    pkgconfig: 'epoxy_has_egl',
+    internal: 'epoxy_has_egl',
+    default_value: '0') == '1'
 endif
 
 # IMModules stuff-unfortunately we need to put items here
@@ -854,8 +861,8 @@ pkgconf = configuration_data()
 
 pkgconf.set('prefix', get_option('prefix'))
 pkgconf.set('exec_prefix', '${prefix}')
-pkgconf.set('libdir', '${prefix}/@0@'.format(get_option('libdir')))
-pkgconf.set('includedir', '${prefix}/@0@'.format(get_option('includedir')))
+pkgconf.set('libdir', '${prefix}' / get_option('libdir'))
+pkgconf.set('includedir', '${prefix}' / get_option('includedir'))
 pkgconf.set('GTK_API_VERSION', gtk_api_version)
 pkgconf.set('VERSION', meson.project_version())
 pkgconf.set('GTK_BINARY_VERSION', gtk_binary_version)
@@ -872,12 +879,12 @@ cairo_packages = ''
 if cairo_pkg_found
   cairo_packages += ' '.join([ ' cairo', cairo_req ])
 elif cc.get_id() == 'msvc' and cairo_dep.found()
-  cairo_packages += ' '.join([ ' -lcairo' ])
+  cairo_libs += '-lcairo'
 endif
 if cairogobj_pkg_found
   cairo_packages += ' '.join([ ' cairo-gobject', cairo_req ])
 elif cc.get_id() == 'msvc' and cairogobj_dep.found()
-  cairo_packages += ' '.join([ ' -lcairo-gobject' ])
+  cairo_libs += '-lcairo-gobject'
 endif
 
 gdk_packages += cairo_packages
@@ -983,9 +990,19 @@ meson.add_install_script('build-aux/meson/post-install.py',
 if host_machine.system() != 'windows'
   # Install Valgrind suppression files (except on Windows,
   # as Valgrind is currently not supported on Windows)
-  install_data('gtk.supp', 'gtk64.supp',
+  install_data('gtk.supp',
     install_dir : join_paths(gtk_datadir, 'gtk-3.0', 'valgrind'))
 endif
+
+test(
+  'version-check',
+  find_program('check-version.py'),
+  args: [
+    join_paths(meson.current_source_dir(), 'configure.ac'),
+    join_paths(meson.current_source_dir(), 'meson.build'),
+  ],
+  suite: 'gtk',
+)
 
 summary = [
   '',

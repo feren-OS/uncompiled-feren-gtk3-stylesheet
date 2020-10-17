@@ -73,6 +73,7 @@
 #include "gtkmain.h"
 #include "gtkscrollable.h"
 #include "gtkpopover.h"
+#include "gtkpopoverprivate.h"
 #include "gtkrevealer.h"
 #include "gtkspinner.h"
 #include "gtkseparator.h"
@@ -376,6 +377,7 @@ struct _GtkFileChooserWidgetPrivate {
   guint show_type_column : 1;
   guint create_folders : 1;
   guint auto_selecting_first_row : 1;
+  guint browse_files_interaction_frozen : 1;
 };
 
 #define MAX_LOADING_TIME 500
@@ -813,14 +815,13 @@ error_creating_folder_dialog (GtkFileChooserWidget *impl,
  */
 static void
 error_creating_folder_over_existing_file_dialog (GtkFileChooserWidget *impl,
-                                                 GFile                 *file,
-                                                 GError                *error)
+                                                 GFile                 *file)
 {
-  error_dialog (impl,
-                _("The folder could not be created, as a file with the same "
-                  "name already exists.  Try using a different name for the "
-                  "folder, or rename the file first."),
-                error);
+  error_message (impl,
+                 _("The folder could not be created, as a file with the same "
+                   "name already exists."),
+                 _("Try using a different name for the folder, or rename the "
+                   "file first."));
 }
 
 static void
@@ -1349,6 +1350,9 @@ browse_files_key_press_event_cb (GtkWidget   *widget,
   GtkFileChooserWidget *impl = (GtkFileChooserWidget *) data;
   GtkFileChooserWidgetPrivate *priv = impl->priv;
 
+  if (priv->browse_files_interaction_frozen)
+    return GDK_EVENT_STOP;
+
   if (should_trigger_location_entry (impl, event) &&
       (priv->action == GTK_FILE_CHOOSER_ACTION_OPEN ||
        priv->action == GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER))
@@ -1680,7 +1684,16 @@ rename_file_cb (GSimpleAction *action,
   GtkFileChooserWidget *impl = data;
   GtkFileChooserWidgetPrivate *priv = impl->priv;
   GtkTreeSelection *selection;
+  GtkWidget *prev_default;
+  GtkWindow *window;
 
+  prev_default = gtk_popover_get_prev_default (GTK_POPOVER (priv->browse_files_popover));
+  if (prev_default) {
+    /* set 'default' early so rename popover can get it */
+    window = GTK_WINDOW (gtk_widget_get_ancestor (priv->browse_files_popover, GTK_TYPE_WINDOW));
+    if (window)
+      gtk_window_set_default (window, prev_default);
+  }
   /* insensitive until we change the name */
   gtk_widget_set_sensitive (priv->rename_file_rename_button, FALSE);
 
@@ -2437,6 +2450,9 @@ list_button_press_event_cb (GtkWidget            *widget,
 {
   GtkFileChooserWidgetPrivate *priv = impl->priv;
   static gboolean in_press = FALSE;
+
+  if (priv->browse_files_interaction_frozen)
+    return GDK_EVENT_STOP;
 
   if (in_press)
     return FALSE;
@@ -4081,6 +4097,8 @@ gtk_file_chooser_widget_map (GtkWidget *widget)
 
   profile_start ("start", NULL);
 
+  priv->browse_files_interaction_frozen = FALSE;
+
   GTK_WIDGET_CLASS (gtk_file_chooser_widget_parent_class)->map (widget);
 
   settings_load (impl);
@@ -5020,7 +5038,7 @@ get_category_from_content_type (const char *content_type)
         {
           if (strcmp (mime_type_map[i].icon_name, icon_name) == 0)
             {
-              basic_type = g_strdup (gettext (mime_type_map[i].display_name));
+              basic_type = g_strdup (_(mime_type_map[i].display_name));
               break;
             }
         }
@@ -6566,6 +6584,11 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 
+  if (response == GTK_RESPONSE_ACCEPT)
+    /* Dialog is now going to be closed, so prevent any button/key presses to
+     * file list (will be restablished on next map()). Fixes data loss bug #2288 */
+    impl->priv->browse_files_interaction_frozen = TRUE;
+
   gtk_widget_destroy (dialog);
 
   return (response == GTK_RESPONSE_ACCEPT);
@@ -6843,8 +6866,7 @@ file_exists_get_info_cb (GCancellable *cancellable,
           /* Oops, the user typed the name of an existing path which is not
            * a folder
            */
-          error_creating_folder_over_existing_file_dialog (impl, data->file,
-                                                           g_error_copy (error));
+          error_creating_folder_over_existing_file_dialog (impl, data->file);
         }
       else
         {
@@ -7360,6 +7382,7 @@ search_engine_hits_added_cb (GtkSearchEngine      *engine,
 /* Callback used from GtkSearchEngine when the query is done running */
 static void
 search_engine_finished_cb (GtkSearchEngine *engine,
+                           gboolean         got_results,
                            gpointer         data)
 {
   GtkFileChooserWidget *impl = GTK_FILE_CHOOSER_WIDGET (data);
@@ -7374,7 +7397,7 @@ search_engine_finished_cb (GtkSearchEngine *engine,
       priv->show_progress_timeout = 0;
     }
 
-  if (gtk_tree_model_iter_n_children (GTK_TREE_MODEL (priv->search_model), NULL) == 0)
+  if (!got_results)
     {
       gtk_stack_set_visible_child_name (GTK_STACK (priv->browse_files_stack), "empty");
       gtk_entry_grab_focus_without_selecting (GTK_ENTRY (priv->search_entry));

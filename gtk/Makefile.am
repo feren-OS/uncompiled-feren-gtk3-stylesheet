@@ -583,6 +583,7 @@ gtk_private_h_sources =		\
 	gtktextmarkprivate.h	\
 	gtktextsegment.h	\
 	gtktexttagprivate.h	\
+	gtktexttagtableprivate.h	\
 	gtktexttypes.h		\
 	gtktextutil.h		\
 	gtktrashmonitor.h	\
@@ -1029,6 +1030,13 @@ gtk_private_h_sources += \
 	gtkprinteroptionwidget.h	\
 	gtksearchenginetracker.h
 
+if HAVE_TRACKER3
+gtk_private_h_sources += \
+	gtksearchenginetracker3.h
+gtk_os_unix_c_sources += \
+	gtksearchenginetracker3.c
+endif
+
 gtk_c_sources += $(gtk_os_unix_c_sources)
 endif
 
@@ -1370,9 +1378,7 @@ adwaita_theme_scss = \
 	$()
 
 highcontrast_theme_scss = \
-	theme/HighContrast/_colors.scss 	\
-	theme/HighContrast/_common.scss 	\
-	theme/HighContrast/_drawing.scss 	\
+	theme/HighContrast/_colors-hc.scss 	\
 	theme/HighContrast/gtk-contained-inverse.scss \
 	theme/HighContrast/gtk-contained.scss 	\
 	$()
@@ -1422,10 +1428,10 @@ resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --gener
 
 gtkresources.h: gtk.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< \
-		--target=$@ --sourcedir=$(srcdir) --c-name _gtk --generate-header --manual-register
+		--target=$@ --sourcedir=$(srcdir) --c-name _gtk --generate-header --manual-register --internal
 gtkresources.c: gtk.gresource.xml $(resource_files)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $< \
-		--target=$@ --sourcedir=$(srcdir) --c-name _gtk --generate-source --manual-register
+		--target=$@ --sourcedir=$(srcdir) --c-name _gtk --generate-source --manual-register --internal
 
 gtkprivatetypebuiltins.h: stamp-gtkprivatetypebuiltins.h
 	@true
@@ -1521,7 +1527,7 @@ gtk_3_HEADERS_INST = \
 
 gtk_3_HEADERS_EXCLUDES = dummy
 
-include $(top_srcdir)/build/Makefile.msvcproj
+include $(top_srcdir)/win32/Makefile.msvcproj
 
 if HAVE_INTROSPECTION
 # Introspection Items for MSVC
@@ -1547,11 +1553,11 @@ GTK_MSVC_GIR_CFLAGS =						\
 	-DINCLUDE_IM_ti_et			\
 	-DINCLUDE_IM_viqr			\
 	-DGTK_TEXT_USE_INTERNAL_UNSUPPORTED_API	\
-	-I../.. -I../../gtk -I../../gdk
+	-I.. -I../gtk -I../gdk
 
 INTROSPECTION_INTERMEDIATE_ITEMS = \
-	$(top_builddir)/build/win32/Gtk-3.0.gir.msvc.introspect		\
-	$(top_builddir)/build/win32/Gtk_3_0_gir_list
+	$(top_builddir)/win32/Gtk-3.0.gir.msvc.introspect		\
+	$(top_builddir)/win32/Gtk_3_0_gir_list
 
 Gtk_3_0_gir_MSVC_FILES =		\
 	$(introspected_pub_headers)	\
@@ -1566,7 +1572,7 @@ Gtk_3_0_gir_MSVC_LIBS = gtk-3.0 gdk-3.0
 Gtk_3_0_gir_MSVC_CFLAGS = $(GTK_MSVC_GIR_CFLAGS)
 Gtk_3_0_gir_MSVC_SCANNERFLAGS = --warn-all --include-uninstalled='./vs$$$$(VSVER)/$$$$(CFG)/$$$$(PLAT)/bin/Gdk-3.0.gir'
 
-include $(top_srcdir)/build/Makefile.msvc-introspection
+include $(top_srcdir)/win32/Makefile.msvc-introspection
 
 else
 INTROSPECTION_INTERMEDIATE_ITEMS =
@@ -1574,8 +1580,8 @@ INTROSPECTION_INTERMEDIATE_ITEMS =
 endif
 
 dist-hook: \
-	$(top_builddir)/build/win32/vs9/gtk-3.vcproj	\
-	$(top_builddir)/build/win32/vs9/gtk-3.headers	\
+	$(top_builddir)/win32/vs9/gtk-3.vcproj	\
+	$(top_builddir)/win32/vs9/gtk-3.headers	\
 	$(INTROSPECTION_INTERMEDIATE_ITEMS)
 
 # Install a RC file for the default GTK+ theme, and key themes
@@ -1753,10 +1759,15 @@ EXTRA_DIST +=                   \
 	$(gesture_sources)	\
 	$(theme_sources)	\
 	$(gsettings_SCHEMAS)	\
+	compose-parse.py	\
 	emoji/convert-emoji.c	\
 	emoji/emoji.json	\
+	emoji/emoji1.json	\
 	a11y/Makefile.inc	\
 	deprecated/Makefile.inc	\
+	glade/README.glade	\
+	glade/gtk-private-widgets.xml \
+	gtk-compose-lookaside.txt \
 	inspector/Makefile.inc	\
 	libgtk3.manifest.in	\
 	gtk-win32.rc.body.in	\
@@ -1766,6 +1777,8 @@ EXTRA_DIST +=                   \
 	gtkwin32embedwidget.c	\
 	gtkprint-win32.h	\
 	gtkprint-win32.c	\
+	gtksearchenginetracker3.c \
+	gtksearchenginetracker3.h \
 	gtksearchenginequartz.h \
 	gtkdbusinterfaces.xml	\
 	gtk-keys.css.default	\
@@ -1785,7 +1798,13 @@ EXTRA_DIST +=                   \
 	deprecated/meson.build \
 	inspector/meson.build \
 	theme/Adwaita/meson.build \
-	theme/HighContrast/meson.build
+	theme/Adwaita/parse-sass.sh \
+	theme/Adwaita/render-assets.sh \
+	theme/HighContrast/assets.svg \
+	theme/HighContrast/assets.txt \
+	theme/HighContrast/meson.build \
+	theme/HighContrast/parse-sass.sh \
+	theme/HighContrast/render-assets.sh
 
 
 -include $(top_srcdir)/git.mk

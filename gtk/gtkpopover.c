@@ -674,6 +674,15 @@ gtk_popover_set_state (GtkPopover *popover,
     }
 }
 
+GtkWidget *
+gtk_popover_get_prev_default (GtkPopover *popover)
+{
+  g_return_val_if_fail (GTK_IS_POPOVER (popover), NULL);
+
+  return popover->priv->prev_default;
+}
+
+
 static void
 gtk_popover_map (GtkWidget *widget)
 {
@@ -1566,7 +1575,7 @@ gtk_popover_button_release (GtkWidget      *widget,
           event->y > child_alloc.y + child_alloc.height)
         gtk_popover_popdown (popover);
     }
-  else if (!gtk_widget_is_ancestor (event_widget, widget))
+  else if (!event_widget || !gtk_widget_is_ancestor (event_widget, widget))
     {
       gtk_popover_popdown (popover);
     }

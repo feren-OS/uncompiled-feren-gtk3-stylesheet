@@ -113,6 +113,8 @@ static const GtkIMContextInfo *info_list[] =
   &imwayland_info,
 };
 
+static void gtk_im_context_wayland_focus_out (GtkIMContext *context);
+
 #define GTK_IM_CONTEXT_WAYLAND(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), type_wayland, GtkIMContextWayland))
 
 #ifndef INCLUDE_IM_wayland
@@ -322,7 +324,7 @@ notify_surrounding_text (GtkIMContextWayland *context)
           mid = MIN (context->surrounding.cursor_idx,
                      context->surrounding.anchor_idx) + (cursor_len / 2);
           a = MAX (0, mid - (MAX_LEN / 2));
-          b = MIN (MAX_LEN, mid + (MAX_LEN / 2));
+          b = MIN (len, mid + (MAX_LEN / 2));
 
           start = &context->surrounding.text[a];
           end = &context->surrounding.text[b];
@@ -468,6 +470,8 @@ static void
 gtk_im_context_wayland_finalize (GObject *object)
 {
   GtkIMContextWayland *context = GTK_IM_CONTEXT_WAYLAND (object);
+
+  gtk_im_context_wayland_focus_out (GTK_IM_CONTEXT (context));
 
   g_clear_object (&context->window);
   g_clear_object (&context->gesture);
@@ -644,6 +648,8 @@ gtk_im_context_wayland_set_client_window (GtkIMContext *context,
           context_wayland->gesture = gesture;
         }
     }
+
+  GTK_IM_CONTEXT_CLASS (parent_class)->set_client_window (context, window);
 }
 
 static void

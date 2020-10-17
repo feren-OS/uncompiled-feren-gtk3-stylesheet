@@ -68,7 +68,7 @@
  * variable.
  *
  * This means that while you can pass the result of
- * gtk_file_chooser_get_filename() to open() or fopen(),
+ * gtk_file_chooser_get_filename() to g_open() or g_fopen(),
  * you may not be able to directly set it as the text of a
  * #GtkLabel widget unless you convert it first to UTF-8,
  * which all GTK+ widgets expect. You should use g_filename_to_utf8()
@@ -957,7 +957,7 @@ gtk_file_chooser_get_current_folder (GtkFileChooser *chooser)
 /**
  * gtk_file_chooser_set_current_name:
  * @chooser: a #GtkFileChooser
- * @name: (type filename): the filename to use, as a UTF-8 string
+ * @name: (type utf8): the filename to use, as a UTF-8 string
  * 
  * Sets the current name in the file selector, as if entered
  * by the user. Note that the name passed in here is a UTF-8

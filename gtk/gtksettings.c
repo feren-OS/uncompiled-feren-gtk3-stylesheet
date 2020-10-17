@@ -148,6 +148,7 @@ enum {
   PROP_CURSOR_BLINK_TIME,
   PROP_CURSOR_BLINK_TIMEOUT,
   PROP_SPLIT_CURSOR,
+  PROP_CURSOR_ASPECT_RATIO,
   PROP_THEME_NAME,
   PROP_ICON_THEME_NAME,
   PROP_FALLBACK_ICON_THEME,
@@ -455,6 +456,15 @@ gtk_settings_class_init (GtkSettingsClass *class)
                                                                    GTK_PARAM_READWRITE),
                                              NULL);
   g_assert (result == PROP_SPLIT_CURSOR);
+  result = settings_install_property_parser (class,
+                                             g_param_spec_float ("gtk-cursor-aspect-ratio",
+                                                                 P_("Cursor Aspect Ratio"),
+                                                                 P_("The aspect ratio of the text caret"),
+                                                                 0.0, 1.0, 0.04,
+                                                                 GTK_PARAM_READWRITE),
+                                             NULL);
+
+  g_assert (result == PROP_CURSOR_ASPECT_RATIO);
   result = settings_install_property_parser (class,
                                              g_param_spec_string ("gtk-theme-name",
                                                                    P_("Theme Name"),
@@ -1833,12 +1843,13 @@ GtkStyleCascade *
 _gtk_settings_get_style_cascade (GtkSettings *settings,
                                  gint         scale)
 {
-  GtkSettingsPrivate *priv = settings->priv;
+  GtkSettingsPrivate *priv;
   GtkStyleCascade *new_cascade;
   GSList *list;
 
   g_return_val_if_fail (GTK_IS_SETTINGS (settings), NULL);
 
+  priv = settings->priv;
   for (list = priv->style_cascades; list; list = list->next)
     {
       if (_gtk_style_cascade_get_scale (list->data) == scale)

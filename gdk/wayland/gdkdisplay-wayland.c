@@ -476,9 +476,15 @@ gdk_registry_handle_global (void               *data,
     }
   else if (strcmp (interface, "gtk_primary_selection_device_manager") == 0)
     {
-      display_wayland->primary_selection_manager =
+      display_wayland->gtk_primary_selection_manager =
         wl_registry_bind(display_wayland->wl_registry, id,
                          &gtk_primary_selection_device_manager_interface, 1);
+    }
+  else if (strcmp (interface, "zwp_primary_selection_device_manager_v1") == 0)
+    {
+      display_wayland->zwp_primary_selection_manager_v1 =
+        wl_registry_bind(display_wayland->wl_registry, id,
+                         &zwp_primary_selection_device_manager_v1_interface, 1);
     }
   else if (strcmp (interface, "zwp_tablet_manager_v2") == 0)
     {
@@ -728,6 +734,8 @@ gdk_wayland_display_finalize (GObject *object)
     }
 
   g_ptr_array_free (display_wayland->monitors, TRUE);
+
+  wl_display_disconnect(display_wayland->wl_display);
 
   G_OBJECT_CLASS (gdk_wayland_display_parent_class)->finalize (object);
 }

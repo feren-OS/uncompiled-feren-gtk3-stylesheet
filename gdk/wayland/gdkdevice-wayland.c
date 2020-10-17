@@ -237,7 +237,8 @@ struct _GdkWaylandSeat
   uint32_t keyboard_time;
   uint32_t keyboard_key_serial;
 
-  struct gtk_primary_selection_device *primary_data_device;
+  struct gtk_primary_selection_device *gtk_primary_data_device;
+  struct zwp_primary_selection_device_v1 *zwp_primary_data_device_v1;
   struct wl_data_device *data_device;
   GdkDragContext *drop_context;
 
@@ -1308,23 +1309,43 @@ static const struct wl_data_device_listener data_device_listener = {
 };
 
 static void
-primary_selection_data_offer (void                                *data,
-                              struct gtk_primary_selection_device *gtk_primary_selection_device,
-                              struct gtk_primary_selection_offer  *gtk_primary_offer)
+primary_selection_data_offer (void     *data,
+                              gpointer  primary_selection_device,
+                              gpointer  primary_offer)
 {
   GdkWaylandSeat *seat = data;
 
   GDK_NOTE (EVENTS,
             g_message ("primary selection offer, device %p, data offer %p",
-                       gtk_primary_selection_device, gtk_primary_offer));
+                       primary_selection_device, primary_offer));
 
-  gdk_wayland_selection_ensure_primary_offer (seat->display, gtk_primary_offer);
+  gdk_wayland_selection_ensure_primary_offer (seat->display, primary_offer);
 }
 
 static void
-primary_selection_selection (void                                *data,
-                             struct gtk_primary_selection_device *gtk_primary_selection_device,
-                             struct gtk_primary_selection_offer  *gtk_primary_offer)
+gtk_primary_selection_data_offer (void                                *data,
+                                  struct gtk_primary_selection_device *primary_selection_device,
+                                  struct gtk_primary_selection_offer  *primary_offer)
+{
+  primary_selection_data_offer (data,
+                                (gpointer) primary_selection_device,
+                                (gpointer) primary_offer);
+}
+
+static void
+zwp_primary_selection_v1_data_offer (void                                   *data,
+                                     struct zwp_primary_selection_device_v1 *primary_selection_device,
+                                     struct zwp_primary_selection_offer_v1  *primary_offer)
+{
+  primary_selection_data_offer (data,
+                                (gpointer) primary_selection_device,
+                                (gpointer) primary_offer);
+}
+
+static void
+primary_selection_selection (void     *data,
+                             gpointer  primary_selection_device,
+                             gpointer  primary_offer)
 {
   GdkWaylandSeat *seat = data;
   GdkAtom selection;
@@ -1334,16 +1355,41 @@ primary_selection_selection (void                                *data,
 
   GDK_NOTE (EVENTS,
             g_message ("primary selection selection, device %p, data offer %p",
-                       gtk_primary_selection_device, gtk_primary_offer));
+                       primary_selection_device, primary_offer));
 
   selection = gdk_atom_intern_static_string ("PRIMARY");
-  gdk_wayland_selection_set_offer (seat->display, selection, gtk_primary_offer);
+  gdk_wayland_selection_set_offer (seat->display, selection, primary_offer);
   emit_selection_owner_change (seat->keyboard_focus, selection);
 }
 
-static const struct gtk_primary_selection_device_listener primary_selection_device_listener = {
-  primary_selection_data_offer,
-  primary_selection_selection,
+static void
+gtk_primary_selection_selection (void                                *data,
+                                 struct gtk_primary_selection_device *primary_selection_device,
+                                 struct gtk_primary_selection_offer  *primary_offer)
+{
+  primary_selection_selection (data,
+                               (gpointer) primary_selection_device,
+                               (gpointer) primary_offer);
+}
+
+static void
+zwp_primary_selection_v1_selection (void                                   *data,
+                                    struct zwp_primary_selection_device_v1 *primary_selection_device,
+                                    struct zwp_primary_selection_offer_v1  *primary_offer)
+{
+  primary_selection_selection (data,
+                               (gpointer) primary_selection_device,
+                               (gpointer) primary_offer);
+}
+
+static const struct gtk_primary_selection_device_listener gtk_primary_device_listener = {
+  gtk_primary_selection_data_offer,
+  gtk_primary_selection_selection,
+};
+
+static const struct zwp_primary_selection_device_v1_listener zwp_primary_device_v1_listener = {
+  zwp_primary_selection_v1_data_offer,
+  zwp_primary_selection_v1_selection,
 };
 
 static GdkDevice * get_scroll_device (GdkWaylandSeat              *seat,
@@ -1986,6 +2032,7 @@ keyboard_handle_leave (void               *data,
   g_object_unref (seat->keyboard_focus);
   seat->keyboard_focus = NULL;
   seat->repeat_key = 0;
+  seat->key_modifiers = 0;
 
   GDK_NOTE (EVENTS,
             g_message ("focus out, seat %p surface %p",
@@ -2814,6 +2861,14 @@ _gdk_wayland_seat_remove_tablet (GdkWaylandSeat       *seat,
   seat->tablets = g_list_remove (seat->tablets, tablet);
 
   zwp_tablet_v2_destroy (tablet->wp_tablet);
+
+  while (tablet->pads)
+    {
+      GdkWaylandTabletPadData *pad = tablet->pads->data;
+
+      pad->current_tablet = NULL;
+      tablet->pads = g_list_remove (tablet->pads, pad);
+    }
 
   device_manager->devices =
     g_list_remove (device_manager->devices, tablet->master);
@@ -5069,13 +5124,23 @@ _gdk_wayland_device_manager_add_seat (GdkDeviceManager *device_manager,
   wl_seat_add_listener (seat->wl_seat, &seat_listener, seat);
   wl_seat_set_user_data (seat->wl_seat, seat);
 
-  if (display_wayland->primary_selection_manager)
+  if (display_wayland->zwp_primary_selection_manager_v1)
     {
-      seat->primary_data_device =
-        gtk_primary_selection_device_manager_get_device (display_wayland->primary_selection_manager,
+      seat->zwp_primary_data_device_v1 =
+        zwp_primary_selection_device_manager_v1_get_device (display_wayland->zwp_primary_selection_manager_v1,
+                                                            seat->wl_seat);
+      zwp_primary_selection_device_v1_add_listener (seat->zwp_primary_data_device_v1,
+                                                    &zwp_primary_device_v1_listener,
+                                                    seat);
+    }
+  else if (display_wayland->gtk_primary_selection_manager)
+    {
+      seat->gtk_primary_data_device =
+        gtk_primary_selection_device_manager_get_device (display_wayland->gtk_primary_selection_manager,
                                                          seat->wl_seat);
-      gtk_primary_selection_device_add_listener (seat->primary_data_device,
-                                                 &primary_selection_device_listener, seat);
+      gtk_primary_selection_device_add_listener (seat->gtk_primary_data_device,
+                                                 &gtk_primary_device_listener,
+                                                 seat);
     }
 
   seat->data_device =
@@ -5346,8 +5411,8 @@ gdk_wayland_seat_set_selection (GdkSeat               *seat,
 }
 
 void
-gdk_wayland_seat_set_primary (GdkSeat                             *seat,
-                              struct gtk_primary_selection_source *source)
+gdk_wayland_seat_set_primary (GdkSeat  *seat,
+                              gpointer  source)
 {
   GdkWaylandSeat *wayland_seat = GDK_WAYLAND_SEAT (seat);
   GdkWaylandDisplay *display_wayland;
@@ -5357,8 +5422,16 @@ gdk_wayland_seat_set_primary (GdkSeat                             *seat,
     {
       display_wayland = GDK_WAYLAND_DISPLAY (gdk_seat_get_display (seat));
       serial = _gdk_wayland_display_get_serial (display_wayland);
-      gtk_primary_selection_device_set_selection (wayland_seat->primary_data_device,
-                                                  source, serial);
+      if (wayland_seat->zwp_primary_data_device_v1)
+        {
+          zwp_primary_selection_device_v1_set_selection (wayland_seat->zwp_primary_data_device_v1,
+                                                         source, serial);
+        }
+      else if (wayland_seat->gtk_primary_data_device)
+        {
+          gtk_primary_selection_device_set_selection (wayland_seat->gtk_primary_data_device,
+                                                      source, serial);
+        }
     }
 }
 
