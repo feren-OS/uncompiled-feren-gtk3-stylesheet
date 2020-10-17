@@ -1,0 +1,303 @@
+/* Misc. Application Fixes */
+
+/**********
+ * Files  *
+ *********/
+.nemo-window .nemo-places-sidebar.frame {
+  border-width: 0;
+}
+.floating-bar {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(gtk("@theme_selected_bg_color"));
+    color: gtk("@theme_selected_fg_color");
+    border-radius: $button_radius $button_radius 0 0;
+    box-shadow: inset 0 0 0 1px gtk("@theme_selected_bg_color"), inset 0 0 0 1px gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.8);
+    padding: 1px;
+    button {
+        @extend %button.flat;
+    }
+    &:backdrop {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent), image(gtk("@theme_unfocused_selected_bg_color"));
+        box-shadow: inset 0 0 0 1px gtk("@theme_unfocused_selected_bg_color"), inset 0 0 0 1px gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7);
+        color: gtk("@theme_text_color");
+    }
+}
+.nemo-window .nemo-window-pane widget.entry {
+    border: 1.4px solid gtk("@theme_selected_bg_color");
+    border-radius: $button_radius;
+    color: gtk("@theme_fg_color");
+    background-color: gtk("@theme_base_color");
+}
+.nemo-window .nemo-window-pane widget.entry:selected:focus, .nemo-window .nemo-window-pane widget.entry:selected {
+    background-color: gtk("@theme_selected_bg_color");
+    color: gtk("@theme_selected_fg_color");
+}
+
+/**********
+ * Photos *
+ *********/
+.checkerboard-layout {
+    color: gtk("@theme_text_color");
+}
+.checkerboard,
+.checkerboard-layout,
+.checkboard-layout .item {
+    background-color: gtk("@theme_base_color");
+    background-image: linear-gradient(45deg, gtkalpha(#000, 0.1) 25%, transparent 25%, transparent 75%, gtkalpha(#000, 0.1) 75%, gtkalpha(#000, 0.1)), linear-gradient(45deg, gtkalpha(#000, 0.1) 25%, transparent 25%, transparent 75%, gtkalpha(#000, 0.1) 75%, gtkalpha(#000, 0.1));
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+}
+.bottom-toolbar {
+    border-top: 1px solid rgba(0,0,0,0.17);
+    background-color: gtk("@theme_bg_color");
+    color: gtk("@theme_fg_color");
+    &:backdrop {
+        border-color: rgba(0,0,0,0.17);
+        background-color: gtk("@theme_unfocused_bg_color");
+        color: gtk("@theme_unfocused_fg_color");
+    }
+}
+.overlay-toolbar {
+    background-color: gtkalpha(gtk("@theme_bg_color"), 0.9);
+    border: none;
+    border-radius: 3px;
+}
+.overlay-toolbar .mark {
+    color: gtk("@theme_text_color");
+}
+
+scale {
+    &.tint {
+        trough {
+            padding: 1px;
+            border: transparent;
+        }
+    }
+    
+    
+    &.temperature {
+        trough {
+            background-image:
+                linear-gradient(
+                    to right,
+                    gtk("@BLUEBERRY_500"),
+                    gtk("@BANANA_500")
+                );
+            padding: 1px;
+            border: transparent;
+        }
+
+        &:dir(rtl) trough {
+            background-image:
+                linear-gradient(
+                    to left,
+                    gtk("@BLUEBERRY_500"),
+                    gtk("@BANANA_500")
+                );
+        }
+    }
+
+
+    &.warmth {
+        trough {
+            background-image:
+                linear-gradient(
+                    to right,
+                    gtkalpha(gtk("@ORANGE_100"), 0.5),
+                    gtk("@ORANGE_500")
+                );
+            padding: 1px;
+            border: transparent;
+        }
+
+        &:dir(rtl) trough {
+            background-image:
+                linear-gradient(
+                    to left,
+                    gtkalpha(gtk("@ORANGE_100"), 0.5),
+                    gtk("@ORANGE_500")
+                );
+        }
+    }
+}
+
+frame.flat > border,
+frame > border.flat,
+.frame.flat {
+  border-style: none;
+}
+
+/***************
+  * Chrome(ium) *
+  ***************/
+window.background.chromium {
+    background-color: gtk("@theme_base_color");
+    color: gtk("@theme_fg_color");
+    &:backdrop {
+        background-color: gtk("@theme_unfocused_base_color");    
+        color: gtk("@theme_unfocused_fg_color");
+    }
+    menubar, .menubar {
+        color: gtk("@theme_fg_color");
+        background-color: gtk("@theme_bg_color");
+        &:backdrop {
+            background-color: gtk("@theme_unfocused_bg_color");    
+            color: gtk("@theme_unfocused_fg_color");
+        }
+    }
+    entry {
+        background-color: gtk("@theme_base_color");
+    }
+    
+    headerbar,
+    .titlebar {
+      button.titlebutton {
+        margin-right: -2.5px;
+        margin-left: -2.5px;
+        &.close {
+          background-image: none;
+          //-gtk-icon-transform: scale(1.125);
+        }
+    
+        &.maximize {
+          background-image: none;
+          //-gtk-icon-transform: scale(1.125);
+        }    
+        &.minimize {
+          background-image: none;
+          //-gtk-icon-transform: scale(1.125);
+        }
+      }
+    
+      @at-root window.background.chromium.maximized headerbar {
+        button.titlebutton {
+          margin-right: -2.5px;
+          margin-left: -2.5px;
+          &.maximize {
+            background-image: none;
+            //-gtk-icon-transform: scale(1.125);
+          }
+        }
+      }
+    }
+}
+
+window.background.chromium headerbar.titlebar {
+}
+
+window.background.chromium headerbar.titlebar .button.titlebutton {
+}
+
+
+/**************************
+  * Misc. (Elementary OS) *
+  ************************/
+.h1 {
+    font-size: 24pt;
+}
+
+.h2 {
+    font-size: 18pt;
+}
+
+.h3 {
+    font-size: 11pt;
+}
+
+label.h4,
+.h4 label {
+    opacity: 0.8;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+.dim-label {
+    opacity: 0.75;
+}
+
+:link:hover label {
+  text-decoration: underline;
+}
+
+
+/********
+* Geary *
+********/
+
+paned statusbar frame {
+    border: none;
+}
+
+
+/****************
+* Slick Greeter *
+****************/
+
+.lightdm menubar {
+    background: none;
+    background-color: gtkalpha(black, 0.6);
+    
+    color: white;
+}
+
+.lightdm-combo cell,
+.lightdm-combo button,
+.lightdm-combo entry,
+.lightdm button,
+.lightdm entry {
+    background-image: none;
+    background-color: gtkalpha(black, 0.5);
+    border: 1px solid gtkalpha(white, 0.6);
+    text-shadow: none;
+    label {
+        color: white;
+    }
+    color: white;
+    caret-color: white;
+    box-shadow: none;
+}
+
+.lightdm button:focus,
+.lightdm button:active,
+.lightdm button:checked,
+.lightdm entry:focus,
+.lightdm entry:active {
+    border: 1px solid white;
+    color: white;
+}
+
+@keyframes dashentry_spinner {
+    to { -gtk-icon-transform: rotate(1turn); }
+}
+
+.lightdm entry:active {
+    -gtk-icon-source: -gtk-icontheme("process-working-symbolic");
+    animation: dashentry_spinner 1s infinite linear;
+}
+
+.lightdm .option-button {
+    padding: 2px;
+    background: none;
+    border: 0;
+    color: white;
+}
+
+.lightdm .toggle-button {
+    background: none;
+    border-width: 0;
+    color: white;
+}
+
+.lightdm .toggle-button.selected {
+    background-color: gtkalpha(black, 0.3);
+    border-width: 1px;
+    color: white;
+}
+
+
+/***********
+* Nautilus *
+***********/
+
+.nautilus-window grid {
+    background-color: gtk("@theme_base_color");
+}
