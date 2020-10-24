@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+// GTK functions
+
+// escape string entirely
+@function gtk ($str) {
+  //TODO: Plasma 5.19 will add a _breeze suffix to the class names, so make sure to adjust 'gtk' as so in 5.19
+  @return unquote("#{$str}_breeze");
+}
+@function gtkbreezent ($str) {
+  @return unquote("#{$str}");
+}
+
+// alpha function
+@function gtkalpha($c,$a) {
+  @return unquote("alpha(#{$c},#{$a})");
+}
+
+// shade function
+@function gtkshade($c, $a) {
+  @return unquote("shade(#{$c},#{$a})");
+}
+
+// mix function
+@function gtkmix($c1, $c2, $m) {
+  @return unquote("mix(#{$c1},#{$c2},#{$m})");
+}

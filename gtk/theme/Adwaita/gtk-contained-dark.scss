@@ -1,6 +1,8 @@
 $variant: 'dark';
 
-@import 'colors';
+@import 'functions';
+@import 'colors-dark';
+@import 'colors-public';
 @import 'drawing';
 @import 'common';
-@import 'colors-public';
+@import 'app-specifics';
