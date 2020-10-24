@@ -4,7 +4,6 @@
 
 // escape string entirely
 @function gtk ($str) {
-  //TODO: Plasma 5.19 will add a _breeze suffix to the class names, so make sure to adjust 'gtk' as so in 5.19
   @return unquote("#{$str}_breeze");
 }
 @function gtkbreezent ($str) {

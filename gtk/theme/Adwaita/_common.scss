@@ -5173,3 +5173,146 @@ popover.emoji-completion contents row box {
 popover.emoji-completion .emoji:hover {
   background: gtk("@theme_selected_bg_color");
 }
+
+//LibHandy
+hdyviewswitcher {
+    > button,
+    > button:backdrop,
+    > button:backdrop:hover,
+    > button:hover,
+    > button:active,
+    > button:hover:focus,
+    > button:active:focus,
+    > button:checked,
+    > button:checked:hover,
+    > button:checked:backdrop {
+        @include button(undecorated);
+        border-left-width: 0;
+        border-right-width: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        transition: 0;
+        & > stack,
+        &:backdrop > stack,
+        &:backdrop:hover > stack,
+        &:hover > stack,
+        &:active > stack,
+        &:hover:focus > stack,
+        &:active:focus > stack,
+        &:checked > stack,
+        &:checked:hover > stack,
+        &:checked:backdrop > stack {
+            @include button(undecorated);
+        }
+        & > stack,
+        &:active > stack,
+        &:active:focus > stack {
+            @include button(undecorated);
+            color: gtk("@theme_text_color");
+            label, & {
+                color: gtk("@theme_text_color");
+            }
+        }
+        &:hover > stack,
+        &:hover:focus > stack {
+            @include button(undecorated);
+            background: gtkmix(gtk("@theme_bg_color"), gtk("@theme_text_color"), 0.1);
+            color: gtk("@theme_text_color");
+            label, & {
+                color: gtk("@theme_text_color");
+            }
+        }
+        &:backdrop > stack,
+        &:backdrop:hover > stack {
+            @include button(undecorated);
+            color: gtk("@theme_unfocused_text_color");
+            label, & {
+                color: gtk("@theme_unfocused_text_color");
+            }
+        }
+        &:checked > stack,
+        &:checked:hover > stack {
+            background: gtkmix(gtk("@theme_bg_color"), gtk("@theme_text_color"), 0.2);
+            label, & {
+                color: gtk("@theme_text_color");
+            }
+        }
+        &:checked:backdrop > stack {
+            background: gtkmix(gtk("@theme_unfocused_bg_color"), gtk("@theme_unfocused_text_color"), 0.2);
+            label, & {
+                color: gtk("@theme_unfocused_text_color");
+            }
+        }
+    }
+}
+headerbar hdyviewswitcher {
+    > button,
+    > button:backdrop,
+    > button:backdrop:hover,
+    > button:hover,
+    > button:active,
+    > button:hover:focus,
+    > button:active:focus,
+    > button:checked,
+    > button:checked:hover,
+    > button:checked:backdrop {
+        @include button(undecorated);
+        border-left-width: 0;
+        border-right-width: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        transition: 0;
+        & > stack,
+        &:backdrop > stack,
+        &:backdrop:hover > stack,
+        &:hover > stack,
+        &:active > stack,
+        &:hover:focus > stack,
+        &:active:focus > stack,
+        &:checked > stack,
+        &:checked:hover > stack,
+        &:checked:backdrop > stack {
+            @include button(undecorated);
+        }
+        & > stack,
+        &:active > stack,
+        &:active:focus > stack {
+            @include button(undecorated);
+            color: gtk("@theme_titlebar_foreground");
+            label, & {
+                color: gtk("@theme_titlebar_foreground");
+            }
+        }
+        &:hover > stack,
+        &:hover:focus > stack {
+            @include button(undecorated);
+            background: gtkmix(gtk("@theme_titlebar_background"), gtk("@theme_titlebar_foreground"), 0.1);
+            color: gtk("@theme_titlebar_foreground");
+            label, & {
+                color: gtk("@theme_titlebar_foreground");
+            }
+        }
+        &:backdrop > stack,
+        &:backdrop:hover > stack {
+            @include button(undecorated);
+            color: gtk("@theme_titlebar_foreground_backdrop");
+            label, & {
+                color: gtk("@theme_titlebar_foreground_backdrop");
+            }
+        }
+        &:checked > stack,
+        &:checked:hover > stack {
+            background: gtkmix(gtk("@theme_titlebar_background"), gtk("@theme_titlebar_foreground"), 0.2);
+            color: gtk("@theme_titlebar_foreground");
+            label, & {
+                color: gtk("@theme_titlebar_foreground");
+            }
+        }
+        &:checked:backdrop > stack {
+            background: gtkmix(gtk("@theme_titlebar_background_backdrop"), gtk("@theme_titlebar_foreground_backdrop"), 0.2);
+            label, & {
+                color: gtk("@theme_titlebar_foreground_backdrop");
+            }
+        }
+    }
+}

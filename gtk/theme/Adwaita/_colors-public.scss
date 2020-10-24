@@ -9,27 +9,6 @@
 ////0.19 / 38 = 0.005 * 32 = 0.16
 @define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.23);
 
-
-@define-color base_color @theme_base_color;
-@define-color text_color @theme_text_color;
-@define-color bg_color @theme_bg_color;
-@define-color fg_color @theme_fg_color;
-
-@define-color selected_fg_color @theme_selected_fg_color;
-@define-color selected_bg_color @theme_selected_bg_color;
-//@define-color selected_borders_color #{"" + gtkdarken(@theme_selected_bg_color_breeze, 15%)};
-@define-color button_background_normal @theme_button_background_normal;
-//@define-color borders_color #{"" + $borders_color};
-//@define-color alt_borders_color #{"" + $alt_borders_color}; // Replace with borders_breeze
-//@define-color borders_edge #{"" + $borders_edge}; // Unused?
-//@define-color link_color #{"" + $link_color};
-//@define-color link_visited_color #{"" + $link_visited_color};
-//@define-color top_hilight #{"" + $top_hilight}; // uses borders_edge
-//@define-color dark_fill #{"" + $dark_fill}; // unused?
-@define-color menu_color @theme_base_color;
-@define-color popover_bg_color @menu_color; // Replace with menu BG colour
-@define-color popover_hover_color @theme_selected_bg_color; // Replace with selected_bg_color to simulate a menu
-
 /*
  * GTK API color re-defs (from BreezeGTK3)
  */
@@ -59,16 +38,45 @@
 
 
 
+
+
+@define-color base_color @theme_base_color_breeze;
+@define-color text_color @theme_text_color_breeze;
+@define-color bg_color @theme_bg_color_breeze;
+@define-color fg_color @theme_fg_color_breeze;
+
+@define-color selected_fg_color @theme_selected_fg_color_breeze;
+@define-color selected_bg_color @theme_selected_bg_color_breeze;
+//@define-color selected_borders_color #{"" + gtkdarken(@theme_selected_bg_color_breeze, 15%)};
+@define-color button_background_normal @theme_button_background_normal_breeze;
+//@define-color borders_color #{"" + $borders_color};
+//@define-color alt_borders_color #{"" + $alt_borders_color}; // Replace with borders_breeze
+//@define-color borders_edge #{"" + $borders_edge}; // Unused?
+//@define-color link_color #{"" + $link_color};
+//@define-color link_visited_color #{"" + $link_visited_color};
+//@define-color top_hilight #{"" + $top_hilight}; // uses borders_edge
+//@define-color dark_fill #{"" + $dark_fill}; // unused?
+@define-color menu_color @theme_base_color_breeze;
+@define-color popover_bg_color @menu_color; // Replace with menu BG colour
+@define-color popover_hover_color @theme_selected_bg_color_breeze; // Replace with selected_bg_color to simulate a menu
+
+
+
+
+
+
+
 // (Elementary OS Compatibility) Brand Colors
 @define-color colorPrimary @theme_titlebar_background_breeze;
 @define-color colorAccent @selected_bg_color;
 //@function gettextColorPrimary {
 //    @return gtkmix(gtkbreezent("@colorPrimary"), gtk("@theme_text_color"), 0.75);
 //}
+//TODO: Remove this once elementary OS 6 applications get brought into Feren OS on 20.04
 @function gettextColorPrimaryShadow {
     @return gtkalpha(gtkbreezent("@colorPrimary"), 0.4);
 }
-@define-color textColorPrimary @theme_text_color;
+@define-color textColorPrimary @theme_text_color_breeze;
 @define-color textColorPrimaryShadow #{"" + gettextColorPrimaryShadow()};
 @define-color tab_base_color @theme_base_color_breeze;
 @define-color STRAWBERRY_100 #{#ff8c82};
@@ -121,8 +129,9 @@
 @define-color BLACK_500 #{#333};
 @define-color BLACK_700 #{#1a1a1a};
 @define-color BLACK_900 #{#000};
-@define-color accent_color_100 @BLUEBERRY_100;
-@define-color accent_color_300 @BLUEBERRY_300;
-@define-color accent_color_500 @BLUEBERRY_500;
-@define-color accent_color_700 @BLUEBERRY_700;
-@define-color accent_color_900 @BLUEBERRY_900;
+@define-color accent_color_100 #{"" + gtkmix(gtk("@theme_selected_fg_color"), white, 0.2)};
+@define-color accent_color_300 #{"" + gtkmix(gtk("@theme_selected_fg_color"), white, 0.1)};
+// 350 is the eOS accent colour officially, so that equates to 100(250/800) = 31.25% of the colour pool
+@define-color accent_color_500 #{"" + gtkmix(gtk("@theme_selected_fg_color"), black, 0.1)};
+@define-color accent_color_700 #{"" + gtkmix(gtk("@theme_selected_fg_color"), black, 0.2)};
+@define-color accent_color_900 #{"" + gtkmix(gtk("@theme_selected_fg_color"), black, 0.3)};
