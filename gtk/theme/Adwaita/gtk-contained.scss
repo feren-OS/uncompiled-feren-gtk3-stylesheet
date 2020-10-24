@@ -6,9 +6,7 @@
 
 $variant: 'light';
 
-@import 'functions';
-@import 'colors-light';
-@import 'colors-public';
+@import 'colors';
 @import 'drawing';
 @import 'common';
-@import 'app-specifics';
+@import 'colors-public';
