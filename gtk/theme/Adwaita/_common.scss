@@ -1182,7 +1182,7 @@ modelbutton.flat,
 
   @extend %undecorated_button;
 
-  &:hover { background: linear-gradient(to bottom, gtkmix(gtk("@theme_selected_bg_color"), white, 0.06), gtk("@theme_selected_bg_color")); }
+  &:hover { background: linear-gradient(to bottom, gtkmix(gtk("@theme_selected_bg_color"), white, 0.06), gtk("@theme_selected_bg_color")); color: gtk("@theme_selected_fg_color"); }
 
   &:selected { @extend %selected_items; }
 
@@ -1944,17 +1944,17 @@ headerbar {
   }
 }
 
-headerbar { // headerbar border rounding
+headerbar { // headerbar border rounding // can you don't with extra border-radiuses for headerbars, lol?
 
   window separator:first-child + &,
-  window &:first-child { &:backdrop, & { border-top-left-radius: 7px; }}
-  window &:last-child { &:backdrop, & { border-top-right-radius: 7px; }}
+  window &:first-child { &:backdrop, & { border-top-left-radius: 0px; }}
+  window &:last-child { &:backdrop, & { border-top-right-radius: 0px; }}
 
   window stack & { // tackles the stacked headerbars case
     &:first-child, &:last-child {
       &:backdrop, & {
-        border-top-left-radius: 7px;
-        border-top-right-radius: 7px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
       }
     }
   }
@@ -1990,7 +1990,12 @@ headerbar { // headerbar border rounding
     box-shadow: none;
   }
 
-  separator { background-color: gtkbreezent("@ferengtk_border_generic"); }  // FIXME: use darker border?
+  separator {
+      background: image(gtkmix(gtk("@theme_titlebar_background"), black, 0.19));
+      &:backdrop {
+        background: image(gtkmix(gtk("@theme_titlebar_background_backdrop"), black, 0.19));
+      }
+  }
 
   @extend %titlebar;
 }
@@ -4336,13 +4341,12 @@ paned {
       min-width: 5px;
       min-height: 5px;
       background-color: gtk("@theme_bg_color");
-      background-image: image(gtkbreezent("@ferengtk_border_generic")), image(gtkbreezent("@ferengtk_border_generic"));
+      background-image: image(gtkbreezent("@ferengtk_border_generic"));
       background-size: 1px 1px, 1px 1px;
 
       &:backdrop {
         background-color: gtk("@theme_unfocused_bg_color");
-        background-image: image(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7)),
-                          image(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
+        background-image: image(gtkalpha(gtkbreezent("@ferengtk_border_generic"), 0.7));
       }
     }
   }
