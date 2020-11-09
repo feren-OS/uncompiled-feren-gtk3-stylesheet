@@ -2374,12 +2374,12 @@ window.popup > menu { // DO NOT REMOVE THIS LINE - IT WILL BREAK THE GTKPOPUPMEN
     min-height: 16px;
     min-width: 16px;
     padding: 4px;
-    background-color: gtkalpha(gtk("@theme_base_color"), 0.94);
+    background-color: transparent;
     border-radius: 0;
 
     &.top {
       margin-top: -4px;
-      border-bottom: 1px solid gtkmix(gtk("@theme_fg_color"), gtk("@theme_base_color"), 0.1);
+      border-bottom: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-top-right-radius: $menu_radius;
       border-top-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
@@ -2388,15 +2388,15 @@ window.popup > menu { // DO NOT REMOVE THIS LINE - IT WILL BREAK THE GTKPOPUPMEN
     &.bottom {
       margin-top: 8px;
       margin-bottom: -12px;
-      border-top: 1px solid gtkmix(gtk("@theme_fg_color"), gtk("@theme_base_color"), 0.1);
+      border-top: 1px solid gtkbreezent("@ferengtk_border_generic");
       border-bottom-right-radius: $menu_radius;
       border-bottom-left-radius: $menu_radius;
       -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
     }
 
-    &:hover { background-color: gtkmix(gtk("@theme_fg_color"), gtk("@theme_base_color"), 0.1); }
+    &:hover { background-color: gtkalpha(gtk("@theme_fg_color"), 0.1); }
 
-    &:backdrop { background-color: gtkalpha(gtk("@theme_unfocused_base_color"), 0.94); }
+    &:backdrop { background-color: transparent; }
 
     &:disabled {
       color: transparent;

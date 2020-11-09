@@ -1131,15 +1131,15 @@ menu menuitem arrow:dir(rtl), .menu menuitem arrow:dir(rtl), .context-menu menui
 
 menu menuitem label:dir(rtl), menu menuitem label:dir(ltr), .menu menuitem label:dir(rtl), .menu menuitem label:dir(ltr), .context-menu menuitem label:dir(rtl), .context-menu menuitem label:dir(ltr), window.popup > menu menuitem label:dir(rtl), window.popup > menu menuitem label:dir(ltr) { color: inherit; }
 
-menu > arrow, .menu > arrow, .context-menu > arrow, window.popup > menu > arrow { box-shadow: none; background-color: transparent; background: none; border-color: transparent; min-height: 16px; min-width: 16px; padding: 4px; background-color: alpha(@theme_base_color_breeze,0.94); border-radius: 0; }
+menu > arrow, .menu > arrow, .context-menu > arrow, window.popup > menu > arrow { box-shadow: none; background-color: transparent; background: none; border-color: transparent; min-height: 16px; min-width: 16px; padding: 4px; background-color: transparent; border-radius: 0; }
 
-menu > arrow.top, .menu > arrow.top, .context-menu > arrow.top, window.popup > menu > arrow.top { margin-top: -4px; border-bottom: 1px solid mix(@theme_fg_color_breeze,@theme_base_color_breeze,0.1); border-top-right-radius: 0px; border-top-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-up-symbolic"); }
+menu > arrow.top, .menu > arrow.top, .context-menu > arrow.top, window.popup > menu > arrow.top { margin-top: -4px; border-bottom: 1px solid @ferengtk_border_generic; border-top-right-radius: 0px; border-top-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-up-symbolic"); }
 
-menu > arrow.bottom, .menu > arrow.bottom, .context-menu > arrow.bottom, window.popup > menu > arrow.bottom { margin-top: 8px; margin-bottom: -12px; border-top: 1px solid mix(@theme_fg_color_breeze,@theme_base_color_breeze,0.1); border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-down-symbolic"); }
+menu > arrow.bottom, .menu > arrow.bottom, .context-menu > arrow.bottom, window.popup > menu > arrow.bottom { margin-top: 8px; margin-bottom: -12px; border-top: 1px solid @ferengtk_border_generic; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; -gtk-icon-source: -gtk-icontheme("pan-down-symbolic"); }
 
-menu > arrow:hover, .menu > arrow:hover, .context-menu > arrow:hover, window.popup > menu > arrow:hover { background-color: mix(@theme_fg_color_breeze,@theme_base_color_breeze,0.1); }
+menu > arrow:hover, .menu > arrow:hover, .context-menu > arrow:hover, window.popup > menu > arrow:hover { background-color: alpha(@theme_fg_color_breeze,0.1); }
 
-menu > arrow:backdrop, .menu > arrow:backdrop, .context-menu > arrow:backdrop, window.popup > menu > arrow:backdrop { background-color: alpha(@theme_unfocused_base_color_breeze,0.94); }
+menu > arrow:backdrop, .menu > arrow:backdrop, .context-menu > arrow:backdrop, window.popup > menu > arrow:backdrop { background-color: transparent; }
 
 menu > arrow:disabled, .menu > arrow:disabled, .context-menu > arrow:disabled, window.popup > menu > arrow:disabled { color: transparent; background-color: transparent; border-color: transparent; }
 
