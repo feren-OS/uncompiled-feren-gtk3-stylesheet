@@ -2189,7 +2189,9 @@ tooltip.csd decoration { border-radius: 4px; box-shadow: none; }
 
 messagedialog.csd decoration { border-radius: 4px; box-shadow: 0 1px 2px alpha(black,0.2), 0 0 0 1px alpha(alpha(black,0.23),0.9); }
 
-.solid-csd decoration { margin: 0; padding: 4px; background-color: @theme_selected_bg_color_breeze; border: solid 1px @theme_selected_bg_color_breeze; border-radius: 0; }
+.solid-csd decoration { margin: 0; padding: 0; background-color: @theme_bg_color_breeze; border-width: 0; border-radius: 0; box-shadow: none; }
+
+.solid-csd decoration:backdrop { background-color: @theme_unfocused_bg_color_breeze; }
 
 button.titlebutton { min-width: 36px; min-height: 30px; padding: 0; margin: 0; border-radius: 3px; border-width: 0; border-color: transparent; margin-right: -3.5px; margin-left: -3.5px; background-image: none; background-color: transparent; color: currentColor; background-position: center; background-repeat: no-repeat; box-shadow: none; }
 
