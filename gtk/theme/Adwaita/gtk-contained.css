@@ -964,9 +964,9 @@ searchbar > revealer > box { margin: -6px; padding: 6px; }
 
 .tiled .titlebar:not(headerbar), .tiled-top .titlebar:not(headerbar), .tiled-right .titlebar:not(headerbar), .tiled-bottom .titlebar:not(headerbar), .tiled-left .titlebar:not(headerbar), .maximized .titlebar:not(headerbar), .fullscreen .titlebar:not(headerbar), .tiled headerbar, .tiled-top headerbar, .tiled-right headerbar, .tiled-bottom headerbar, .tiled-left headerbar, .maximized headerbar, .fullscreen headerbar { border-radius: 0; }
 
-.default-decoration.titlebar:not(headerbar), headerbar.default-decoration { min-height: 28px; padding: 4px; }
+.default-decoration.titlebar:not(headerbar), headerbar.default-decoration { min-height: 28px; padding: 2px; padding-left: 5.5px; padding-right: 5.5px; }
 
-.default-decoration.titlebar:not(headerbar) button.titlebutton, headerbar.default-decoration button.titlebutton { min-height: 28px; min-width: 28px; margin: 0; padding: 0; }
+.default-decoration.titlebar:not(headerbar) button.titlebutton, headerbar.default-decoration button.titlebutton { min-width: 36px; min-height: 30px; padding: 0; margin: 0; margin-right: -3.5px; margin-left: -3.5px; padding: 0; }
 
 .titlebar:not(headerbar) separator.titlebutton, headerbar separator.titlebutton { opacity: 0; }
 
@@ -1854,7 +1854,7 @@ calendar:backdrop { color: @theme_unfocused_text_color_breeze; border-color: alp
 calendar:indeterminate { color: alpha(currentColor,0.1); }
 
 /*********** Dialogs * */
-messagedialog .titlebar { min-height: 20px; background-image: none; background-color: @theme_bg_color_breeze; border-style: none; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+messagedialog .titlebar { min-height: 20px; border-style: none; border-top-left-radius: 4px; border-top-right-radius: 4px; }
 
 messagedialog .dialog-action-area { padding: 8px; }
 
@@ -2188,7 +2188,9 @@ tooltip.csd decoration { border-radius: 4px; box-shadow: none; }
 
 messagedialog.csd decoration { border-radius: 4px; box-shadow: 0 1px 2px alpha(black,0.2), 0 0 0 1px alpha(alpha(black,0.23),0.9); }
 
-.solid-csd decoration { margin: 0; padding: 4px; background-color: @theme_selected_bg_color_breeze; border: solid 1px @theme_selected_bg_color_breeze; border-radius: 0; }
+.solid-csd decoration { margin: 0; padding: 0; background-color: @theme_bg_color_breeze; border-width: 0; border-radius: 0; box-shadow: none; }
+
+.solid-csd decoration:backdrop { background-color: @theme_unfocused_bg_color_breeze; }
 
 button.titlebutton { min-width: 36px; min-height: 30px; padding: 0; margin: 0; border-radius: 3px; border-width: 0; border-color: transparent; margin-right: -3.5px; margin-left: -3.5px; background-image: none; background-color: transparent; color: currentColor; background-position: center; background-repeat: no-repeat; box-shadow: none; }
 
