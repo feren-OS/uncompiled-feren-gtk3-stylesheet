@@ -4800,25 +4800,16 @@ decoration {
 
 // Window Close button
 button.titlebutton {
-  //@extend %button_basic;
+  @extend %button;
 
-  //@extend %button_basic_flat;
+  @extend %button_basic_flat;
 
   min-width: 36px;
   min-height: 30px;
   padding: 0;
   margin: 0;
-  border-radius: $button_radius - 1;
-  border-width: 0;
-  border-color: transparent;
   margin-right: -3.5px;
   margin-left: -3.5px;
-  background-image: none;
-  background-color: transparent;
-  color: currentColor;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: none;
 
   //&:not(.appmenu) {
     //border-radius: 9999px;
@@ -4847,152 +4838,29 @@ button.titlebutton {
 //}
 
 headerbar button.titlebutton:hover,
-  .titlebar .button.titlebutton:hover {
-    box-shadow: none;
-    border-color: transparent;
-    background-color: gtkalpha(currentColor, 0.1); }
+  .titlebar .button.titlebutton:hover {}
   headerbar button.titlebutton:active, headerbar button.titlebutton:checked,
   .titlebar .button.titlebutton:active,
-  .titlebar .button.titlebutton:checked {
-    border-color: transparent;
-    background-color: gtkalpha(currentColor, 0.2);
-    color: currentColor;
-    box-shadow: none; }
-  headerbar button.titlebutton:backdrop, .titlebar .button.titlebutton:backdrop {
-    color: currentColor;
-  }
+  .titlebar .button.titlebutton:checked {}
+  headerbar button.titlebutton:backdrop, .titlebar .button.titlebutton:backdrop {}
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close, headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize, headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize, headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
     opacity: 1;
-    background-size: 18px 18px;
-    -gtk-icon-source: none;
-    image {
-        color: transparent;
-    }
-  border: none;
+    background-size: 24px 24px;
 }
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
-  opacity: 1;
-  color: currentColor;
-}
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {}
 
-headerbar button.titlebutton.close, .titlebar button.titlebutton.close {
-    background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
-    color: currentColor;
-    background-position: center;
-    background-repeat: no-repeat;
-    -gtk-icon-source: none;
-    image {
-        color: transparent;
-    }
-}
+headerbar button.titlebutton.close, .titlebar button.titlebutton.close {}
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {
-    background-color: transparent;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
-    color: currentColor;
-}
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop {}
 
-headerbar button.titlebutton.close:hover, .titlebar button.titlebutton.close:hover {
-    color: white;
-    background-color: #ff5555;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
+headerbar button.titlebutton.close:hover:not(:backdrop), .titlebar button.titlebutton.close:hover:not(:backdrop) {
+    @include button(hover, gtk("@error_color"), white);
 }
 
 headerbar button.titlebutton.close:active, .titlebar button.titlebutton.close:active {
-    color: white;
-    background-color: #c83737;
-    background-image: -gtk-recolor(url('assets/close-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
-    color: currentColor;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
-    color: currentColor;
-}
-
-headerbar button.titlebutton.maximize:hover, .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.maximize:active, .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/max-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
-    color: currentColor;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
-    color: currentColor;
-}
-
-headerbar button.titlebutton.minimize:hover, .titlebar button.titlebutton.minimize:hover {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.minimize:active, .titlebar button.titlebutton.minimize:active {
-    background-image: -gtk-recolor(url('assets/min-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-    color: currentColor;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-    color: currentColor;
-}
-
-headerbar button.titlebutton.restore:hover, .titlebar button.titlebutton.restore:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-}
-
-headerbar button.titlebutton.restore:active, .titlebar button.titlebutton.restore:active {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-}
-
-.maximized headerbar button.titlebutton.maximize, .maximized .titlebar button.titlebutton.maximize,
-.maximized headerbar button.titlebutton.maximize,
-.maximized .titlebar button.titlebutton.maximize {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-    color: currentColor;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.maximized headerbar button.titlebutton.maximize:backdrop, .maximized .titlebar button.titlebutton.maximize:backdrop,
-.maximized headerbar button.titlebutton.maximize:backdrop,
-.maximized .titlebar button.titlebutton.maximize:backdrop {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-    color: currentColor;
-}
-
-.maximized headerbar button.titlebutton.maximize:hover, .maximized .titlebar button.titlebutton.maximize:hover,
-.maximized headerbar button.titlebutton.maximize:hover,
-.maximized .titlebar button.titlebutton.maximize:hover {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
-}
-
-.maximized headerbar button.titlebutton.maximize:active, .maximized .titlebar button.titlebutton.maximize:active,
-.maximized headerbar button.titlebutton.maximize:active,
-.maximized .titlebar button.titlebutton.maximize:active {
-    background-image: -gtk-recolor(url('assets/rest-icon-symbolic.svg'));
+    @include button(active, gtk("@error_color"), white);
 }
 
 // catch all extend :)
