@@ -147,38 +147,6 @@ window.background.chromium {
     entry {
         background-color: gtk("@theme_base_color");
     }
-    
-    headerbar,
-    .titlebar {
-      button.titlebutton {
-        margin-right: -2.5px;
-        margin-left: -2.5px;
-        &.close {
-          background-image: none;
-          //-gtk-icon-transform: scale(1.125);
-        }
-    
-        &.maximize {
-          background-image: none;
-          //-gtk-icon-transform: scale(1.125);
-        }    
-        &.minimize {
-          background-image: none;
-          //-gtk-icon-transform: scale(1.125);
-        }
-      }
-    
-      @at-root window.background.chromium.maximized headerbar {
-        button.titlebutton {
-          margin-right: -2.5px;
-          margin-left: -2.5px;
-          &.maximize {
-            background-image: none;
-            //-gtk-icon-transform: scale(1.125);
-          }
-        }
-      }
-    }
 }
 
 window.background.chromium headerbar.titlebar {
