@@ -4799,7 +4799,13 @@ decoration {
 }
 
 // Window Close button
-button.titlebutton {
+button.titlebutton,
+headerbar button.titlebutton:hover:not(:backdrop),
+  headerbar button.titlebutton:active:not(:backdrop),
+  headerbar button.titlebutton:checked:not(:backdrop),
+  .titlebar .button.titlebutton:hover:not(:backdrop),
+  .titlebar .button.titlebutton:active:not(:backdrop),
+  .titlebar .button.titlebutton:checked:not(:backdrop) {
   @extend %button;
 
   @extend %button_basic_flat;
@@ -4837,19 +4843,15 @@ button.titlebutton {
   //&:backdrop { -gtk-icon-shadow: none; }
 //}
 
-headerbar button.titlebutton:hover,
-  .titlebar .button.titlebutton:hover {}
-  headerbar button.titlebutton:active, headerbar button.titlebutton:checked,
-  .titlebar .button.titlebutton:active,
-  .titlebar .button.titlebutton:checked {}
-  headerbar button.titlebutton:backdrop, .titlebar .button.titlebutton:backdrop {}
-
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close, headerbar button.titlebutton.maximize, .titlebar button.titlebutton.maximize, headerbar button.titlebutton.minimize, .titlebar button.titlebutton.minimize, headerbar button.titlebutton.restore, .titlebar button.titlebutton.restore {
     opacity: 1;
     background-size: 24px 24px;
+    color: gtk("@theme_titlebar_foreground");
 }
 
-headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {}
+headerbar button.titlebutton.close:backdrop, .titlebar button.titlebutton.close:backdrop, headerbar button.titlebutton.maximize:backdrop, .titlebar button.titlebutton.maximize:backdrop, headerbar button.titlebutton.minimize:backdrop, .titlebar button.titlebutton.minimize:backdrop, headerbar button.titlebutton.restore:backdrop, .titlebar button.titlebutton.restore:backdrop {
+  color: gtk("@theme_titlebar_foreground_backdrop");
+}
 
 headerbar button.titlebutton.close, .titlebar button.titlebutton.close {}
 
