@@ -3,6 +3,18 @@
    ----------------
    use responsibly! */
 
+// Feren GTK Border Values
+@define-color ferengtk_darkening_bg rgba(0, 0, 0, 0.08);
+@define-color ferengtk_border_generic rgba(0, 0, 0, 0.19);
+////0.19 / 38 = 0.005 * 32 = 0.16
+@define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.23);
+// Basic theme
+$ferengtk_basic_bg: #646464;
+$ferengtk_basic_fg: white;
+$ferengtk_basic_bg_inactive: #838383; //Loses 20% opacity when inactive on non-Basic
+$ferengtk_basic_fg_inactive: #e6e6e6; //is 80% opaque when inactive, atop the lightened titlebar for Basic
+
+
 // Sass thinks we're using the colors in the variables as strings and may shoot
 // warning, it's innocuous and can be defeated by using "" + $var
 /*

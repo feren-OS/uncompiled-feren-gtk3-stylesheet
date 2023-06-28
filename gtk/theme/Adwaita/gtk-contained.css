@@ -1,3 +1,87 @@
+/*TODO*/
+/* GTK NAMED COLORS ---------------- use responsibly! */
+@define-color ferengtk_darkening_bg rgba(0, 0, 0, 0.08);
+@define-color ferengtk_border_generic rgba(0, 0, 0, 0.19);
+@define-color ferengtk_selected_items_border rgba(0, 0, 0, 0.23);
+/*
+widget text/foreground color */
+@define-color theme_fg_color #2e3436;
+/*
+text color for entries, views and content in general */
+@define-color theme_text_color black;
+/*
+widget base background color */
+@define-color theme_bg_color #f6f5f4;
+/*
+text widgets and the like base background color */
+@define-color theme_base_color #ffffff;
+/*
+base background color of selections */
+@define-color theme_selected_bg_color #3584e4;
+/*
+text/foreground color of selections */
+@define-color theme_selected_fg_color #ffffff;
+/*
+base background color of insensitive widgets */
+@define-color insensitive_bg_color #faf9f8;
+/*
+text foreground color of insensitive widgets */
+@define-color insensitive_fg_color #929595;
+/*
+insensitive text widgets and the like base background color */
+@define-color insensitive_base_color #ffffff;
+/*
+widget text/foreground color on backdrop windows */
+@define-color theme_unfocused_fg_color #929595;
+/*
+text color for entries, views and content in general on backdrop windows */
+@define-color theme_unfocused_text_color black;
+/*
+widget base background color on backdrop windows */
+@define-color theme_unfocused_bg_color #f6f5f4;
+/*
+text widgets and the like base background color on backdrop windows */
+@define-color theme_unfocused_base_color #fcfcfc;
+/*
+base background color of selections on backdrop windows */
+@define-color theme_unfocused_selected_bg_color #3584e4;
+/*
+text/foreground color of selections on backdrop windows */
+@define-color theme_unfocused_selected_fg_color #ffffff;
+/*
+insensitive color on backdrop windows*/
+@define-color unfocused_insensitive_color #d4cfca;
+/*
+widgets main borders color */
+@define-color borders #cdc7c2;
+/*
+widgets main borders color on backdrop windows */
+@define-color unfocused_borders #d5d0cc;
+/*
+these are pretty self explicative */
+@define-color warning_color #f57900;
+@define-color error_color #cc0000;
+@define-color success_color #33d17a;
+/*
+these colors are exported for the window manager and shouldn't be used in applications,
+read if you used those and something break with a version upgrade you're on your own... */
+@define-color wm_title shade(#2e3436, 1.8);
+@define-color wm_unfocused_title #929595;
+@define-color wm_highlight rgba(255, 255, 255, 0.8);
+@define-color wm_borders_edge rgba(255, 255, 255, 0.8);
+@define-color wm_bg_a shade(#f6f5f4, 1.2);
+@define-color wm_bg_b #f6f5f4;
+@define-color wm_shadow alpha(black, 0.35);
+@define-color wm_border alpha(black, 0.18);
+@define-color wm_button_hover_color_a shade(#f6f5f4, 1.3);
+@define-color wm_button_hover_color_b #f6f5f4;
+@define-color wm_button_active_color_a shade(#f6f5f4, 0.85);
+@define-color wm_button_active_color_b shade(#f6f5f4, 0.89);
+@define-color wm_button_active_color_c shade(#f6f5f4, 0.9);
+/* content view background such as thumbnails view in Photos or Boxes */
+@define-color content_view_bg #ffffff;
+/* Very contrasty background for text views (@theme_text_color foreground) */
+@define-color text_view_bg #ffffff;
 /*************************** Check and Radio buttons * */
 * { padding: 0; -GtkToolButton-icon-spacing: 4; -GtkTextView-error-underline-color: #cc0000; -GtkScrolledWindow-scrollbar-spacing: 0; -GtkToolItemGroup-expander-size: 11; -GtkWidget-text-handle-width: 20; -GtkWidget-text-handle-height: 24; -GtkDialog-button-spacing: 4; -GtkDialog-action-area-border: 0; outline-color: alpha(currentColor,0.3); outline-style: dashed; outline-offset: -3px; outline-width: 1px; -gtk-outline-radius: 3px; -gtk-secondary-caret-color: #3584e4; }
 
@@ -580,9 +664,13 @@ searchbar > revealer > box { margin: -6px; padding: 6px; }
 .inline-toolbar:backdrop, searchbar > revealer > box:backdrop, .location-bar:backdrop { border-color: #d5d0cc; background-color: #eae8e6; box-shadow: none; transition: 200ms ease-out; }
 
 /*************** Header bars * */
-.titlebar:not(headerbar), headerbar { padding: 0 6px; min-height: 46px; border-width: 0 0 1px; border-style: solid; border-color: #bfb8b1; border-radius: 0; background: #dfdcd8 linear-gradient(to top, #dad6d2, #e1dedb); box-shadow: inset 0 1px rgba(255, 255, 255, 0.8); /* Darken switchbuttons for headerbars. issue #1588 */ /* hide the close button separator */ }
+.titlebar:not(headerbar), headerbar { padding: 0 6px; min-height: 46px; border-width: 0 0 1px; border-style: solid; border-color: #bfb8b1; border-radius: 0; background: url("assets/tbar.svg"), linear-gradient(to top, #575757, #646464); background-color: #575757; /* For the remaining portion */ background-size: 100% 38px; background-repeat: no-repeat; /* Darken switchbuttons for headerbars. issue #1588 */ /* hide the close button separator */ }
 
-.titlebar:backdrop:not(headerbar), headerbar:backdrop { border-color: #d5d0cc; background-color: #f6f5f4; background-image: none; box-shadow: inset 0 1px rgba(255, 255, 255, 0.8); transition: 200ms ease-out; }
+.titlebar:not(headerbar) label, .titlebar:not(headerbar), headerbar label, headerbar { color: white; }
+
+.titlebar:backdrop:not(headerbar), headerbar:backdrop { background: url("assets/tbarinac.svg"), linear-gradient(to top, #767676, #838383); background-color: #767676; /* For the remaining portion */ background-size: 100% 38px; background-repeat: no-repeat; transition: 0; }
+
+.titlebar:backdrop:not(headerbar) label, .titlebar:backdrop:not(headerbar), headerbar:backdrop label, headerbar:backdrop { color: #e6e6e6; }
 
 .titlebar:not(headerbar) .title, headerbar .title { padding-left: 12px; padding-right: 12px; font-weight: bold; }
 
@@ -592,11 +680,13 @@ searchbar > revealer > box { margin: -6px; padding: 6px; }
 
 .titlebar:not(headerbar) stackswitcher button:checked:backdrop, .titlebar:not(headerbar) button.toggle:checked:backdrop, headerbar stackswitcher button:checked:backdrop, headerbar button.toggle:checked:backdrop { color: #929595; border-color: #d5d0cc; background-image: image(#e4e4e0); box-shadow: inset 0 1px rgba(255, 255, 255, 0); }
 
-.selection-mode .titlebar:not(headerbar), .selection-mode.titlebar:not(headerbar), .selection-mode headerbar, headerbar.selection-mode { color: #ffffff; border-color: #185fb4; text-shadow: 0 -1px rgba(0, 0, 0, 0.5); background: #3584e4 linear-gradient(to top, #2c7fe3, #3987e5); box-shadow: inset 0 1px rgba(134, 181, 239, 0.9); }
+.selection-mode .titlebar:not(headerbar), .selection-mode.titlebar:not(headerbar), .selection-mode headerbar, headerbar.selection-mode { background: url("assets/tbar.svg"), linear-gradient(to top, #1f76e1, #3584e4); background-color: #1f76e1; /* For the remaining portion */ background-size: 100% 38px; background-repeat: no-repeat; }
 
-.selection-mode .titlebar:backdrop:not(headerbar), .selection-mode.titlebar:backdrop:not(headerbar), .selection-mode headerbar:backdrop, headerbar.selection-mode:backdrop { background-color: #3584e4; background-image: none; box-shadow: inset 0 1px rgba(154, 194, 242, 0.88); }
+.selection-mode .titlebar:not(headerbar) label, .selection-mode .titlebar:not(headerbar), .selection-mode.titlebar:not(headerbar) label, .selection-mode.titlebar:not(headerbar), .selection-mode headerbar label, .selection-mode headerbar, headerbar.selection-mode label, headerbar.selection-mode { color: #ffffff; }
 
-.selection-mode .titlebar:backdrop:not(headerbar) label, .selection-mode.titlebar:backdrop:not(headerbar) label, .selection-mode headerbar:backdrop label, headerbar.selection-mode:backdrop label { text-shadow: none; color: #ffffff; }
+.selection-mode .titlebar:backdrop:not(headerbar), .selection-mode.titlebar:backdrop:not(headerbar), .selection-mode headerbar:backdrop, headerbar.selection-mode:backdrop { background: url("assets/tbarinac.svg"), linear-gradient(to top, #1f76e1, #3584e4); background-color: #1f76e1; /* For the remaining portion */ background-size: 100% 38px; background-repeat: no-repeat; /* TODO: mix button-opacity% with titlebar */ }
+
+.selection-mode .titlebar:backdrop:not(headerbar) label, .selection-mode .titlebar:backdrop:not(headerbar), .selection-mode.titlebar:backdrop:not(headerbar) label, .selection-mode.titlebar:backdrop:not(headerbar), .selection-mode headerbar:backdrop label, .selection-mode headerbar:backdrop, headerbar.selection-mode:backdrop label, headerbar.selection-mode:backdrop { color: #ffffff; }
 
 .selection-mode .titlebar:not(headerbar) button, .selection-mode.titlebar:not(headerbar) button, .selection-mode headerbar button, headerbar.selection-mode button { color: #ffffff; outline-color: rgba(255, 255, 255, 0.3); border-color: #1b6acb; border-bottom-color: #15539e; background-image: linear-gradient(to top, #2379e2 2px, #3584e4); text-shadow: 0 -1px rgba(0, 0, 0, 0.559216); -gtk-icon-shadow: 0 -1px rgba(0, 0, 0, 0.559216); box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.07); }
 
@@ -1964,84 +2054,3 @@ popover.emoji-completion arrow { border: none; background: none; }
 popover.emoji-completion contents row box { padding: 2px 10px; }
 
 popover.emoji-completion .emoji:hover { background: white; }
-
-/* GTK NAMED COLORS ---------------- use responsibly! */
-/*
-widget text/foreground color */
-@define-color theme_fg_color #2e3436;
-/*
-text color for entries, views and content in general */
-@define-color theme_text_color black;
-/*
-widget base background color */
-@define-color theme_bg_color #f6f5f4;
-/*
-text widgets and the like base background color */
-@define-color theme_base_color #ffffff;
-/*
-base background color of selections */
-@define-color theme_selected_bg_color #3584e4;
-/*
-text/foreground color of selections */
-@define-color theme_selected_fg_color #ffffff;
-/*
-base background color of insensitive widgets */
-@define-color insensitive_bg_color #faf9f8;
-/*
-text foreground color of insensitive widgets */
-@define-color insensitive_fg_color #929595;
-/*
-insensitive text widgets and the like base background color */
-@define-color insensitive_base_color #ffffff;
-/*
-widget text/foreground color on backdrop windows */
-@define-color theme_unfocused_fg_color #929595;
-/*
-text color for entries, views and content in general on backdrop windows */
-@define-color theme_unfocused_text_color black;
-/*
-widget base background color on backdrop windows */
-@define-color theme_unfocused_bg_color #f6f5f4;
-/*
-text widgets and the like base background color on backdrop windows */
-@define-color theme_unfocused_base_color #fcfcfc;
-/*
-base background color of selections on backdrop windows */
-@define-color theme_unfocused_selected_bg_color #3584e4;
-/*
-text/foreground color of selections on backdrop windows */
-@define-color theme_unfocused_selected_fg_color #ffffff;
-/*
-insensitive color on backdrop windows*/
-@define-color unfocused_insensitive_color #d4cfca;
-/*
-widgets main borders color */
-@define-color borders #cdc7c2;
-/*
-widgets main borders color on backdrop windows */
-@define-color unfocused_borders #d5d0cc;
-/*
-these are pretty self explicative */
-@define-color warning_color #f57900;
-@define-color error_color #cc0000;
-@define-color success_color #33d17a;
-/*
-these colors are exported for the window manager and shouldn't be used in applications,
-read if you used those and something break with a version upgrade you're on your own... */
-@define-color wm_title shade(#2e3436, 1.8);
-@define-color wm_unfocused_title #929595;
-@define-color wm_highlight rgba(255, 255, 255, 0.8);
-@define-color wm_borders_edge rgba(255, 255, 255, 0.8);
-@define-color wm_bg_a shade(#f6f5f4, 1.2);
-@define-color wm_bg_b #f6f5f4;
-@define-color wm_shadow alpha(black, 0.35);
-@define-color wm_border alpha(black, 0.18);
-@define-color wm_button_hover_color_a shade(#f6f5f4, 1.3);
-@define-color wm_button_hover_color_b #f6f5f4;
-@define-color wm_button_active_color_a shade(#f6f5f4, 0.85);
-@define-color wm_button_active_color_b shade(#f6f5f4, 0.89);
-@define-color wm_button_active_color_c shade(#f6f5f4, 0.9);
-/* content view background such as thumbnails view in Photos or Boxes */
-@define-color content_view_bg #ffffff;
-/* Very contrasty background for text views (@theme_text_color foreground) */
-@define-color text_view_bg #ffffff;
